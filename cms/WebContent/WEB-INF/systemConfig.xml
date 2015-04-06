@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<System>
+	<Database JdbcUrl="jdbc:mysql://127.0.0.1:3306/" User="root" Password="root"/>
+	
+	<Handlers>
+		<Handler Req="manage_news_query.do" Class="com.ftd.manage.news.NewsHandlerAdd"/>
+		<Handler Req="manage_news_add.do" Class="com.ftd.manage.news.NewsHandlerAdd"/>
+		<Handler Req="manage_news_modify.do" Class="com.ftd.manage.news.NewsHandlerAdd"/>
+		<Handler Req="manage_news_delete.do" Class="com.ftd.manage.news.NewsHandlerAdd"/>
+	</Handlers>
+</System>
