@@ -137,12 +137,11 @@
           {title:'操作',dataIndex:'',width:200,renderer : function(value,obj){
             var editStr =  Search.createLink({ //链接使用 此方式
                 id : 'edit' + obj.id,
-                title : '编辑学生信息',
-                text : '打开编辑',
-                href : 'form/example.html'
+                title : '编辑新闻',
+                text : '编辑',
+                href : 'form/edit_news.html'
               }),
-              editStr1 = '<span class="grid-command btn-edit" title="编辑学生信息">弹出编辑</span>',
-              delStr = '<span class="grid-command btn-del" title="删除学生信息">删除</span>';//页面操作不需要使用Search.createLink
+              delStr = '<span class="grid-command btn-del" title="删除">删除</span>';//页面操作不需要使用Search.createLink
             return editStr +  editStr1 + delStr;
           }}
         ],
@@ -161,7 +160,6 @@
         tbar : {
           items : [
             {text : '<i class="icon-plus"></i>新建',btnCls : 'button button-small',handler:addFunction},
-            {text : '<i class="icon-edit"></i>编辑',btnCls : 'button button-small',handler:function(){alert('编辑');}},
             {text : '<i class="icon-remove"></i>删除',btnCls : 'button button-small',handler : delFunction}
           ]
         },
@@ -175,8 +173,11 @@
       grid = search.get('grid');
 
     function addFunction(){
-      var newData = {isNew : true}; //标志是新增加的记录
-      editing.add(newData,'name'); //添加记录后，直接编辑
+    	top.topManager.openPage({
+    	    id : 'edit_news',
+    	    href : 'content/news/edit_news.html',
+    	    title : '编辑新闻'
+    	});
     }
 
     //删除操作
