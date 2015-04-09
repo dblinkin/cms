@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Resource>	
+	<!-- 错误码 -->
+	<String Id="error.msg.session.time.out" Msg=""/>
+
+</Resource>
