@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import com.ftd.system.FilePath;
 import com.ftd.system.SysMgr;
+import com.ftd.system.TemplateMgr;
 
 public class InitServlet extends HttpServlet {
 
@@ -24,6 +25,11 @@ public class InitServlet extends HttpServlet {
 
 		if (!SysMgr.getInstance().init(FilePath.FILE_SYSTEM)) {
 			logger.info("cms startup failed. load system config error.");
+			System.exit(0);
+		}
+
+		if (!TemplateMgr.getInstance().init(FilePath.TEMPLATE_PATH)) {
+			logger.info("cms startup failed. load template error.");
 			System.exit(0);
 		}
 

@@ -1,10 +1,6 @@
 package com.ftd.system.user;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import javax.sql.rowset.CachedRowSet;
 
@@ -27,7 +23,7 @@ public class UserDao {
 	}
 
 	public void updatePassword(String password, int id) throws FtdException {
-		String sql = "update user set password=? where id=?";
+		String sql = "update user set password=? where user_id=?";
 		try {
 			client.executeUpdate(sql, MD5Util.getMD5String(password), id);
 		} catch (SQLException e) {
@@ -37,7 +33,7 @@ public class UserDao {
 
 	public User select(String username, String password) {
 		String sql = String.format(
-				"select * from user where usercode='%s' and password='%s'",
+				"select * from user where user_name='%s' and password='%s'",
 				SQLFilter.sql_inj(username),
 				MD5Util.getMD5String(SQLFilter.sql_inj(password)));
 
@@ -47,8 +43,8 @@ public class UserDao {
 			rs = client.executeQuery(sql);
 			if (rs.next()) {
 				User u = new User();
-				u.setUserId(rs.getInt("id"));
-				u.setUsername(rs.getString("usercode"));
+				u.setUserId(rs.getInt("user_id"));
+				u.setUsername(rs.getString("user_name"));
 				return u;
 			}
 		} catch (Exception e) {

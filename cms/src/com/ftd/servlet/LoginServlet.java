@@ -9,28 +9,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+
 import com.ftd.manage.ManagerSession;
 import com.ftd.system.SysMgr;
 import com.ftd.system.user.User;
 import com.ftd.system.user.UserDao;
 import com.ftd.util.StrUtil;
 
-import net.sf.json.JSONObject;
-
-@WebServlet("/managerlogin.do")
+@WebServlet("/manage/managerlogin")
 public class LoginServlet extends HttpServlet {
-	public static int DEFAULT_ERROR_CODE = 1 << 16;
-	public static String DEFAULT_ERROR_MESSAGE = "处理失败";
-
-	public static int CMD_NOT_FOUND_CODE = 1 << 17;
-	public static String CMD_NOT_FOUND_MESSAGE = "无效的请求";
-
-	public static int CMD_ERROR_URL_CODE = 1 << 18;
-	public static String CMD_EOOR_URL_MESSAGE = "错误的URL";
-
-	public static String CMD_PARAM_INVALID = "参数验证未通过";
-	public static String CMD_SESSION_TIME_OUT = "session超时，请重新登录。";
-
 	private static final long serialVersionUID = 8974092876129821086L;
 
 	@Override

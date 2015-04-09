@@ -2,12 +2,10 @@ package com.ftd.system;
 
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
-import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -16,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ftd.servlet.Handler;
+import com.ftd.util.XmlUtil;
 import com.ftd.util.dbclient.DBClient;
 
 public class SysMgr {
@@ -58,7 +57,7 @@ public class SysMgr {
 
 		Element root = document.getRootElement();
 		Element dbconfigElement = root.element("Database");
-		HashMap<String, String> dbkv = getAttribute(dbconfigElement);
+		HashMap<String, String> dbkv = XmlUtil.getAttribute(dbconfigElement);
 
 		String jdbcUrl = dbkv.get("JdbcUrl");
 		String user = dbkv.get("User");
@@ -76,7 +75,7 @@ public class SysMgr {
 
 		List<Element> handlerElements = root.element("Handlers").elements();
 		for (Element handlerElement : handlerElements) {
-			HashMap<String, String> hkv = getAttribute(handlerElement);
+			HashMap<String, String> hkv = XmlUtil.getAttribute(handlerElement);
 
 			Handler h = null;
 			try {
@@ -90,16 +89,6 @@ public class SysMgr {
 		}
 
 		return true;
-	}
-
-	public static HashMap<String, String> getAttribute(Element element) {
-		HashMap<String, String> kv = new HashMap<String, String>();
-		Iterator<Attribute> it = element.attributeIterator();
-		while (it.hasNext()) {
-			Attribute at = it.next();
-			kv.put(at.getName(), at.getValue());
-		}
-		return kv;
 	}
 
 }
