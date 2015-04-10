@@ -24,10 +24,17 @@ public class UserDao {
 
 	public void updatePassword(String password, int id) throws FtdException {
 		String sql = "update user set password=? where user_id=?";
+
+		int affectedRow = 0;
 		try {
-			client.executeUpdate(sql, MD5Util.getMD5String(password), id);
+			affectedRow = client.executeUpdate(sql,
+					MD5Util.getMD5String(password), id);
 		} catch (SQLException e) {
-			throw new FtdException(e);
+			throw new FtdException(e, "db.sql.error");
+		}
+
+		if (affectedRow == 0) {
+			throw new FtdException(null, "user.not.exist");
 		}
 	}
 

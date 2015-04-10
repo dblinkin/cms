@@ -62,6 +62,7 @@ public class StrZipUtil {
 			gzip.close();
 		} catch (IOException e) {
 			// do nothing
+			e.printStackTrace();
 		}
 
 		String result = str;
@@ -69,6 +70,7 @@ public class StrZipUtil {
 			str = out.toString("ISO-8859-1");
 		} catch (UnsupportedEncodingException ue) {
 			// do nothing
+			ue.printStackTrace();
 		}
 		// 使用指定的 charsetName，通过解码字节将缓冲区内容转换为字符串
 		return result;

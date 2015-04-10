@@ -3,42 +3,45 @@ package com.ftd.servlet;
 public class FtdException extends Exception {
 	private static final long serialVersionUID = -5315661972489226997L;
 
-	private int errorCode;
-	private String desc;
+	private Throwable cause;
 
-	public FtdException(Exception e) {
-		super(e);
+	private String errorCodeId;
+
+	private Object[] args;
+
+	public FtdException(Throwable e, String errorCodeId) {
+		super(errorCodeId);
+		this.errorCodeId = errorCodeId;
 	}
 
-	public FtdException(int errorCode) {
-		this.errorCode = errorCode;
+	public FtdException(Throwable e, String errorCodeId, Object... args) {
+		super(errorCodeId);
+		this.errorCodeId = errorCodeId;
+		this.args = args;
 	}
 
-	public FtdException(int errorCode, String desc) {
-		this.errorCode = errorCode;
-		this.desc = desc;
+	public String getErrorCodeId() {
+		return errorCodeId;
 	}
 
-	public FtdException(Exception e, int errorCode, String desc) {
-		super(e);
-		this.errorCode = errorCode;
-		this.desc = desc;
+	public void setErrorCodeId(String errorCodeId) {
+		this.errorCodeId = errorCodeId;
 	}
 
-	public int getErrorCode() {
-		return errorCode;
+	public Object[] getArgs() {
+		return args;
 	}
 
-	public void setErrorCode(int errorCode) {
-		this.errorCode = errorCode;
+	public void setArgs(Object[] args) {
+		this.args = args;
 	}
 
-	public String getDesc() {
-		return desc;
+	public Throwable getCause() {
+		return cause;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setCause(Throwable cause) {
+		this.cause = cause;
 	}
 
 }

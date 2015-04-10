@@ -15,6 +15,8 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ftd.i18n.I18nMgr;
+import com.ftd.i18n.Resource;
 import com.ftd.system.SysMgr;
 
 @WebServlet("*.do")
@@ -41,54 +43,72 @@ public class FtdServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 
+		String lang = request.getParameter("lang");
+		if (lang == null) {
+			lang = SysMgr.getInstance().getDefaultLang();
+		}
+
 		String url = request.getRequestURI();
 
 		int index = url.lastIndexOf("/");
 		String cmd = null;
-		JSONObject json = new JSONObject();
-		if (index > 0) {
+
+		JSONObject result = new JSONObject();
+		do {
+			if (index <= 0) {
+				result.element(Context.RET_CODE, 0x1000);
+				String errFmt = I18nMgr.getInstance().getMsg(lang,
+						Resource.ERROR_CODE_PREFIX + "request.url.error");
+				result.element(Context.RET_MSG, String.format(errFmt, url));
+				logger.error("error request url [{}] !", url);
+				break;
+			}
+
 			cmd = url.substring(index + 1, url.length());
 			Handler handler = SysMgr.getInstance().getHandler(cmd);
-
-			if (handler != null) {
-				logger.info("received request : " + cmd);
-				// 去除 .do = length = 3;
-				cmd = cmd.substring(0, cmd.length() - 3);
-
-				Context ctx = new Context(request, response, cmd);
-				try {
-
-					handler.handle(ctx);
-
-					json.element(Context.RET_CODE, ctx.getRetCode());
-					json.element(Context.RET_MSG, ctx.getRetMsg());
-					json.putAll(ctx.getResult());
-				} catch (FtdException fe) {
-					json.element("retCode", fe.getErrorCode());
-					json.element("retMsg", fe.getDesc());
-					logger.error(ExceptionUtils.getStackTrace(fe));
-				} catch (Exception e) {
-					json.element("retCode", 0);
-					json.element("retMsg", "->" + e.getClass().getName() + ":"
-							+ e.getMessage());
-					logger.error(ExceptionUtils.getStackTrace(e));
-				}
-			} else {
-				json.element("retCode", -1);
-				json.element("retMsg", -9);
-				logger.error("cmd[" + cmd + "] not foud!");
+			if (handler == null) {
+				result.element(Context.RET_CODE, 0x1001);
+				String errFmt = I18nMgr.getInstance().getMsg(lang,
+						Resource.ERROR_CODE_PREFIX + "handler.not.found");
+				result.element(Context.RET_MSG, String.format(errFmt, cmd));
+				logger.error("handler[{}] not found", cmd);
+				break;
 			}
-		} else {
-			json.element("retCode", -1);
-			json.element("retMsg", -9);
-			logger.error("error url [" + url + "] !");
-		}
+
+			logger.info("received request[{}]", cmd);
+			// 去除 .do = length = 3;
+			cmd = cmd.substring(0, cmd.length() - 3);
+			Context ctx = new Context(request, response, cmd);
+
+			try {
+				handler.handle(ctx);
+			} catch (FtdException fe) {
+				result.element(Context.RET_CODE, 0x1002);
+				String errFmt = I18nMgr.getInstance().getMsg(lang,
+						Resource.ERROR_CODE_PREFIX + fe.getErrorCodeId());
+				result.element(Context.RET_MSG,
+						String.format(errFmt, fe.getArgs()));
+
+				logger.error(ExceptionUtils.getStackTrace(fe.getCause()));
+				break;
+			} catch (Exception e) {
+				result.element(Context.RET_CODE, 0x1003);
+				String errFmt = I18nMgr.getInstance().getMsg(lang,
+						Resource.ERROR_CODE_PREFIX + "server.internal.error");
+				result.element(Context.RET_MSG,
+						String.format(errFmt, e.getMessage()));
+
+				logger.error(ExceptionUtils.getStackTrace(e));
+				break;
+			}
+
+		} while (false);
 
 		// 写入结果
 		PrintWriter out = null;
 		try {
 			out = response.getWriter();
-			json.write(out);
+			result.write(out);
 			out.flush();
 		} catch (Exception e) {
 			throw e;
@@ -98,5 +118,4 @@ public class FtdServlet extends HttpServlet {
 		}
 
 	}
-
 }

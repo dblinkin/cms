@@ -23,7 +23,7 @@
   
   <div class="container">
     <div class="row">
-      <form id="J_Form" class="form-horizontal span24" action="manage_news_add.do">
+      <form id="J_Form" class="form-horizontal span24" action="manage_article_preview.do" target="_blank">
         <div class="row">
           <div class="control-group span15">
             <label class="control-label"><s>*</s>新闻标题：</label>
@@ -47,12 +47,13 @@
         </div>
         
         <script type="text/plain" id="myEditor" style="width:1000px;height:240px;">
-    		<p>这里我可以写一些输入提示</p>
+    		<p>请输入新闻内容(新闻标题请在这里重新排版)</p>
 		</script>
         
         <div class="row form-actions actions-bar">
             <div class="span13 offset3 ">
-              <button type="submit" class="button button-primary">保存</button>
+              <button type="submit" class="button button-primary">预览</button>
+              <button id="add" class="button button-primary">保存</button>
               <button type="reset" class="button">重置</button>
             </div>
         </div>
@@ -90,8 +91,13 @@
     
     form.on('beforesubmit',function(){
     	form.setFieldValue("newsContent", UM.getEditor('myEditor').getContent());
+    	form.setFieldValue("ftl", "news.ftl");
     });
   });
+  
+  $("#add").click(function(){
+	  
+  })
 </script>
 
 <body>

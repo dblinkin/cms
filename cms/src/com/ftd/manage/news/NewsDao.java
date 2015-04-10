@@ -6,12 +6,12 @@ import java.util.List;
 
 import javax.sql.rowset.CachedRowSet;
 
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ftd.servlet.FtdException;
 import com.ftd.system.SysMgr;
+import com.ftd.util.StrUtil;
 import com.ftd.util.dbclient.DBClient;
 
 public class NewsDao {
@@ -26,9 +26,9 @@ public class NewsDao {
 		try {
 			dbClient.executeUpdate(sql, news.getNewsType(),
 					news.getNewsTitle(), news.getNewsUrl(), news.getNewsTime(),
-					content);
+					StrUtil.toHexString(content.getBytes()));
 		} catch (Exception e) {
-			throw new FtdException(e);
+			throw new FtdException(e, "db.sql.error");
 		}
 	}
 
@@ -36,7 +36,7 @@ public class NewsDao {
 		List<News> newsList = new ArrayList<News>();
 
 		DBClient dbClient = SysMgr.getInstance().getDbClient();
-		String sql = "select * from news";
+		String sql = "select * from news order by news_time desc";
 
 		CachedRowSet rs = null;
 		try {
@@ -55,14 +55,13 @@ public class NewsDao {
 					newsList.add(news);
 				}
 			}
-		} catch (Exception e) {
-			throw new FtdException(e);
+		} catch (SQLException e) {
+			throw new FtdException(e, "db.sql.error");
 		} finally {
 			if (rs != null)
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					logger.error(ExceptionUtils.getStackTrace(e));
 					// do nothing
 				}
 		}

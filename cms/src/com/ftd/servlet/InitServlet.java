@@ -5,9 +5,9 @@ import javax.servlet.http.HttpServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ftd.system.ContentMgr;
 import com.ftd.system.FilePath;
 import com.ftd.system.SysMgr;
-import com.ftd.system.TemplateMgr;
 
 public class InitServlet extends HttpServlet {
 
@@ -28,8 +28,8 @@ public class InitServlet extends HttpServlet {
 			System.exit(0);
 		}
 
-		if (!TemplateMgr.getInstance().init(FilePath.TEMPLATE_PATH)) {
-			logger.info("cms startup failed. load template error.");
+		if (!ContentMgr.getInstance().init()) {
+			logger.info("cms startup failed. load content error.");
 			System.exit(0);
 		}
 

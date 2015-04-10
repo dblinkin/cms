@@ -19,6 +19,9 @@ import com.ftd.util.dbclient.DBClient;
 
 public class SysMgr {
 
+	// 默认语言
+	private String defaultLang;
+
 	private DBClient dbClient;
 
 	private Map<String, Handler> handlerMap = new HashMap<String, Handler>();
@@ -40,6 +43,10 @@ public class SysMgr {
 
 	public Handler getHandler(String cmd) {
 		return handlerMap.get(cmd);
+	}
+
+	public String getDefaultLang() {
+		return defaultLang;
 	}
 
 	public boolean init(String filePath) {

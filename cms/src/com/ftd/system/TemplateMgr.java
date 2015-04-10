@@ -1,6 +1,7 @@
 package com.ftd.system;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -23,17 +24,8 @@ public class TemplateMgr {
 
 	private Configuration cfg;
 
-	private static TemplateMgr instance = new TemplateMgr();
-
 	private static final Logger logger = LoggerFactory
 			.getLogger(TemplateMgr.class);
-
-	private TemplateMgr() {
-	}
-
-	public static TemplateMgr getInstance() {
-		return instance;
-	}
 
 	public boolean init(String templatePath) {
 		cfg = new Configuration(Configuration.VERSION_2_3_22);
@@ -56,9 +48,13 @@ public class TemplateMgr {
 			out = new FileWriter(new File(filePath), false);
 			template.process(data, out);
 			out.flush();
-		} catch (IOException | TemplateException e) {
-			logger.error(ExceptionUtils.getStackTrace(e));
-			throw new FtdException(e);
+		} catch (IOException ioe) {
+			if (ioe instanceof FileNotFoundException)
+				throw new FtdException(ioe, "file.not.found", templateName);
+			else
+				throw new FtdException(ioe, "file.write.error", templateName);
+		} catch (TemplateException te) {
+			throw new FtdException(te, "template.parse.error", templateName);
 		} finally {
 			if (out != null)
 				try {
@@ -70,14 +66,19 @@ public class TemplateMgr {
 	}
 
 	public void writeResponse(HttpServletResponse response,
-			Map<String, Object> data, String templateName) throws Exception {
+			Map<String, Object> data, String templateName) throws FtdException {
 		try {
 			Template template = cfg.getTemplate(templateName, "UTF-8");
 
 			template.process(data, response.getWriter());
 
-		} catch (IOException | TemplateException e) {
-			throw e;
+		} catch (IOException ioe) {
+			if (ioe instanceof FileNotFoundException)
+				throw new FtdException(ioe, "file.not.found", templateName);
+			else
+				throw new FtdException(ioe, "file.write.error", templateName);
+		} catch (TemplateException te) {
+			throw new FtdException(te, "template.parse.error", templateName);
 		}
 	}
 
