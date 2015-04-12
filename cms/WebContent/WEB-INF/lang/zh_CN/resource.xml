@@ -4,6 +4,6 @@
 	<String Id="error.msg.session.time.out" Msg="您长时间没有活动，请重新登录"/>
 	<String Id="error.msg.request.url.error" Msg="收到一个错误的请求[%1s]"/>
 	<String Id="error.msg.handler.not.found" Msg="处理器没有注册[%1s]"/>
-	<String Id="error.msg.server.internal.error" Msg="服务器异常[%1s]"/>
+	<String Id="error.msg.server.internal.error" Msg="服务器异常"/>
 
 </Resource>

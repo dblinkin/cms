@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -14,11 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tomcat.util.http.fileupload.FileItem;
 
+import com.ftd.system.SysMgr;
+
 public class Context {
 	public final HttpServletRequest request;
 	public final HttpServletResponse response;
 	public final String cmd;
 	public Map<String, Object> paramMap;
+	public Connection connection;
 
 	public static final int DEFAULT_SUCCESS_CODE = 0;
 
@@ -51,6 +56,10 @@ public class Context {
 		this.paramMap = getMultipartParameters(items);
 		this.cmd = (String) paramMap.get("cmd");
 		setOpr();
+	}
+
+	public void setTranction() throws SQLException {
+		this.connection = SysMgr.getInstance().getDbClient().getConnection();
 	}
 
 	private Map<String, Object> getParameters() {

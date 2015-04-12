@@ -33,7 +33,8 @@ public class I18nMgr {
 	public String getMsg(String resourceName, String strId) {
 		Resource resource = langResourceMap.get(resourceName);
 		if (resource == null) {
-			String filePath = FilePath.LANG_RESOURCE_PATH + "/" + resourceName;
+			String filePath = FilePath.LANG_RESOURCE_PATH + "/" + resourceName
+					+ "/resource.xml";
 			resource = loadResource(filePath);
 		}
 

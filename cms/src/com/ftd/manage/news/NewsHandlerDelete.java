@@ -8,8 +8,9 @@ public class NewsHandlerDelete extends Handler {
 
 	@Override
 	public void handle(Context ctx) throws FtdException {
-		// TODO Auto-generated method stub
+		String ids = (String) ctx.paramMap.get("ids");
 
+		System.out.println(ids);
 	}
 
 }

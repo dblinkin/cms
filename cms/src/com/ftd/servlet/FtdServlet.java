@@ -88,8 +88,10 @@ public class FtdServlet extends HttpServlet {
 						Resource.ERROR_CODE_PREFIX + fe.getErrorCodeId());
 				result.element(Context.RET_MSG,
 						String.format(errFmt, fe.getArgs()));
-
-				logger.error(ExceptionUtils.getStackTrace(fe.getCause()));
+				if (fe.getCause() != null)
+					logger.error(ExceptionUtils.getStackTrace(fe.getCause()));
+				else
+					logger.error(ExceptionUtils.getStackTrace(fe));
 				break;
 			} catch (Exception e) {
 				result.element(Context.RET_CODE, 0x1003);
@@ -102,6 +104,7 @@ public class FtdServlet extends HttpServlet {
 				break;
 			}
 
+			result.putAll(ctx.getResult());
 		} while (false);
 
 		// 写入结果

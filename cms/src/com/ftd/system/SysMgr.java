@@ -20,7 +20,7 @@ import com.ftd.util.dbclient.DBClient;
 public class SysMgr {
 
 	// 默认语言
-	private String defaultLang;
+	private String defaultLang = "zh_CN";
 
 	private DBClient dbClient;
 

@@ -1,6 +1,6 @@
 var ori = document.location.origin;
 var projectName = document.location.href.substring(ori.length + 1);
-projectName = project.substring(0, project.indexOf("/"));
+projectName = projectName.substring(0, projectName.indexOf("/"));
 
 
 var _ajax = $.ajax;

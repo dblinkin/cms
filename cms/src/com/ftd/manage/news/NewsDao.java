@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import com.ftd.servlet.FtdException;
 import com.ftd.system.SysMgr;
 import com.ftd.util.StrUtil;
+import com.ftd.util.StrZipUtil;
 import com.ftd.util.dbclient.DBClient;
 
 public class NewsDao {
@@ -24,12 +25,82 @@ public class NewsDao {
 		String sql = "insert into news(news_type, news_title, news_url, news_time, news_content) values(?, ?, ?, ?, ?)";
 
 		try {
-			dbClient.executeUpdate(sql, news.getNewsType(),
-					news.getNewsTitle(), news.getNewsUrl(), news.getNewsTime(),
-					StrUtil.toHexString(content.getBytes()));
-		} catch (Exception e) {
+			dbClient.executeUpdate(
+					sql,
+					news.getNewsType(),
+					news.getNewsTitle(),
+					news.getNewsUrl(),
+					news.getNewsTime(),
+					StrUtil.toHexString(StrZipUtil.compress(content).getBytes()));
+		} catch (SQLException e) {
 			throw new FtdException(e, "db.sql.error");
 		}
+	}
+
+	public static void delete(int newsId) throws FtdException {
+		DBClient dbClient = SysMgr.getInstance().getDbClient();
+
+		String sql = "delete form news where news_id = ?";
+
+		try {
+			dbClient.executeUpdate(sql, newsId);
+		} catch (SQLException e) {
+			throw new FtdException(e, "db.sql.error");
+		}
+	}
+
+	public static void update(News news, String content) throws FtdException {
+		DBClient dbClient = SysMgr.getInstance().getDbClient();
+
+		String sql = "update news set news_type=?, news_title=?, news_url=?, news_time=?, news_content=? where news_id=?";
+
+		try {
+			dbClient.executeUpdate(sql, news.getNewsType(),
+					news.getNewsTitle(), news.getNewsUrl(), news.getNewsTime(),
+					StrUtil.toHexString(content.getBytes()), news.getNewsId());
+		} catch (SQLException e) {
+			throw new FtdException(e, "db.sql.error");
+		}
+	}
+
+	public static News select(int newsId) throws FtdException {
+		DBClient dbClient = SysMgr.getInstance().getDbClient();
+		String sql = "select * from news where news_id=" + newsId;
+
+		CachedRowSet rs = null;
+		try {
+			rs = dbClient.executeQuery(sql);
+
+			if (rs != null) {
+				while (rs.next()) {
+					News news = new News();
+
+					news.setNewsId(rs.getInt("news_id"));
+					news.setNewsType(rs.getInt("news_type"));
+					news.setNewsTitle(rs.getString("news_title"));
+					news.setNewsUrl(rs.getString("news_url"));
+					news.setNewsTime(rs.getString("news_time"));
+
+					String content = rs.getString("news_content");
+					if (content != null) {
+						news.setNewsContent(StrZipUtil.unCompress(content));
+					}
+
+					return news;
+				}
+			}
+		} catch (SQLException e) {
+			throw new FtdException(e, "db.sql.error");
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// do nothing
+				}
+		}
+
+		return null;
 	}
 
 	public static List<News> selectAll() throws FtdException {

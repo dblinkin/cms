@@ -45,7 +45,7 @@ public class NewsMgr {
 			}
 			nl.add(news);
 		}
-		return false;
+		return true;
 	}
 
 	public PageQuery.Result<News> getPageNews(int type, int page, int pageSize) {
