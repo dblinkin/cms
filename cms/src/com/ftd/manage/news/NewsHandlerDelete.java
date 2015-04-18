@@ -8,9 +8,15 @@ public class NewsHandlerDelete extends Handler {
 
 	@Override
 	public void handle(Context ctx) throws FtdException {
-		String ids = (String) ctx.paramMap.get("ids");
+		String[] ids = ctx.request.getParameterValues("ids[]");
 
-		System.out.println(ids);
+		if (ids != null) {
+			for (String idStr : ids) {
+				int id = Integer.parseInt(idStr);
+				NewsDao.delete(id);
+			}
+		}
+
 	}
 
 }

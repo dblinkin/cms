@@ -19,7 +19,18 @@ public class NewsHandlerQuery extends Handler {
 
 		// 不传Id查全部，传Id查单个
 		if (StrUtil.isEmpty(newsIdStr)) {
-			List<News> newsList = NewsDao.selectAll();
+			int newsType = StrUtil.parseInt(
+					(String) ctx.paramMap.get("newsType"), 0);
+
+			String startDate = (String) ctx.paramMap.get("startDate");
+			String endDate = (String) ctx.paramMap.get("endDate");
+
+			int pageNum = StrUtil.parseInt(
+					(String) ctx.paramMap.get("pageNum"), 0);
+			int pageSize = StrUtil.parseInt(
+					(String) ctx.paramMap.get("pageSize"), 0);
+			List<News> newsList = NewsDao.selectAll(newsType, startDate,
+					endDate, pageSize, pageNum);
 
 			JSONArray ja = new JSONArray();
 			for (News news : newsList) {
@@ -28,6 +39,8 @@ public class NewsHandlerQuery extends Handler {
 			}
 
 			ctx.putResult("rows", ja);
+			ctx.putResult("results", NewsDao.selectNum(newsType, startDate,
+					endDate, pageSize, pageNum));
 		} else {
 			int newsId = Integer.parseInt(newsIdStr);
 			News news = NewsDao.select(newsId);

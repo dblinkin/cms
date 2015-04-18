@@ -1,7 +1,5 @@
 package com.ftd.manage.news;
 
-import java.util.UUID;
-
 import net.sf.json.JSONObject;
 
 import com.ftd.servlet.Context;
@@ -9,25 +7,26 @@ import com.ftd.servlet.FtdException;
 import com.ftd.servlet.Handler;
 import com.ftd.system.ContentMgr;
 import com.ftd.system.FilePath;
+import com.ftd.util.StrUtil;
 
 public class NewsHandlerAdd extends Handler {
 
 	@Override
 	public void handle(Context ctx) throws FtdException {
-		// TODO Auto-generated method stub
 		JSONObject obj = JSONObject.fromObject(ctx.paramMap);
-
 		News news = (News) JSONObject.toBean(obj, News.class);
-
-		String content = (String) ctx.paramMap.get("newsContent");
-
-		NewsDao.insert(news, content);
 
 		String deploy = (String) ctx.paramMap.get("deploy");
 		if ("true".equalsIgnoreCase(deploy)) {
-			UUID uuid = UUID.randomUUID();
-			String fileName = FilePath.getArticlePath("news") + uuid.toString()
-					+ ".html";
+			String news_url = FilePath
+					.getFolderPath(FilePath.ARTICLE_NEWS_PATH)
+					+ "/"
+					+ FilePath.getFilename(FilePath.EXT_HTML);
+			news.setNewsUrl(news_url);
+			news.setNewsTime(StrUtil.dateHm(System.currentTimeMillis()));
+
+			String fileName = FilePath.getWritePath(FilePath.ARTICLE_NEWS_PATH)
+					+ "/" + FilePath.getFilename(FilePath.EXT_HTML);
 
 			String templateName = (String) ctx.paramMap.get("ftl");
 			if (templateName == null) {
@@ -36,6 +35,9 @@ public class NewsHandlerAdd extends Handler {
 			ContentMgr.getInstance().getTemplateMgr()
 					.writeFile(fileName, ctx.paramMap, templateName);
 		}
+
+		String content = (String) ctx.paramMap.get("newsContent");
+		NewsDao.insert(news, content);
 	}
 
 }

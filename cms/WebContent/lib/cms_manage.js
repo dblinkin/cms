@@ -18,5 +18,31 @@ $.ajax = function (s) {
         }
     };
     
+    if(!s.type){
+    	$.extend(s, {type : "post"})    	
+    }
+    if(!s.dataType){
+    	$.extend(s, {dataType : "json"})
+    }
     _ajax(s);
+}
+
+/**
+ * 取得url链接中的参数
+ * @param argName
+ * @returns
+ */
+function getHrefParam(argName){
+	var url = document.location.href;
+	var i = url.indexOf("?");
+	if( i == -1)
+		return null;
+	var attr = url.substring(i + 1).split("&");
+	for(var j = 0; j < attr.length; i++){
+		var ai = attr[j].indexOf(argName + "=");
+		if(ai != -1){
+			return attr[j].replace(argName + "=","");
+		}
+	}
+	return null;
 }

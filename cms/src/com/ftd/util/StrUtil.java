@@ -1,5 +1,7 @@
 package com.ftd.util;
 
+import java.text.SimpleDateFormat;
+
 import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 
 public class StrUtil {
@@ -48,6 +50,24 @@ public class StrUtil {
 		}
 
 		return null;
+	}
+
+	public static String parseHexString(String hexStr) {
+		if (hexStr != null) {
+			if (hexStr.charAt(0) == '0' && hexStr.charAt(1) == 'x') {
+				hexStr = hexStr.substring(2);
+			}
+			return new String(HexBin.decode(hexStr));
+		}
+		return null;
+	}
+
+	public static String datetime(long date) {
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+	}
+
+	public static String dateHm(long date) {
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date);
 	}
 
 }

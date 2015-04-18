@@ -51,6 +51,7 @@
             </div>
         </div>
         
+        <input type="hidden" name="newsId" value="0">
         <input type="hidden" name="ftl" value="news.ftl">
       </form>
     </div>
@@ -58,6 +59,7 @@
 
   </div>
   <script type="text/javascript" src="../../assets/js/jquery-1.8.1.min.js"></script>
+  <script type="text/javascript" src="../../../lib/cms_manage.js"></script>
   <script type="text/javascript" src="../../assets/js/bui-min.js"></script>
   <script type="text/javascript" src="../../assets/js/config-min.js"></script>
   
@@ -82,13 +84,37 @@
     form.render();
   });
   
+  var newsId = getHrefParam("newsId");
+  if(newsId){
+	  queryNews(newsId);
+  }
+  
   $("#add").click(function(){
-	  addNews(false);
+	  if(newsId)
+		updateNews(false);
+	  else
+	  	addNews(false);
   })
   
   $("#addAndDeploy").click(function(){
-	  addNews(true);
+	  if(newsId)
+		updateNews(true);
+	  else
+	  	addNews(true);
   })
+  
+  function queryNews(newsId){
+	  $.ajax({
+		  url : "manage_news_query.do?newsId=" + newsId,
+		  success : function(data){
+			  if(data.news){
+				  form.setRecord(data.news);
+				  form.setFieldValue("ftl", "news.ftl");
+				  um.setContent(data.news.newsContent);
+			  }
+		  }
+	  });
+  }
   
   function addNews(isDeploy){
 	  var submitMask = form.get('submitMask');
@@ -107,7 +133,19 @@
 			  if(submitMask && submitMask.hide){
 			        submitMask.hide();
 			  }
-			  alert(data);
+			  BUI.Message.Alert("添加成功！");
+		  }
+	  });
+  }
+  
+  function updateNews(isDeploy){
+	  var data = BUI.merge(true,form.serializeToObject(),{deploy:isDeploy});
+	  
+	  $.ajax({
+		  url : "manage_news_modify.do",
+		  data : data,
+		  success : function(data){
+			  BUI.Message.Alert("保存成功！");
 		  }
 	  });
   }

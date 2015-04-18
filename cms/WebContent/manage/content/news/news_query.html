@@ -25,13 +25,14 @@
             <label class="control-label">新闻类型：</label>
             <div class="controls" >
               <select id="" name="newsType">
+              	<option value="">请选择</option>
                 <option value="1">农交所动态</option>
                 <option value="0">行业动态</option>
               </select>
             </div>
           </div>
           <div class="control-group span9">
-            <label class="control-label">发布时间：</label>
+            <label class="control-label">操作时间：</label>
             <div class="controls">
               <input type="text" class=" calendar" name="startDate"><span> - </span><input name="endDate" type="text" class=" calendar">
             </div>
@@ -68,13 +69,13 @@
           {title:'新闻ID',dataIndex:'newsId',width:80,elCls:'center',},
           {title:'新闻类型',dataIndex:'newsType',width:100,elCls:'center',renderer:BUI.Grid.Format.enumRenderer(enumObj)},
           {title:'新闻标题',dataIndex:'newsTitle',width:200,elCls:'center'},
-          {title:'创建时间',dataIndex:'newsTime',width:60,elCls:'center',renderer:BUI.Grid.Format.dateRenderer},
+          {title:'操作时间',dataIndex:'newsTime',width:60,elCls:'center',renderer:BUI.Grid.Format.dateRenderer},
           {title:'操作',dataIndex:'',width:100,elCls:'center',renderer : function(value,obj){
             var editStr =  Search.createLink({ //链接使用 此方式
-                id : 'edit' + obj.id,
+                id : 'edit' + obj.newsId,
                 title : '编辑新闻',
                 text : '编辑',
-                href : 'form/edit_news.html'
+                href : 'content/news/edit_news.html?newsId=' + obj.newsId
               }),
               delStr = '<span class="grid-command btn-del" title="删除">删除</span>';//页面操作不需要使用Search.createLink
             return editStr + delStr;
@@ -86,8 +87,12 @@
             addUrl : 'manage_news_add.do',
             updateUrl : 'manage_news_update.do',
             removeUrl : 'manage_news_delete.do'
-          }/*,
-          method : 'POST'*/
+          },
+          pageStart : 1,
+          limitParam : 'pageSize', //一页多少条记录
+          pageIndexParam : 'pageNum', //页码
+          startParam : 'startNum', //起始记录
+          method : 'POST'
         },
         autoSync : true //保存数据后，自动更新
       }),
@@ -112,7 +117,7 @@
     	top.topManager.openPage({
     	    id : 'edit_news',
     	    href : 'content/news/edit_news.html',
-    	    title : '编辑新闻'
+    	    title : '添加新闻'
     	});
     }
 

@@ -7,37 +7,17 @@ import java.io.UnsupportedEncodingException;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * 
  * Module: ZipUtil.java Description: 对字符串的压缩及解压 Company: Author: pantp Date: May
  * 6, 2012
  */
 public class StrZipUtil {
-
-	public static void main(String[] args) throws IOException {
-		// 字符串超过一定的长度
-		String str = "ABCdef123中文~!@#$%^&*()_+{};/1111111111111111111111111AAAAAAAAAAAJDLFJDLFJDLFJLDFFFFJEIIIIIIIIIIFJJJJJJJJJJJJALLLLLLLLLLLLLLLLLLLLLL"
-				+ "LLppppppppppppppppppppppppppppppppppppppppp===========================------------------------------iiiiiiiiiiiiiiiiiiiiiii";
-		System.out.println("\n原始的字符串为------->" + str);
-		float len0 = str.length();
-		System.out.println("原始的字符串长度为------->" + len0);
-
-		String ys = compress(str);
-		System.out.println("\n压缩后的字符串为----->" + ys);
-		float len1 = ys.length();
-		System.out.println("压缩后的字符串长度为----->" + len1);
-
-		String jy = unCompress(ys);
-		System.out.println("\n解压缩后的字符串为--->" + jy);
-		System.out.println("解压缩后的字符串长度为--->" + jy.length());
-
-		System.out.println("\n压缩比例为" + len1 / len0);
-
-		// 判断
-		if (str.equals(jy)) {
-			System.out.println("先压缩再解压以后字符串和原来的是一模一样的");
-		}
-	}
+	private static Logger logger = LoggerFactory.getLogger(StrZipUtil.class);
 
 	/**
 	 * 字符串的压缩
@@ -62,12 +42,11 @@ public class StrZipUtil {
 			gzip.close();
 		} catch (IOException e) {
 			// do nothing
-			e.printStackTrace();
 		}
 
 		String result = str;
 		try {
-			str = out.toString("ISO-8859-1");
+			result = out.toString("ISO-8859-1");
 		} catch (UnsupportedEncodingException ue) {
 			// do nothing
 			ue.printStackTrace();
@@ -107,6 +86,7 @@ public class StrZipUtil {
 			gzip = new GZIPInputStream(in);
 		} catch (IOException e) {
 			// do nothing
+			logger.error(ExceptionUtils.getStackTrace(e));
 		}
 		if (gzip == null)
 			return str;
@@ -131,6 +111,19 @@ public class StrZipUtil {
 			// do nothing
 		}
 		return result;
+	}
+
+	public static void main(String[] args) throws IOException {
+
+		String comStr = StrZipUtil.compress("afasfasdfasfasdfas");
+		String src = StrUtil.toHexString(comStr.getBytes());
+		System.out.println(comStr);
+		System.out.println(src);
+
+		String hexStr = StrUtil.parseHexString(src);
+		String strs = StrZipUtil.unCompress(hexStr);
+		System.out.println(hexStr);
+		System.out.println(strs);
 	}
 
 }

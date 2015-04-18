@@ -12,12 +12,14 @@ public class FtdException extends Exception {
 	public FtdException(Throwable e, String errorCodeId) {
 		super(errorCodeId);
 		this.errorCodeId = errorCodeId;
+		this.cause = e;
 	}
 
 	public FtdException(Throwable e, String errorCodeId, Object... args) {
 		super(errorCodeId);
 		this.errorCodeId = errorCodeId;
 		this.args = args;
+		this.cause = e;
 	}
 
 	public String getErrorCodeId() {
