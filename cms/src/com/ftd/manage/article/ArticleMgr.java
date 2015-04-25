@@ -97,7 +97,9 @@ public class ArticleMgr {
 		}
 	}
 
-	public void releaseArticle(ReleaseModel rm) {
+	public void releaseArticle(ReleaseModel rm) throws FtdException {
+		ArticleDao.updateRelease(rm);
+
 		Article a = articleId_article.get(rm.getArticleId());
 		if (a != null) {
 			a.setReleased(true);
