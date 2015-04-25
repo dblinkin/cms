@@ -2,7 +2,7 @@ package com.ftd.manage.release.model;
 
 import java.util.Map;
 
-public class NoticeModel implements ModelProvider {
+public class NewsModel implements ModelProvider {
 
 	@Override
 	public boolean isCached() {
@@ -20,8 +20,8 @@ public class NoticeModel implements ModelProvider {
 	public Map<String, Object> getModel(int articleId, int... channels) {
 		// TODO Auto-generated method stub
 		ArticleIndexModel aim = new ArticleIndexModel();
-		aim.setChannel1Key("notice_channel");
-		return aim.getModel(0, 768);
+		aim.setChannel1Key("news_channel");
+		return aim.getModel(0, 512);
 	}
 
 }
