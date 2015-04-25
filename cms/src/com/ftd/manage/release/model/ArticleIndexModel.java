@@ -12,6 +12,9 @@ import com.ftd.manage.channel.ChannelMgr;
 
 public class ArticleIndexModel implements ModelProvider {
 
+	private String channel1Key = "channel_articleIndex";
+	private String channel2Key = "articleIndex";
+
 	@Override
 	public boolean isCached() {
 		return true;
@@ -26,30 +29,54 @@ public class ArticleIndexModel implements ModelProvider {
 	@Override
 	public Map<String, Object> getModel(int articleId, int... channels) {
 		Map<String, Object> model = new HashMap<String, Object>();
-		if (channels.length == 1) {
-			Channel parentChannel = ChannelMgr.getInstance().getChannel(
-					channels[0]);
-			if (parentChannel != null) {
-				List<ArticleModelAdapter> am = new ArrayList<ArticleIndexModel.ArticleModelAdapter>();
-				for (Channel c : parentChannel.getChildren()) {
-					ArticleModelAdapter ama = new ArticleModelAdapter();
-					ama.setChannel(c);
-					ama.setArticleIndex(ArticleMgr.getInstance().getArticles(
-							c.getChannelId(), 5));
-					am.add(ama);
+
+		for (int i = channels.length; i > 0; i--) {
+			if (channels[i - 1] <= 0)
+				continue;
+
+			Channel c = ChannelMgr.getInstance().getChannel(channels[i - 1]);
+			if (c == null)
+				continue;
+
+			if (c.getParentChannelId() == 0) {
+				Channel parentChannel = ChannelMgr.getInstance().getChannel(
+						c.getChannelId());
+				if (parentChannel != null) {
+					List<ArticleModelAdapter> am = new ArrayList<ArticleIndexModel.ArticleModelAdapter>();
+					for (Channel cc : parentChannel.getChildren()) {
+						ArticleModelAdapter ama = new ArticleModelAdapter();
+						ama.setChannel(cc);
+						ama.setArticleIndex(ArticleMgr.getInstance()
+								.getArticles(cc.getChannelId(), 5));
+						am.add(ama);
+					}
+					model.put(channel1Key, am);
 				}
-				model.put("channel_articleIndex", am);
-			}
-		} else if (channels.length == 2) {
-			Channel c = ChannelMgr.getInstance().getChannel(channels[1]);
-			if (c != null) {
+
+			} else {
 				model.put(
-						"articleIndex",
+						channel2Key,
 						ArticleMgr.getInstance().getArticles(c.getChannelId(),
 								-1));
 			}
 		}
 		return model;
+	}
+
+	public String getChannel1Key() {
+		return channel1Key;
+	}
+
+	public void setChannel1Key(String channel1Key) {
+		this.channel1Key = channel1Key;
+	}
+
+	public String getChannel2Key() {
+		return channel2Key;
+	}
+
+	public void setChannel2Key(String channel2Key) {
+		this.channel2Key = channel2Key;
 	}
 
 	public static class ArticleModelAdapter {

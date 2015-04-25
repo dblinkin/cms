@@ -1,22 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ReleaseConfig>
+	<!-- 默认首页模板 -->
 	<Release Src="MAIN_PAGE" Template="index.ftl" FilenameFormat="/index.html">
 		<Model>com.ftd.manage.release.model.ChannelModel</Model>
-	</Release>
+		<Model>com.ftd.manage.release.model.NoticeModel</Model>
+		<Model>com.ftd.manage.release.model.NewsModel</Model>
+	</Release>	
+	<!-- 默认一级栏目模板 -->
 	<Release Src="FIRST_CHANNEL" Template="first_channel.ftl" FilenameFormat="/article/{first_channel}.html">
 		<Model>com.ftd.manage.release.model.ChannelModel</Model>
+		<Model>com.ftd.manage.release.model.ArticleIndexModel</Model>
 		<AfterRelease>com.ftd.manage.release.check.ChannelAfterRelease</AfterRelease>
 	</Release>
+	<!-- 默认二级栏目模板 -->
 	<Release Src="SECOND_CHANNEL" Template="second_channel.ftl" FilenameFormat="/article/{first_channel}/{second_channel}.html">
 		<Model>com.ftd.manage.release.model.ChannelModel</Model>
+		<Model>com.ftd.manage.release.model.ArticleIndexModel</Model>
 		<AfterRelease>com.ftd.manage.release.check.ChannelAfterRelease</AfterRelease>
 	</Release>
+	<!-- 默认文章页模板 -->
 	<Release Src="ARTICLE" Template="article.ftl" FilenameFormat="/article/{first_channel}/{second_channel}/{yyyy}{mm}{dd}/{rand:6}{time}.html">
 		<Model>com.ftd.manage.release.model.ChannelModel</Model>
 		<Model>com.ftd.manage.release.model.ArticleModel</Model>
 		<AfterRelease>com.ftd.manage.release.check.ArticleAfterRelease</AfterRelease>
 	</Release>
+	
+	<!-- 文章即时预览模板 -->
 	<Release Src="PREVIEW" Template="article.ftl" FilenameFormat="/article/{first_channel}/{second_channel}/{yyyy}{mm}{dd}/{rand:6}{time}.html">
+		<Model>com.ftd.manage.release.model.ChannelModel</Model>
+	</Release>
+	
+	<!-- 用户定义模板  受让项目文章模板 -->
+	<Release Src="USER_DEFINE" Template="article.ftl" FilenameFormat="/article/{first_channel}/{second_channel}/{yyyy}{mm}{dd}/{rand:6}{time}.html">
 		<Model>com.ftd.manage.release.model.ChannelModel</Model>
 	</Release>
 </ReleaseConfig>
