@@ -95,9 +95,8 @@
                 text : '编辑',
                 href : 'article/article_edit.html?articleId=' + obj.articleId
               }),
-              releaseStr = '<i class="icon-upload"></i><span class="grid-command btn-release" title="发布">发布</span>';
               delStr = '<i class="icon-remove"></i><span class="grid-command btn-del" title="删除">删除</span>';//页面操作不需要使用Search.createLink
-            return releaseStr + editStr + delStr;
+            return editStr + delStr;
           }}
         ],
       store = Search.createStore('manage_article.do?opr=query',{
