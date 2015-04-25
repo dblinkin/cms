@@ -224,20 +224,16 @@ padding-left: 3px;
 			  <div class="panel-heading" style="padding:0; border-bottom: none;font-family:'Micro YaHei',微软雅黑;">
         <h3 class="panel-title" id="panel-title" >
 		   <ul class="nav nav-tabs " >
-		   <#list channels as ch1>
-		   <#if ch1.channelId = 768>
-		   <#if ch1.children?size != 0>
-		   <#list ch1.children as ch2>
-		   <#if ch2_index = 0>
-		<li  style="margin-top:0;"; class="active"><a href="#${ch2.channelDesc}" aria-controls="${ch2.channelDesc}" role="tab" data-toggle="pill" style="text-decoration:none;" >${ch2.channelName}</a></li>
+		   <#if notice_channel?size != 0>
+		   <#list notice_channel as ch1>
+		   <#if ch1_index = 0>
+		<li  style="margin-top:0;"; class="active"><a href="#${ch1.channel.channelDesc}" aria-controls="${ch1.channel.channelDesc}" role="tab" data-toggle="pill" style="text-decoration:none;" >${ch1.channel.channelName}</a></li>
 			<#else>
-		<li  style="margin-top:0;";><a href="#${ch2.channelDesc}" aria-controls="${ch2.channelDesc}" role="tab" data-toggle="pill" style="text-decoration:none;" >${ch2.channelName}</a></li>
+		<li  style="margin-top:0;";><a href="#${ch1.channel.channelDesc}" aria-controls="${ch1.channel.channelDesc}" role="tab" data-toggle="pill" style="text-decoration:none;" >${ch1.channel.channelName}</a></li>
 			
 			</#if>
 			</#list>
 			</#if>
-			</#if>
-			</#list>
 				
 			</ul>
 			
@@ -245,122 +241,41 @@ padding-left: 3px;
       </div>
 	  
      <div class="tab-content">
-	 <#list channels as ch1>
-	  <#if ch1.channelId = 768>
-	  
-	  <#if ch1.children?size != 0>
-	  <#list ch1.children as ch2>
-		   <#if ch2_index = 0>
-	 <div role="tabpanel" class="tab-pane active" id="${ch2.channelDesc}">
+	
+	 <#if notice_channel?size != 0>
+	<#list notice_channel as notice>
+	<#if notice_index = 0>
+	 <div role="tabpanel" class="tab-pane active" id="${notice.channel.channelDesc}">
 	 
       <div class="panel-body" style="margin-top:-1em;margin-bottom:0.5em">
 			
 			<ul >
+			<#list notice.articleIndex as  article>
 			<li style="list-style-position:inside;margin-left:-3em;width:28em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">2014-04-15&nbsp;</span>
+				<span style="">${article.releasedTime[0..10]}</span>
 				
-				<a href="#" title="关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务">aa养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务</a>
-				
-				</li>
-				<li style="list-style-position:inside;margin-left:-3em;width:28em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">2014-04-15&nbsp;</span>
-				
-				<a href="#" title="关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务">关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务</a>
+				<a href="${article.articleUrl}" title="${article.articleTitle}">${article.articleTitle}</a>
 				
 				</li>
-				<li style="list-style-position:inside;margin-left:-3em;width:28em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">2014-04-15&nbsp;</span>
-				
-				<a href="#" title="关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务">关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务</a>
-				
-				</li>
-				<li style="list-style-position:inside;margin-left:-3em;width:28em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">2014-04-15&nbsp;</span>
-				
-				<a href="#" title="关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务">关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务</a>
-				
-				</li>
-				<li style="list-style-position:inside;margin-left:-3em;width:28em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">2014-04-15&nbsp;</span>
-				
-				<a href="#" title="关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务">关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务</a>
-				
-				</li><li style="list-style-position:inside;margin-left:-3em;width:28em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">2014-04-15&nbsp;</span>
-				
-				<a href="#" title="关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务">关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务</a>
-				
-				</li><li style="list-style-position:inside;margin-left:-3em;width:28em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">2014-04-15&nbsp;</span>
-				
-				<a href="#" title="关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务">关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务</a>
-				
-				</li>
-				<li style="list-style-position:inside;margin-left:-3em;width:28em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">2014-04-15&nbsp;</span>
-				
-				<a href="#" title="关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务">关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务</a>
-				
-				</li>
-				
+		  </#list>
 			</ul>
 	    </div>
 	
 	</div>
 	<#else>
-	 <div role="tabpanel" class="tab-pane" id="${ch2.channelDesc}">
+	 <div role="tabpanel" class="tab-pane" id="${notice.channel.channelDesc}">
 	 
       <div class="panel-body" style="margin-top:-1em;margin-bottom:0.5em">
 			
 			<ul >
+			<#list notice.articleIndex as  article>
 			<li style="list-style-position:inside;margin-left:-3em;width:28em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">2014-04-15&nbsp;</span>
+				<span style="">${article.releasedTime[0..10]}</span>
 				
-				<a href="#" title="关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务">bb养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务</a>
-				
-				</li>
-				<li style="list-style-position:inside;margin-left:-3em;width:28em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">2014-04-15&nbsp;</span>
-				
-				<a href="#" title="关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务">关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务</a>
+				<a href="${article.articleUrl}" title="${article.articleTitle}">${article.articleTitle}</a>
 				
 				</li>
-				<li style="list-style-position:inside;margin-left:-3em;width:28em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">2014-04-15&nbsp;</span>
-				
-				<a href="#" title="关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务">关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务</a>
-				
-				</li>
-				<li style="list-style-position:inside;margin-left:-3em;width:28em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">2014-04-15&nbsp;</span>
-				
-				<a href="#" title="关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务">关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务</a>
-				
-				</li>
-				<li style="list-style-position:inside;margin-left:-3em;width:28em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">2014-04-15&nbsp;</span>
-				
-				<a href="#" title="关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务">关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务</a>
-				
-				</li><li style="list-style-position:inside;margin-left:-3em;width:28em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">2014-04-15&nbsp;</span>
-				
-				<a href="#" title="关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务">关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务</a>
-				
-				</li>
-				<li style="list-style-position:inside;margin-left:-3em;width:28em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">2014-04-15&nbsp;</span>
-				
-				<a href="#" title="关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务">关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务</a>
-				
-				</li>
-				<li style="list-style-position:inside;margin-left:-3em;width:28em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">2014-04-15&nbsp;</span>
-				
-				<a href="#" title="关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务">关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务</a>
-				
-				</li>
-				
+		  </#list>
 			</ul>
 	    </div>
 	
@@ -368,10 +283,8 @@ padding-left: 3px;
 	
 	</#if>
 	</#list>
-	</#if>
-	</#if>
-	</#list>
 	
+	</#if>
 	
 	</div>
 	
@@ -381,82 +294,83 @@ padding-left: 3px;
 		
 		
     </div>
-	
-	
 	<div class="row" style="margin-top:0.5em;">
 	<div class="col-lg-4 col-md-4 col-sm-5 col-xs-5 col-lg-offset-1 col-md-offset-1" style="padding-right:5px;" >
-		
-           <div class="panel panel-primary">
-			  <div class="panel-heading" style="padding:0;border-bottom:none;font-family:'Micro YaHei',微软雅黑;" >
-        <h3 class="panel-title" id="panel-title">
-		<ul class="nav nav-tabs ">
-				<li style="margin-top:0"; class="active"><a href="#" >热点动态</a></li>
-				
-				<li style="margin-top:0";><a href="#">业内动态</a></li>
-				
-				<li style="margin-top:0";><a href="#">本所动态</a></li>
+		 <div class="panel panel-primary" style="">
+			  <div class="panel-heading" style="padding:0; border-bottom: none;font-family:'Micro YaHei',微软雅黑;">
+        <h3 class="panel-title" id="panel-title" >
+		   <ul class="nav nav-tabs " >
+		   <#if news_channel?size != 0>
+		   <#list news_channel as news>
+		   <#if news_index = 0>
+		<li  style="margin-top:0;"; class="active"><a href="#${news.channel.channelDesc}" aria-controls="${news.channel.channelDesc}" role="tab" data-toggle="pill" style="text-decoration:none;" >${news.channel.channelName}</a></li>
+			<#else>
+		<li  style="margin-top:0;";><a href="#${news.channel.channelDesc}" aria-controls="${news.channel.channelDesc}" role="tab" data-toggle="pill" style="text-decoration:none;" >${news.channel.channelName}</a></li>
 			
+			</#if>
+			</#list>
+			</#if>
 				
 			</ul>
-		</h3>
+			
+			</h3>
       </div>
-     
-      <div class="panel-body"  style="margin-top:-1em; ">
-         
+	  
+     <div class="tab-content">
+	
+	 <#if news_channel?size != 0>
+	<#list news_channel as news>
+	<#if news_index = 0>
+	 <div role="tabpanel" class="tab-pane active" id="${news.channel.channelDesc}">
+	 
+      <div class="panel-body" style="margin-top:-1em;margin-bottom:0.5em">
 			
-         
-			<ul>
-			
-			<li style="list-style-position:inside;margin-left:-3em;width:26em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">2014-04-15&nbsp;</span>
+			<ul >
+			<#list news.articleIndex as  article>
+			<li style="list-style-position:inside;margin-left:-3em;width:28em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+				<span style="">${article.releasedTime[0..10]}</span>
 				
-				<a href="#" title="关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务">关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务</a>
-				
-				</li>
-			<li style="list-style-position:inside;margin-left:-3em;width:26em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">2014-04-15&nbsp;</span>
-				
-				<a href="#" title="关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务">关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务</a>
+				<a href="${article.articleUrl}" title="${article.articleTitle}">${article.articleTitle}</a>
 				
 				</li>
-				<li style="list-style-position:inside;margin-left:-3em;width:26em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">2014-04-15&nbsp;</span>
-				
-				<a href="#" title="关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务">关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务</a>
-				
-				</li>
-				<li style="list-style-position:inside;margin-left:-3em;width:26em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">2014-04-15&nbsp;</span>
-				
-				<a href="#" title="关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务">关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务</a>
-				
-				</li>
-				<li style="list-style-position:inside;margin-left:-3em;width:26em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">2014-04-15&nbsp;</span>
-				
-				<a href="#" title="关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务">关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务</a>
-				
-				</li>
-				<li style="list-style-position:inside;margin-left:-3em;width:26em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">2014-04-15&nbsp;</span>
-				
-				<a href="#" title="关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务">关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务</a>
-				
-				</li>
-				<li style="list-style-position:inside;margin-left:-3em;width:26em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">2014-04-15&nbsp;</span>
-				
-				<a href="#" title="关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务">关注养老产业发展聚焦城乡社会服务关注养老产业发展聚焦城乡社会服务</a>
-				
-				</li>
-				
-				
+		  </#list>
 			</ul>
+	    </div>
+	
+	</div>
+	<#else>
+	 <div role="tabpanel" class="tab-pane" id="${news.channel.channelDesc}">
+	 
+      <div class="panel-body" style="margin-top:-1em;margin-bottom:0.5em">
 			
-		 
+			<ul >
+			<#list news.articleIndex as  article>
+			<li style="list-style-position:inside;margin-left:-3em;width:28em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+				<span style="">${article.releasedTime[0..10]}</span>
+				
+				<a href="${article.articleUrl}" title="${article.articleTitle}">${article.articleTitle}</a>
+				
+				</li>
+		  </#list>
+			</ul>
+	    </div>
+	
 	</div>
+	
+	</#if>
+	</#list>
+	
+	</#if>
+	
 	</div>
-		  </div>
+	
+	
+	</div>
+          
+		</div>
+	
+	
+	
 	
 	<div class="col-lg-6 col-md-6" style="padding-left:5px;" >
 		
