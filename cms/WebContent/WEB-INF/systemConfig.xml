@@ -3,8 +3,15 @@
 	<Database JdbcUrl="jdbc:mysql://127.0.0.1:3306/cms" User="root" Password="root"/>
 	
 	<Handlers>
+		<Handler Req="manage_channel.do" Class="com.ftd.manage.channel.ChannelHandler"/>
+		<Handler Req="manage_query_channel.do" Class="com.ftd.manage.channel.ChannelHandlerQueryFirst"/>
+	
 		<!-- 网页发布前的预览 -->
-		<Handler Req="manage_article_preview.do" Class="com.ftd.manage.PreviewHandler"/>
+		<Handler Req="manage_article_preview.do" Class="com.ftd.manage.release.preview.RealtimePreviewHandler"/>
+		<Handler Req="manage_preview.do" Class="com.ftd.manage.release.preview.PreviewHandler"/>
+		<Handler Req="manage_article.do" Class="com.ftd.manage.article.ArticleHandler"/>
+		
+		<Handler Req="manage_release.do" Class="com.ftd.manage.release.ReleaseHandler"/>
 	
 		<!-- 新闻动态 -->
 		<Handler Req="manage_news_query.do" Class="com.ftd.manage.news.NewsHandlerQuery"/>

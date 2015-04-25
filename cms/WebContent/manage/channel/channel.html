@@ -1,0 +1,200 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <title> 搜索表单</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="../assets/css/dpl-min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/bui-min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/page-min.css" rel="stylesheet" type="text/css" />
+ </head>
+ <body>
+  
+  <div class="container">
+	<div class="search-grid-container">
+      <div id="t1"></div>
+    </div>
+  </div>
+  
+  <div id="content" class="hide">
+    <form id="J_Form" class="form-horizontal">
+      <div class="row">
+        <div class="control-group span15">
+          <label class="control-label"><s>*</s>栏目名称：</label>
+          <div class="controls">
+            <input name="channelName" type="text" data-rules="{required:true}" class="input-normal control-text">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="control-group span15">
+          <label class="control-label"><s>*</s>URL显示名：</label>
+          <div class="controls">
+            <input name="channelDesc" type="text" data-rules="{required:true}" class="input-normal control-text">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+      	<div class="control-group span15">
+          <label class="control-label">父栏目：</label>
+          <div class="controls bui-form-field-select" data-loader="{url:'manage_query_channel.do',property:'items',dataType:'json'}">
+            <input name="parentChannelId" type="hidden" value="0">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+      	<div class="control-group span15">
+          <label class="control-label"><s>*</s>栏目模板：</label>
+          <div class="controls">
+            <select  data-rules="{required:true}"  name="channelTpl" class="input-normal"> 
+              <option value="0">默认模板</option>
+              <option value="1">一级栏目模板</option>
+              <option value="2">二级栏目模板</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+  <script type="text/javascript" src="../assets/js/jquery-1.8.1.min.js"></script>
+  <script type="text/javascript" src="../../lib/cms_manage.js"></script>
+  <script type="text/javascript" src="../assets/js/bui.js"></script>
+  <script type="text/javascript" src="../assets/js/config.js"></script>
+  <script type="text/javascript">
+    BUI.use('common/page');
+  </script>
+<script type="text/javascript">
+BUI.use(['bui/extensions/treegrid','bui/data'],function (TreeGrid, Data) {
+	
+	var editing = new BUI.Grid.Plugins.DialogEditing({
+        contentId : 'content', //设置隐藏的Dialog内容
+        triggerCls : 'btn-edit'
+      });
+
+	/*
+	editing.on("editorshow", function(e, form){
+		var form = this.get('form');
+		var field = form.getField("parentChannelId");
+		field.set("remote", {
+			url : "manage_query_channel.do",
+			dataType : "json",
+			callback :function(data){
+				field.setItems(data.channels);
+			}
+		});
+	});
+	/**/
+	
+	editing.on("accept", function(e, form){
+		var editType = this.get('editType');
+    	if(editType == "add"){
+    		$.ajax({
+    			url : "manage_channel.do?opr=insert",
+    			data : e.record,
+    			success : function(data){
+    				top.topManager.reloadPage();
+    			}
+    		});
+    	}else if(editType == "edit"){
+    		delete e.record.children;
+    		$.ajax({
+    			url : "manage_channel.do?opr=update",
+    			data : e.record,
+    			success : function(data){
+    				top.topManager.reloadPage();
+    			}
+    		});
+    	}
+    });
+      
+	var data = [ 
+      {channelName : '新闻动态',channelDesc : '12',channelId:'256',channelTpl:'tpl',children: 
+    	  [{channelName : '热点动态',channelDesc : 'adasdf',channelId:'257',channelTpl:'tpl2'}]}
+    ];
+	
+	var store = new Data.Store({
+		data : data
+	});
+   
+    var tree = new TreeGrid({
+      render : '#t1',
+      columns : [
+        {title : '栏目名称',dataIndex :'channelName',width:100}, 
+        {title : 'URL显示名',dataIndex :'channelDesc',width:100}, 
+        {title : '栏目ID',dataIndex : 'channelId',width:100},
+        {title : '栏目模板',dataIndex : 'channelTpl',width:100},
+        {title : '操作',width:100, renderer:function(){
+        	var editStr = '<span class="grid-command btn-edit">编辑</span>',
+        		delStr = '<span class="grid-command btn-del" title="删除">删除</span>';
+        	return editStr + delStr;
+        }}
+      ],
+      nodes   : data,
+      tbar : {
+          items : [
+            {text : '<i class="icon-plus"></i>添加',btnCls : 'button button-small',handler:addFunction},
+            {text : '<i class="icon-refresh"></i>刷新',btnCls : 'button button-small',handler : function(){top.topManager.reloadPage();}}
+          ]
+        },
+      forceFit: true,
+      plugins : [editing,BUI.Grid.Plugins.AutoFit] // 插件形式引入多选表格
+    });
+    tree.render();
+    
+    queryData();
+    
+    function addFunction(){
+    	var newData = {channelName :'请输入栏目名称'};
+    	editing.add(newData); //添加记录后，直接编辑
+    }
+
+    //删除操作
+    function delFunction(){
+      var selections = grid.getSelection();
+      delItems(selections);
+    }
+
+    function delItems(items){
+      var ids = [];
+      BUI.each(items,function(item){
+        ids.push(item.channelId);
+      });
+
+      if(ids.length){
+        BUI.Message.Confirm('确认要删除选中的记录么？',function(){
+          $.ajax({
+        	url : "manage_channel.do?opr=delete",
+  			data : {"ids[]": ids},
+  			success : function(data){
+  				queryData();
+  			}
+          });
+        },'question');
+      }
+    }
+    
+ 	//监听事件，删除一条记录
+    tree.on('cellclick',function(ev){
+      var sender = $(ev.domTarget); //点击的Dom
+      if(sender.hasClass('btn-del')){
+        var record = ev.record;
+        delItems([record]);
+      }
+    });
+    
+    function queryData(){
+    	$.ajax({
+    		url : "manage_channel.do?opr=query",
+    		type : "get",
+    		success : function(data){
+    			tree.showData(data.rows);
+    			tree.expandAll();
+    		}
+    	});
+    }
+    
+  });
+</script>
+
+<body>
+</html>  

@@ -5,7 +5,9 @@ import javax.servlet.http.HttpServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ftd.system.ContentMgr;
+import com.ftd.manage.article.ArticleMgr;
+import com.ftd.manage.channel.ChannelMgr;
+import com.ftd.manage.release.ReleaseMgr;
 import com.ftd.system.FilePath;
 import com.ftd.system.SysMgr;
 
@@ -28,8 +30,18 @@ public class InitServlet extends HttpServlet {
 			System.exit(0);
 		}
 
-		if (!ContentMgr.getInstance().init()) {
-			logger.info("cms startup failed. load content error.");
+		if (!ChannelMgr.getInstance().init()) {
+			logger.info("cms startup failed. load channel error.");
+			System.exit(0);
+		}
+
+		if (!ArticleMgr.getInstance().init()) {
+			logger.info("cms startup failed. load article error.");
+			System.exit(0);
+		}
+
+		if (!ReleaseMgr.getInstance().init()) {
+			logger.info("cms startup failed. load release manager error.");
 			System.exit(0);
 		}
 

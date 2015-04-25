@@ -12,11 +12,11 @@ public class Resource {
 		resMap.put(id, msg);
 	}
 
-	public String getMsg(String id, Object... objs) {
+	public String getMsg(String id) {
 		String res = resMap.get(id);
 		if (res == null)
 			res = "";
-		return String.format(res, objs);
+		return res;
 	}
 
 	public String getError(String id) {

@@ -5,7 +5,6 @@ import net.sf.json.JSONObject;
 import com.ftd.servlet.Context;
 import com.ftd.servlet.FtdException;
 import com.ftd.servlet.Handler;
-import com.ftd.system.ContentMgr;
 import com.ftd.system.FilePath;
 import com.ftd.util.StrUtil;
 
@@ -32,8 +31,6 @@ public class NewsHandlerAdd extends Handler {
 			if (templateName == null) {
 				throw new FtdException(null, "file.not.found", templateName);
 			}
-			ContentMgr.getInstance().getTemplateMgr()
-					.writeFile(fileName, ctx.paramMap, templateName);
 		}
 
 		String content = (String) ctx.paramMap.get("newsContent");

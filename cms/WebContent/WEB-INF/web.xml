@@ -14,7 +14,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>ManageAccessFilter</filter-name>
-		<url-pattern>*.doddsda</url-pattern>
+		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
 	
 	

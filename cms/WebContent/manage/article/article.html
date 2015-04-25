@@ -1,0 +1,176 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <title>文章查询</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="../assets/css/dpl-min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/bui-min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/page-min.css" rel="stylesheet" type="text/css" />
+ </head>
+ <body>
+  
+  <div class="container">
+    <div class="row">
+      <form id="searchForm" class="form-horizontal span24">
+        <div class="row">
+          <div class="control-group span8">
+            <label class="control-label">文章类型：</label>
+            <div class="controls bui-form-group-select" data-type="channel">
+	          <select class="input-small" name="channel1Id"><option>一级栏目</option></select>&nbsp;&nbsp;
+	          <select class="input-small" name="channel2Id"><option>二级栏目</option></select>
+	        </div>
+          </div>
+          <div class="control-group span9">
+            <label class="control-label">操作时间：</label>
+            <div class="controls">
+              <input type="text" class=" calendar" name="startDate"><span> - </span><input name="endDate" type="text" class=" calendar">
+            </div>
+          </div>
+          <div class="span3 offset2">
+            <button  type="button" id="btnSearch" class="button button-primary">搜索</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="search-grid-container">
+      <div id="grid"></div>
+    </div>
+
+  </div>
+  
+  <script type="text/javascript" src="../assets/js/jquery-1.8.1.min.js"></script>
+  <script type="text/javascript" src="../../lib/cms_manage.js"></script>
+  <script type="text/javascript" src="../assets/js/bui.js"></script>
+  <script type="text/javascript" src="../assets/js/config.js"></script>
+  <script type="text/javascript">
+    BUI.use('common/page');
+  </script>
+<script type="text/javascript">
+  BUI.use(['common/search','bui/form'],function (Search,Form) {
+	// 自定义类型
+    BUI.Form.Group.Select.addType('channel',{
+   	  proxy : {//加载数据的配置项
+	 	url : 'manage_query_channel.do',
+	    dataType : 'json'
+	  },
+      root : {id : '0'}
+    });
+	
+	$(":input[name='channel1Id']").change(function(){
+		$.ajax({
+			url : 'manage_query_channel.do',
+			data : {id : $(this).val()},
+			success : function(data){
+				var first = $("option:first",":input[name='channel2Id']");
+				$(":input[name='channel2Id']").empty().append(first);	
+				if(data.nodes && data.nodes.length){									
+					$(data.nodes).each(function(i){
+						var str = "<option value='"+data.nodes[i].id + "'>" +data.nodes[i].text +"</option>";
+						$(":input[name='channel2Id']").append(str);
+					});
+				}
+			}
+		});
+	});
+	  
+	
+    var enumObj = {"1":"农交所动态","0":"行业动态"},
+    	enumBoolean = {"true":"是", "false":"否"},
+      editing = new BUI.Grid.Plugins.DialogEditing({
+        contentId : 'content', //设置隐藏的Dialog内容
+        autoSave : true, //添加数据或者修改数据时，自动保存
+        triggerCls : 'btn-edit'
+      }),
+      columns = [
+          {title:'文章ID',dataIndex:'articleId',width:80,elCls:'center',},
+          {title:'文章标题',dataIndex:'articleTitle',width:200,elCls:'center'},
+          {title:'文章来源',dataIndex:'articleSrc',width:100,elCls:'center'},
+          {title:'是否发布',dataIndex:'released',width:60,elCls:'center',renderer:BUI.Grid.Format.enumRenderer(enumBoolean)},
+          {title:'创建时间',dataIndex:'createTime',width:100,elCls:'center',renderer:BUI.Grid.Format.dateRenderer},
+          {title:'发布时间',dataIndex:'releasedTime',width:100,elCls:'center',renderer:BUI.Grid.Format.dateRenderer},
+          {title:'操作',dataIndex:'',width:100,elCls:'center',renderer : function(value,obj){
+            var editStr = "<i class='icon-edit'></i>"+ Search.createLink({ //链接使用 此方式
+                id : 'edit' + obj.articleId,
+                title : '编辑新闻',
+                text : '编辑',
+                href : 'article/article_edit.html?articleId=' + obj.articleId
+              }),
+              releaseStr = '<i class="icon-upload"></i><span class="grid-command btn-release" title="发布">发布</span>';
+              delStr = '<i class="icon-remove"></i><span class="grid-command btn-del" title="删除">删除</span>';//页面操作不需要使用Search.createLink
+            return releaseStr + editStr + delStr;
+          }}
+        ],
+      store = Search.createStore('manage_article.do?opr=query',{
+        proxy : {
+          save : { //也可以是一个字符串，那么增删改，都会往那么路径提交数据，同时附加参数saveType
+            addUrl : 'manage_article.do?opr=insert',
+            updateUrl : 'manage_article.do?opr=update',
+            removeUrl : 'manage_article.do?opr=delete'
+          },
+          pageStart : 1,
+          limitParam : 'pageSize', //一页多少条记录
+          pageIndexParam : 'pageNum', //页码
+          startParam : 'startNum', //起始记录
+          method : 'POST'
+        },
+        autoSync : true //保存数据后，自动更新
+      }),
+      gridCfg = Search.createGridCfg(columns,{
+        tbar : {
+          items : [
+            {text : '<i class="icon-plus"></i>新建',btnCls : 'button button-small',handler:addFunction},
+            {text : '<i class="icon-remove"></i>删除',btnCls : 'button button-small',handler : delFunction},
+            {text : '<i class="icon-refresh"></i>刷新',btnCls : 'button button-small',handler : function(){top.topManager.reloadPage();}}
+          ]
+        },
+        forceFit: true,
+        plugins : [editing,BUI.Grid.Plugins.CheckSelection,BUI.Grid.Plugins.AutoFit] // 插件形式引入多选表格
+      });
+
+    var  search = new Search({
+        store : store,
+        gridCfg : gridCfg
+      }),
+      grid = search.get('grid');
+
+    function addFunction(){
+    	top.topManager.openPage({
+    	    id : 'edit_article',
+    	    href : 'article/article_edit.html',
+    	    title : '添加新闻'
+    	});
+    }
+
+    //删除操作
+    function delFunction(){
+      var selections = grid.getSelection();
+      delItems(selections);
+    }
+
+    function delItems(items){
+      var ids = [];
+      BUI.each(items,function(item){
+        ids.push(item.articleId);
+      });
+
+      if(ids.length){
+        BUI.Message.Confirm('确认要删除选中的记录么？',function(){
+          store.save('remove',{ids : ids});
+        },'question');
+      }
+    }
+
+    //监听事件，删除一条记录
+    grid.on('cellclick',function(ev){
+      var sender = $(ev.domTarget); //点击的Dom
+      if(sender.hasClass('btn-del')){
+        var record = ev.record;
+        delItems([record]);
+      }
+    });
+    /**/
+  });
+</script>
+
+<body>
+</html>  

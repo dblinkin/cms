@@ -8,10 +8,22 @@ $.ajax = function (s) {
     var old = s.success;
     
     s.success = function (data, textStatus, jqXHR) {
-        if (data && data.retCode && data.retCode == 0x101) {
-            alert("timeout");
-            window.location.href = "/" + projectName + "/manage/login.html";
-            return;
+        if (data && data.retCode) {
+        	if(data.retCode == 0x101){
+        		BUI.Message.Alert('您长时间未操作，请重新登录','error');
+        		
+        		var w = window;
+        		while(w.parent != w){
+        			w = w.parent;
+        		}
+        		
+                w.location.href = "/manage/login.html";
+                return;
+        	}else if(data.retCode != 0){
+        		BUI.Message.Alert(data.retMsg,'error');
+        		return;
+        	}
+        	
         }
         if (old) {
             old(data, textStatus, jqXHR);

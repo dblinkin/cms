@@ -97,14 +97,11 @@
     <script>
 $(function(){
 	$("#loginForm").submit(function(){
-		console.log($(this));
-		console.log($("#loginForm").serialize());
-		
 		$.ajax({
 			url : "managerlogin?opr=login",
 			type : "post",
 			dataType:"json",
-			data : {username : $("#username").val(), password : $("#password").val()},
+			data : {username : $("#username").val(), password : $("#password").val(), lang:"zh_CN"},
 			success : function(data){
 				if(data.retCode == 0)
 					window.location.href = "main.html";

@@ -18,7 +18,13 @@ public class FilePath {
 
 	public static final String EXT_HTML = ".html";
 
+	public static final String IMAGE_UPLOAD_PATH = ARTICLE_PATH + "/image";
+
+	public static String ROOT_PATH;
+
 	public static String FILE_SYSTEM = "/WEB-INF/systemConfig.xml";
+
+	public static String RELEASE_CONFIG_PATH = "/WEB-INF/release.xml";
 
 	public static String LANG_RESOURCE_PATH = "/WEB-INF/lang";
 
@@ -26,11 +32,16 @@ public class FilePath {
 
 	public static String ARTICLE_WRITE_PATH = ARTICLE_PATH;
 
+	public static String IMAGE_UPLOAD_REALPATH;
+
 	public static void initRealPath(ServletContext ctx) {
+		ROOT_PATH = ctx.getRealPath("/");
 		FILE_SYSTEM = ctx.getRealPath(FILE_SYSTEM);
+		RELEASE_CONFIG_PATH = ctx.getRealPath(RELEASE_CONFIG_PATH);
 		LANG_RESOURCE_PATH = ctx.getRealPath(LANG_RESOURCE_PATH);
 		TEMPLATE_PATH = ctx.getRealPath(TEMPLATE_PATH);
 		ARTICLE_WRITE_PATH = ctx.getRealPath(ARTICLE_PATH);
+		IMAGE_UPLOAD_REALPATH = ctx.getRealPath(IMAGE_UPLOAD_PATH);
 	}
 
 	public static String getFolderPath(String articleType) {

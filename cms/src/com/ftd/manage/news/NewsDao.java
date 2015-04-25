@@ -1,5 +1,6 @@
 package com.ftd.manage.news;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +85,11 @@ public class NewsDao {
 					news.setNewsType(rs.getInt("news_type"));
 					news.setNewsTitle(rs.getString("news_title"));
 					news.setNewsUrl(rs.getString("news_url"));
-					news.setNewsTime(rs.getString("news_time"));
+
+					Date d = rs.getDate("news_time");
+					if (d != null) {
+						news.setNewsTime(StrUtil.dateHm(d.getTime()));
+					}
 
 					byte[] content = rs.getBytes("news_content");
 					if (content != null) {
@@ -165,7 +170,10 @@ public class NewsDao {
 					news.setNewsType(rs.getInt("news_type"));
 					news.setNewsTitle(rs.getString("news_title"));
 					news.setNewsUrl(rs.getString("news_url"));
-					news.setNewsTime(rs.getString("news_time"));
+					Date d = rs.getDate("news_time");
+					if (d != null) {
+						news.setNewsTime(StrUtil.dateHm(d.getTime()));
+					}
 
 					newsList.add(news);
 				}

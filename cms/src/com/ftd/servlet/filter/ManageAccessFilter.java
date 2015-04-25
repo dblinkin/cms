@@ -16,6 +16,8 @@ import net.sf.json.JSONObject;
 import com.ftd.i18n.I18nMgr;
 import com.ftd.manage.ManagerSession;
 import com.ftd.servlet.Context;
+import com.ftd.system.SysMgr;
+import com.ftd.util.StrUtil;
 
 public class ManageAccessFilter implements Filter {
 
@@ -33,7 +35,8 @@ public class ManageAccessFilter implements Filter {
 		if (managerSession != null) {
 			chain.doFilter(request, response);
 		} else {
-			String lang = (String) req.getAttribute("lang");
+			String lang = StrUtil.parseStr((String) req.getAttribute("lang"),
+					SysMgr.getInstance().getDefaultLang());
 
 			String errStr = I18nMgr.getInstance().getMsg(lang,
 					"msg.error.session.time.out");
@@ -43,7 +46,8 @@ public class ManageAccessFilter implements Filter {
 			result.element(Context.RET_CODE, 0x101);
 			result.element(Context.RET_MSG, errStr);
 
-			result.write(resp.getWriter());
+			resp.getWriter().write(result.toString());
+			resp.getWriter().flush();
 		}
 
 	}

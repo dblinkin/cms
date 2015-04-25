@@ -1,6 +1,8 @@
 package com.ftd.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 
@@ -68,6 +70,21 @@ public class StrUtil {
 
 	public static String dateHm(long date) {
 		return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date);
+	}
+
+	public static long parseDatetime(String dateTime, long defaultValue) {
+		if (StrUtil.isEmpty(dateTime))
+			return defaultValue;
+		long value = defaultValue;
+		Date d = null;
+		try {
+			d = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateTime);
+		} catch (ParseException e) {
+			// do nothing
+		}
+		if (d != null)
+			value = d.getTime();
+		return value;
 	}
 
 }
