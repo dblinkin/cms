@@ -96,6 +96,14 @@ padding-left: 3px;
 	min-width:120px;
 }
 
+.tjxmtdsize{width:236px; height:150px;}
+.tjxmimg{width:219px; height:150px; margin:10px 17px 8px 0;border:0px solid #bababa; }
+.tjxmline{font-size:14px;font-family:"微软雅黑";height:30px; line-height:30px;padding:0;}
+a.tjxmdesc:link{font-size:14px;font-family:"微软雅黑";text-decoration:none;color:#000;}
+a.tjxmdesc:visited{font-size:14px;font-family:"微软雅黑";text-decoration:none;color:#000; }
+a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;color:#000; }
+
+
 </style>
   </head>
 <!--
@@ -247,15 +255,22 @@ padding-left: 3px;
 	<#if notice_index = 0>
 	 <div role="tabpanel" class="tab-pane active" id="${notice.channel.channelDesc}">
 	 
-      <div class="panel-body" style="margin-top:-1em;margin-bottom:0.5em">
+      <div class="panel-body" style="margin-top:-1em;margin-left:-2em;margin-bottom:0.5em;position:relative;height:18.3em;overflow: hidden;">
 			
 			<ul >
 			<#list notice.articleIndex as  article>
-			<li style="list-style-position:inside;margin-left:-3em;width:28em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">${article.releasedTime[0..10]}</span>
+			<li style="width:24em;margin-top:1.5em;"  >
 				
-				<a href="${article.articleUrl}" title="${article.articleTitle}">${article.articleTitle}</a>
 				
+				<a href="${article.articleUrl}" target="_blank" title="${article.articleTitle}">
+
+					
+					   
+                 ${article.articleTitle}
+
+
+				</a>
+				<span style="right:0.5em;position:absolute;">${article.releasedTime[0..10]}</span>
 				</li>
 		  </#list>
 			</ul>
@@ -263,24 +278,30 @@ padding-left: 3px;
 	
 	</div>
 	<#else>
-	 <div role="tabpanel" class="tab-pane" id="${notice.channel.channelDesc}">
+	<div role="tabpanel" class="tab-pane" id="${notice.channel.channelDesc}">
 	 
-      <div class="panel-body" style="margin-top:-1em;margin-bottom:0.5em">
+      <div class="panel-body" style="margin-top:-1em;margin-left:-2em;margin-bottom:0.5em;position:relative;height:18.3em;overflow: hidden;">
 			
 			<ul >
 			<#list notice.articleIndex as  article>
-			<li style="list-style-position:inside;margin-left:-3em;width:28em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">${article.releasedTime[0..10]}</span>
+			<li style="width:24em;margin-top:1.5em;">
 				
-				<a href="${article.articleUrl}" title="${article.articleTitle}">${article.articleTitle}</a>
 				
+				<a href="${article.articleUrl}" target="_blank" title="${article.articleTitle}">
+
+					
+						${article.articleTitle}
+
+				
+
+				</a>
+				<span style="right:0.5em;position:absolute;">${article.releasedTime[0..10]}</span>
 				</li>
 		  </#list>
 			</ul>
 	    </div>
 	
 	</div>
-	
 	</#if>
 	</#list>
 	
@@ -323,15 +344,15 @@ padding-left: 3px;
 	<#if news_index = 0>
 	 <div role="tabpanel" class="tab-pane active" id="${news.channel.channelDesc}">
 	 
-      <div class="panel-body" style="margin-top:-1em;margin-bottom:0.5em">
+      <div class="panel-body" style="margin-top:-1em;margin-left:-2em;margin-bottom:0.5em;position:relative;height:16em;overflow: hidden;">
 			
 			<ul >
 			<#list news.articleIndex as  article>
-			<li style="list-style-position:inside;margin-left:-3em;width:28em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">${article.releasedTime[0..10]}</span>
+			<li style="width:22em;margin-top:1em;">
 				
-				<a href="${article.articleUrl}" title="${article.articleTitle}">${article.articleTitle}</a>
 				
+				<a href="${article.articleUrl}" target="_blank" title="${article.articleTitle}">${article.articleTitle}</a>
+				<span style="right:0.5em;position:absolute;">${article.releasedTime[0..10]}</span>
 				</li>
 		  </#list>
 			</ul>
@@ -339,17 +360,17 @@ padding-left: 3px;
 	
 	</div>
 	<#else>
-	 <div role="tabpanel" class="tab-pane" id="${news.channel.channelDesc}">
+		 <div role="tabpanel" class="tab-pane" id="${news.channel.channelDesc}">
 	 
-      <div class="panel-body" style="margin-top:-1em;margin-bottom:0.5em">
+      <div class="panel-body" style="margin-top:-1em;margin-left:-2em;margin-bottom:0.5em;position:relative;height:16em;overflow: hidden;">
 			
 			<ul >
 			<#list news.articleIndex as  article>
-			<li style="list-style-position:inside;margin-left:-3em;width:28em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-				<span style="">${article.releasedTime[0..10]}</span>
+			<li style="width:22em;margin-top:1em;">
 				
-				<a href="${article.articleUrl}" title="${article.articleTitle}">${article.articleTitle}</a>
 				
+				<a href="${article.articleUrl}" target="_blank" title="${article.articleTitle}">${article.articleTitle}</a>
+				<span style="right:0.5em;position:absolute;">${article.releasedTime[0..10]}</span>
 				</li>
 		  </#list>
 			</ul>
@@ -451,10 +472,96 @@ padding-left: 3px;
         <h3 class="panel-title" id="panel-title">推荐项目<a class="anchorjs-link" href="#panel-title"><span class="anchorjs-icon"></span></a></h3>
       </div>
 	
-			<div style="text-align:center">
+		<div style="text-align:center;margin:0 auto;">
 			
 			
- <iframe src="page/recmdProject.html" width="1000" height="215" frameborder="0" style="margin:0 auto;"scrolling="no" ></iframe>
+ <div id="demozt" style="overflow:hidden; width:1000px;border:0;margin-left: 3em; ">
+  <table cellpadding="0" cellspacing="0" border="0" >
+    <tr>
+      <td id="demozt1" align="center">
+   <table cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<!--这里放组件 -->
+<td>
+   <td align="center" valign="top">
+<table border="0" cellpadding="0" cellspacing="0" style="text-align: center;">
+<tr>
+<td class="tjxmtdsize"><a title="陆良某镇2万平米厂房" target="_blank" href=""><img src="/image/r1.jpg" class="tjxmimg"></a></td>+00
+</tr>
+<tr>
+<td valign="top" class="tjxmline"><a title="陆良某镇2万平米厂房" target="_blank" href="" class="tjxmdesc">陆良某镇2万平米厂房</a></td>
+</tr>
+</table>
+</td>
+
+<td align="center" valign="top">
+<table border="0" cellpadding="0" cellspacing="0" style="text-align: center;">
+<tr>
+<td class="tjxmtdsize"><a title="陆良某张山营镇200亩荒山" target="_blank" href=""><img src="/image/r2.jpg" class="tjxmimg"></a></td>
+</tr>
+<tr>
+<td valign="top" class="tjxmline"><a title="陆良某张山营镇200亩荒山" target="_blank" href="" class="tjxmdesc">陆良某张山营镇200亩荒山</a></td>
+</tr>
+</table>
+</td>
+
+
+<td align="center" valign="top">
+<table border="0" cellpadding="0" cellspacing="0" style="text-align: center;">
+<tr>
+<td class="tjxmtdsize"><a title="陆良某镇200亩山林" target="_blank" href=""><img src="/image/r3.jpg" class="tjxmimg"></a></td>
+</tr>
+<tr>
+<td valign="top" class="tjxmline"><a title="陆良某镇200亩山林" target="_blank" href="" class="tjxmdesc">陆良某镇200亩山林</a></td>
+</tr>
+</table>
+</td>
+
+
+<td align="center" valign="top">
+<table border="0" cellpadding="0" cellspacing="0" style="text-align: center;">
+<tr>
+<td class="tjxmtdsize"><a title="陆良某镇200亩果园" target="_blank" href=""><img src="/image/r4.jpg" class="tjxmimg"></a></td>
+</tr>
+<tr>
+<td valign="top" class="tjxmline"><a title="陆良某镇200亩果园" target="_blank" href="" class="tjxmdesc">陆良某镇200亩果园</a></td>
+</tr>
+</table>
+</td>
+
+
+<td align="center" valign="top">
+<table border="0" cellpadding="0" cellspacing="0" style="text-align: center;">
+<tr>
+<td class="tjxmtdsize"><a title="陆良某镇200亩果园" target="_blank" href=""><img src="/image/r5.jpg" class="tjxmimg"></a></td>
+</tr>
+<tr>
+<td valign="top" class="tjxmline"><a title="陆良某镇200亩果园" target="_blank" href="" class="tjxmdesc">陆良某镇200亩果园</a></td>
+</tr>
+</table>
+</td>
+
+
+<td align="center" valign="top">
+<table border="0" cellpadding="0" cellspacing="0" style="text-align: center;">
+<tr>
+<td class="tjxmtdsize"><a title="陆良某镇200亩果园" target="_blank" href=""><img src="/image/r5.jpg" class="tjxmimg"></a></td>
+</tr>
+<tr>
+<td valign="top" class="tjxmline"><a title="陆良某镇200亩果园" target="_blank" href="" class="tjxmdesc">陆良某镇200亩果园</a></td>
+</tr>
+</table>
+</td>
+
+
+</td>
+</tr>
+</table>
+</td>
+      <td id="demozt2" width="0"></td>
+    </tr>
+  </table>
+</div>
 </div>
 	</div>
 	</div>
@@ -648,7 +755,23 @@ padding-left: 3px;
     $(document).off('click.bs.dropdown.data-api');
 });
 	</script>
-	
+	<script type="text/javascript">
+<!--
+  var speed=30//速度数值越大速度越慢
+  document.getElementById("demozt2").innerHTML=document.getElementById("demozt1").innerHTML
+  function Marquee(){
+  if(document.getElementById("demozt2").offsetWidth-document.getElementById("demozt").scrollLeft<=0)
+  document.getElementById("demozt").scrollLeft-=document.getElementById("demozt1").offsetWidth
+  else{
+  document.getElementById("demozt").scrollLeft++
+  }
+  }
+  var MyMar=setInterval(Marquee,speed)
+  document.getElementById("demozt").onmouseover=function() {clearInterval(MyMar)}
+  document.getElementById("demozt").onmouseout=function() {MyMar=setInterval(Marquee,speed)}
+      
+-->
+</script>
 	
   </body>
 </html>
