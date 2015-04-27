@@ -22,6 +22,8 @@ public class SysMgr {
 
 	// 默认首页栏目
 	private int mainPageChannel;
+	//
+	private int articleIndexNum;
 	// 默认语言
 	private String defaultLang;
 
@@ -54,6 +56,10 @@ public class SysMgr {
 
 	public int getMainPageChannel() {
 		return mainPageChannel;
+	}
+
+	public int getArticleIndexNum() {
+		return articleIndexNum;
 	}
 
 	public boolean init(String filePath) {
@@ -108,6 +114,10 @@ public class SysMgr {
 
 		Element langElement = root.element("Lang");
 		this.defaultLang = StrUtil.parseStr(langElement.getTextTrim(), "zh_CN");
+
+		Element articleIndexNumElement = root.element("ArticleIndexNum");
+		this.articleIndexNum = StrUtil.parseInt(
+				articleIndexNumElement.getTextTrim(), 6);
 
 		return true;
 	}

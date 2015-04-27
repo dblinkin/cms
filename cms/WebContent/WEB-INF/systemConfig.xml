@@ -6,6 +6,8 @@
 	<MainPageChannel>256</MainPageChannel>
 	<Lang>zh_CN</Lang>
 	
+	<ArticleIndexNum>6</ArticleIndexNum><!-- 一级栏目文章索引数目 -->
+	
 	<Handlers>
 		<Handler Req="manage_channel.do" Class="com.ftd.manage.channel.ChannelHandler"/>
 		<Handler Req="manage_query_channel.do" Class="com.ftd.manage.channel.ChannelHandlerQueryFirst"/>
