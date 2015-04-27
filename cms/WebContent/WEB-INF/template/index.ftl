@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
-
+	<meta name="baidu-site-verification" content="hhbgjRtbzj" />
     <title>陆良农村产权交易所</title>
 
     <!-- Bootstrap core CSS -->
