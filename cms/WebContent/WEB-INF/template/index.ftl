@@ -152,7 +152,7 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
                            <li class="dropdown " >
 										
 										
-										<a  href="${ch1.channelUrl?if_exists}" >
+										<a  href="${ch1.channelUrl?if_exists}" target="_blank">
 											${ch1.channelName} 
 											<#if ch1.children?size != 0>
 											<span class="caret"></span>
@@ -164,7 +164,7 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
 										<ul style="margin-left:-1.5em;">
 											<#list ch1.children as ch2>
 											
-											<li><a href="${ch2.channelUrl?if_exists}" >${ch2.channelName}</a></li>
+											<li><a href="${ch2.channelUrl?if_exists}" target="_blank">${ch2.channelName}</a></li>
 											
 											</#list>
 										</ul>
@@ -276,7 +276,7 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
                  ${article.articleTitle}
 
 
-				</a> 
+				</a>
 				<span style="right:.5em;position:absolute;">${article.releasedTime[0..10]}</span>
 				</li>
 		  </#list>
