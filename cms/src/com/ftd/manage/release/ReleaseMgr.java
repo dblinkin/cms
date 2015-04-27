@@ -62,6 +62,10 @@ public class ReleaseMgr {
 		return true;
 	}
 
+	public Release getRelease(String src) {
+		return releaseSrc_release.get(src);
+	}
+
 	/**
 	 * 发布一个网页
 	 * 
@@ -88,8 +92,7 @@ public class ReleaseMgr {
 		}
 
 		// 得到文件名
-		String filename = PathFormat.parse(
-				PathFormat.format(r.getFilenameFormat()), channelIds);
+		String filename = getReleaseFilename(releaseSrc, channelIds);
 		int i = filename.lastIndexOf("/");
 		if (i > 0) {
 			String dirStr = FilePath.ROOT_PATH + filename.substring(0, i);
@@ -117,6 +120,17 @@ public class ReleaseMgr {
 		for (AfterRelease ar : r.getAfterReleases()) {
 			ar.afterRelease(rm);
 		}
+
+	}
+
+	public String getReleaseFilename(String src, int... channelIds) {
+		String filename = null;
+		Release r = releaseSrc_release.get(src);
+		if (r != null) {
+			filename = PathFormat.parse(
+					PathFormat.format(r.getFilenameFormat()), channelIds);
+		}
+		return filename;
 
 	}
 

@@ -20,13 +20,14 @@ public class ChannelDao {
 			.getLogger(ChannelDao.class);
 
 	public static void insert(Channel c) throws FtdException {
-		String sql = "insert into channel values(?,?,?,?,?,?)";
+		String sql = "insert into channel values(?,?,?,?,?,?,?)";
 		DBClient dbClient = SysMgr.getInstance().getDbClient();
 
 		try {
 			dbClient.executeUpdate(sql, c.getChannelId(),
 					c.getParentChannelId(), c.getChannelName(),
-					c.getChannelDesc(), c.getChannelUrl(), c.getChannelTpl());
+					c.getChannelDesc(), c.getChannelUrl(), c.getIsNav(),
+					c.getChannelTpl());
 		} catch (SQLException e) {
 			throw new FtdException(e, "db.sql.error");
 		}
@@ -43,12 +44,12 @@ public class ChannelDao {
 	}
 
 	public static void update(Channel c) throws FtdException {
-		String sql = "update channel set parent_channel_id=?,channel_name=?,channel_desc=?,channel_url=?,channel_tpl=? where channel_id=?";
+		String sql = "update channel set parent_channel_id=?,channel_name=?,channel_desc=?,channel_url=?,channel_tpl=?,is_nav=? where channel_id=?";
 		DBClient dbClient = SysMgr.getInstance().getDbClient();
 		try {
 			dbClient.executeUpdate(sql, c.getParentChannelId(),
 					c.getChannelName(), c.getChannelDesc(), c.getChannelUrl(),
-					c.getChannelTpl(), c.getChannelId());
+					c.getChannelTpl(), c.getChannelId(), c.getIsNav());
 		} catch (SQLException e) {
 			throw new FtdException(e, "db.sql.error");
 		}
@@ -83,6 +84,7 @@ public class ChannelDao {
 					c.setChannelDesc(rs.getString("channel_desc"));
 					c.setChannelUrl(rs.getString("channel_url"));
 					c.setChannelTpl(rs.getString("channel_tpl"));
+					c.setIsNav(rs.getInt("is_nav"));
 					channels.add(c);
 				}
 			}

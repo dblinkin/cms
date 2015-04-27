@@ -68,6 +68,10 @@ public class ArticleMgr {
 		return result;
 	}
 
+	public List<Article> getArticleAll() {
+		return new ArrayList<Article>(articles);
+	}
+
 	public Article getArticle(int articleId) {
 		return articleId_article.get(articleId);
 	}

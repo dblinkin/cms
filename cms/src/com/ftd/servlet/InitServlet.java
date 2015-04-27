@@ -30,6 +30,11 @@ public class InitServlet extends HttpServlet {
 			System.exit(0);
 		}
 
+		if (!ReleaseMgr.getInstance().init()) {
+			logger.info("cms startup failed. load release manager error.");
+			System.exit(0);
+		}
+
 		if (!ChannelMgr.getInstance().init()) {
 			logger.info("cms startup failed. load channel error.");
 			System.exit(0);
@@ -37,11 +42,6 @@ public class InitServlet extends HttpServlet {
 
 		if (!ArticleMgr.getInstance().init()) {
 			logger.info("cms startup failed. load article error.");
-			System.exit(0);
-		}
-
-		if (!ReleaseMgr.getInstance().init()) {
-			logger.info("cms startup failed. load release manager error.");
 			System.exit(0);
 		}
 

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <System>
-	<!-- <Database JdbcUrl="jdbc:mysql://127.0.0.1:3306/cms" User="root" Password="root"/> -->
-	<Database JdbcUrl="jdbc:mysql://192.168.1.101:3306/cms" User="lvlv" Password="123456"/>
+	 <Database JdbcUrl="jdbc:mysql://123.57.207.129:3306/cms" User="root" Password="root"/>
+	<!--<Database JdbcUrl="jdbc:mysql://192.168.1.101:3306/cms" User="lvlv" Password="123456"/> -->
+	
+	<MainPageChannel>256</MainPageChannel>
+	<Lang>zh_CN</Lang>
 	
 	<Handlers>
 		<Handler Req="manage_channel.do" Class="com.ftd.manage.channel.ChannelHandler"/>
@@ -13,9 +16,13 @@
 		<Handler Req="manage_article.do" Class="com.ftd.manage.article.ArticleHandler"/>
 		
 		<Handler Req="manage_release.do" Class="com.ftd.manage.release.ReleaseHandler"/>
+		<Handler Req="manage_release_all.do" Class="com.ftd.manage.release.ReleaseAllHandler"/>
 	
-		<!-- 新闻动态 -->
-		<Handler Req="manage_news_query.do" Class="com.ftd.manage.news.NewsHandlerQuery"/>
+		<!-- 轮播新闻-->
+		<Handler Req="manage_poll_news.do" Class="com.ext.newspoll.NewsPollHandler"/>
+		<Handler Req="manage_recommend_project.do" Class="com.ext.project.recommend.RcmdProjectHandler"/>
+		<Handler Req="manage_friend_link.do" Class="com.ext.friendlink.FriendLinkHandler"/>
+		
 		<Handler Req="manage_news_add.do" Class="com.ftd.manage.news.NewsHandlerAdd"/>
 		<Handler Req="manage_news_modify.do" Class="com.ftd.manage.news.NewsHandlerUpdate"/>
 		<Handler Req="manage_news_delete.do" Class="com.ftd.manage.news.NewsHandlerDelete"/>

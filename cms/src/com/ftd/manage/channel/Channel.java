@@ -17,6 +17,8 @@ public class Channel {
 	// 栏目使用的模板
 	private String channelTpl;
 
+	private int isNav;
+
 	// 用于前台标示
 	private boolean leaf;
 
@@ -96,6 +98,14 @@ public class Channel {
 
 	public void setLeaf(boolean leaf) {
 		this.leaf = leaf;
+	}
+
+	public int getIsNav() {
+		return isNav;
+	}
+
+	public void setIsNav(int isNav) {
+		this.isNav = isNav;
 	}
 
 }
