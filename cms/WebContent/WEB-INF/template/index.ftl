@@ -138,8 +138,10 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
 		</div>
 		
     <div class="container-fluid" style="margin-top: 0.5em;">
+         
+         <#--导航条开始-->
+         
          <div class="row">
-     
 	 <div class="col-lg-12 col-md-12" style="text-align: center;font-family:'Micro YaHei',微软雅黑;padding-right:9em;padding-left:9em;">
 				<div class="panel panel-primary" style="margin-bottom: 0px;">
 			  <div class="panel-heading" style="padding:0" >
@@ -149,18 +151,20 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
                            <#list channels as ch1>
                            <li class="dropdown " >
 										
-										<a  href="${ch1.channelUrl?if_exists}" >
+										
+										<a  href="${ch1.channelUrl?if_exists}" target="_blank">
 											${ch1.channelName} 
 											<#if ch1.children?size != 0>
 											<span class="caret"></span>
 											</#if>
 										</a>
+										
 										<#if ch1.children?size != 0>
 										<ul class="dropdown-menu mega-menu-2 transition" style="margin-top:-0.01em;width:9.8em;">
 										<ul style="margin-left:-1.5em;">
 											<#list ch1.children as ch2>
 											
-											<li><a href="${ch2.channelUrl?if_exists}">${ch2.channelName}</a></li>
+											<li><a href="${ch2.channelUrl?if_exists}" target="_blank">${ch2.channelName}</a></li>
 											
 											</#list>
 										</ul>
@@ -177,7 +181,11 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
 		     </div>
       </div>
     </div>
+    
+    <#--导航条结束-->
 	</div>
+	
+	
 	
 	  <div class="row" style="margin-top:0.5em;">
 		
@@ -224,7 +232,7 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
   </a>
 </div>
 	</div>
-		
+		<#--通知公告开始-->
 		  <div class="col-lg-5 col-md-5" style="margin-left:-2em;padding-right:7em;padding-left:15px" >
 		
           
@@ -255,11 +263,10 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
 	<#if notice_index = 0>
 	 <div role="tabpanel" class="tab-pane active" id="${notice.channel.channelDesc}">
 	 
-      <div class="panel-body" style="margin-top:-1em;margin-left:-2em;margin-bottom:0.5em;position:relative;height:18.3em;overflow: hidden;">
-			
-			<ul >
+      <div class="panel-body" style="margin-top:-1em;margin-left:-2em;margin-bottom:0.5em;position:relative;height:18.3em;">
+			<ul style="margin-left:-1.5em;" >
 			<#list notice.articleIndex as  article>
-			<li style="width:24em;margin-top:1.5em;"  >
+			<li style="width:25em;margin-top:1.3em;overflow-x: hidden;white-space: nowrap;text-overflow: ellipsis;list-style-position: inside;" >
 				
 				
 				<a href="${article.articleUrl}" target="_blank" title="${article.articleTitle}">
@@ -270,7 +277,7 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
 
 
 				</a>
-				<span style="right:0.5em;position:absolute;">${article.releasedTime[0..10]}</span>
+				<span style="right:.5em;position:absolute;">${article.releasedTime[0..10]}</span>
 				</li>
 		  </#list>
 			</ul>
@@ -278,24 +285,23 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
 	
 	</div>
 	<#else>
-	<div role="tabpanel" class="tab-pane" id="${notice.channel.channelDesc}">
+		 <div role="tabpanel" class="tab-pane" id="${notice.channel.channelDesc}">
 	 
-      <div class="panel-body" style="margin-top:-1em;margin-left:-2em;margin-bottom:0.5em;position:relative;height:18.3em;overflow: hidden;">
-			
-			<ul >
+      <div class="panel-body" style="margin-top:-1em;margin-left:-2em;margin-bottom:0.5em;position:relative;height:18.3em;">
+			<ul style="margin-left:-1.5em;" >
 			<#list notice.articleIndex as  article>
-			<li style="width:24em;margin-top:1.5em;">
+			<li style="width:25em;margin-top:1.3em;overflow-x: hidden;white-space: nowrap;text-overflow: ellipsis;list-style-position: inside;" >
 				
 				
 				<a href="${article.articleUrl}" target="_blank" title="${article.articleTitle}">
 
 					
-						${article.articleTitle}
+					   
+                 ${article.articleTitle}
 
-				
 
 				</a>
-				<span style="right:0.5em;position:absolute;">${article.releasedTime[0..10]}</span>
+				<span style="right:.5em;position:absolute;">${article.releasedTime[0..10]}</span>
 				</li>
 		  </#list>
 			</ul>
@@ -312,10 +318,13 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
 	
 	</div>
 		  </div>
-		
+		<#--通知公告结束-->
 		
     </div>
+    
+    
 	<div class="row" style="margin-top:0.5em;">
+	<#--新闻动态开始-->
 	<div class="col-lg-4 col-md-4 col-sm-5 col-xs-5 col-lg-offset-1 col-md-offset-1" style="padding-right:5px;" >
 		 <div class="panel panel-primary" style="">
 			  <div class="panel-heading" style="padding:0; border-bottom: none;font-family:'Micro YaHei',微软雅黑;">
@@ -344,16 +353,18 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
 	<#if news_index = 0>
 	 <div role="tabpanel" class="tab-pane active" id="${news.channel.channelDesc}">
 	 
-      <div class="panel-body" style="margin-top:-1em;margin-left:-2em;margin-bottom:0.5em;position:relative;height:16em;overflow: hidden;">
+      <div class="panel-body" style="margin-top:-1em;margin-left:-2em;margin-bottom:0.5em;position:relative;height:16em;">
 			
-			<ul >
+			<ul style="margin-left:-1.5em;">
 			<#list news.articleIndex as  article>
-			<li style="width:22em;margin-top:1em;">
+			<#if article_index lt 5>
+			<li style="width:24em;margin-top:1.3em;overflow-x: hidden;white-space: nowrap;text-overflow: ellipsis;list-style-position: inside;">
 				
 				
 				<a href="${article.articleUrl}" target="_blank" title="${article.articleTitle}">${article.articleTitle}</a>
 				<span style="right:0.5em;position:absolute;">${article.releasedTime[0..10]}</span>
 				</li>
+			</#if>
 		  </#list>
 			</ul>
 	    </div>
@@ -362,16 +373,16 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
 	<#else>
 		 <div role="tabpanel" class="tab-pane" id="${news.channel.channelDesc}">
 	 
-      <div class="panel-body" style="margin-top:-1em;margin-left:-2em;margin-bottom:0.5em;position:relative;height:16em;overflow: hidden;">
+      <div class="panel-body" style="margin-top:-1em;margin-left:-2em;margin-bottom:0.5em;position:relative;height:16em;">
 			
-			<ul >
+			<ul style="margin-left:-1.5em;">
 			<#list news.articleIndex as  article>
-			<li style="width:22em;margin-top:1em;">
-				
-				
+			<#if article_index lt 5>
+			<li style="width:24em;margin-top:1.3em;overflow-x: hidden;white-space: nowrap;text-overflow: ellipsis;list-style-position: inside;">
 				<a href="${article.articleUrl}" target="_blank" title="${article.articleTitle}">${article.articleTitle}</a>
 				<span style="right:0.5em;position:absolute;">${article.releasedTime[0..10]}</span>
 				</li>
+				</#if>
 		  </#list>
 			</ul>
 	    </div>
@@ -389,7 +400,7 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
 	</div>
           
 		</div>
-	
+	<#--新闻动态结束-->
 	
 	
 	
@@ -486,7 +497,7 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
    <td align="center" valign="top">
 <table border="0" cellpadding="0" cellspacing="0" style="text-align: center;">
 <tr>
-<td class="tjxmtdsize"><a title="陆良某镇2万平米厂房" target="_blank" href=""><img src="/image/r1.jpg" class="tjxmimg"></a></td>+00
+<td class="tjxmtdsize"><a title="陆良某镇2万平米厂房" target="_blank" href=""><img src="/image/r1.jpg" class="tjxmimg"></a></td>
 </tr>
 <tr>
 <td valign="top" class="tjxmline"><a title="陆良某镇2万平米厂房" target="_blank" href="" class="tjxmdesc">陆良某镇2万平米厂房</a></td>
