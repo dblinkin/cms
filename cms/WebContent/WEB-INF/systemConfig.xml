@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <System>
-	<!-- <Database JdbcUrl="jdbc:mysql://127.0.0.1:3306/cms" User="root" Password="root"/> -->
-	<Database JdbcUrl="jdbc:mysql://192.168.1.101:3306/cms" User="lvlv" Password="123456"/>
+	 <Database JdbcUrl="jdbc:mysql://123.57.207.129:3306/cms" User="root" Password="root"/>
 	
 	<Handlers>
 		<Handler Req="manage_channel.do" Class="com.ftd.manage.channel.ChannelHandler"/>
