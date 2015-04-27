@@ -146,7 +146,7 @@ padding-left: 3px;
                            <li class="dropdown " >
 										
 										
-										<a  href="${ch1.channelUrl?if_exists}" target="_blank">
+										<a  href="${ch1.channelUrl?if_exists}" >
 											${ch1.channelName} 
 											<#if ch1.children?size != 0>
 											<span class="caret"></span>
@@ -158,7 +158,7 @@ padding-left: 3px;
 										<ul style="margin-left:-1.5em;">
 											<#list ch1.children as ch2>
 											
-											<li><a href="${ch2.channelUrl?if_exists}" target="_blank">${ch2.channelName}</a></li>
+											<li><a href="${ch2.channelUrl?if_exists}" >${ch2.channelName}</a></li>
 											
 											</#list>
 										</ul>
@@ -186,10 +186,10 @@ padding-left: 3px;
 	
 	<div class="col-lg-3 col-lg-offset-1">
 	<ol class="breadcrumb" style="background-color:#fff;">
-  <li ><a href="/index.html"  target="_blank">首页</a></li>
+  <li ><a href="/index.html"  >首页</a></li>
   
   
-  <li><a href="${currentChannel.channelUrl?if_exists}"  target="_blank" >${currentChannel.channelName}</a></li>
+  <li><a href="${currentChannel.channelUrl?if_exists}"   >${currentChannel.channelName}</a></li>
   
 	
   </ol>
@@ -248,7 +248,7 @@ padding-left: 3px;
 </div>
 
       </div>
-      
+       
       
 	  <div class="col-lg-8 " style="margin-top:-1em;">
 	  <div class="tab-content">
