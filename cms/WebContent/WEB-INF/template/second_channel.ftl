@@ -248,7 +248,7 @@ padding-left: 3px;
 </div>
 
       </div>
-      
+       
       
 	  <div class="col-lg-8 " style="margin-top:-1em;">
 	  <div class="tab-content">

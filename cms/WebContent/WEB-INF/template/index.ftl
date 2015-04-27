@@ -276,7 +276,7 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
                  ${article.articleTitle}
 
 
-				</a>
+				</a> 
 				<span style="right:.5em;position:absolute;">${article.releasedTime[0..10]}</span>
 				</li>
 		  </#list>

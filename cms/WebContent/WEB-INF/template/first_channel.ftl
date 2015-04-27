@@ -236,7 +236,7 @@ padding-left: 3px;
    <ul class="nav nav-tabs">
 	<li class="divider"></li>
    </ul>
-
+ 
 
   <!-- List group -->
   <ul class="list-group">
