@@ -5,6 +5,9 @@
 		<Model>com.ftd.manage.release.model.ChannelModel</Model>
 		<Model>com.ftd.manage.release.model.NoticeModel</Model>
 		<Model>com.ftd.manage.release.model.NewsModel</Model>
+		<Model>com.ext.newspoll.NewsPollModel</Model><!-- 轮播广告 -->
+		<Model>com.ext.project.recommend.RcmdProjectModel</Model><!-- 推荐项目 -->
+		<Model>com.ext.friendlink.FriendLinkModel</Model><!-- 友情链接 -->
 	</Release>	
 	<!-- 默认一级栏目模板 -->
 	<Release Src="FIRST_CHANNEL" Template="first_channel.ftl" FilenameFormat="/article/{first_channel}.html">
@@ -31,7 +34,7 @@
 	</Release>
 	
 	<!-- 用户定义模板  受让项目文章模板 -->
-	<Release Src="USER_DEFINE" Template="article.ftl" FilenameFormat="/article/{first_channel}/{second_channel}/{yyyy}{mm}{dd}/{rand:6}{time}.html">
+	<Release Src="USER_DEFINE" DefineId="1" Template="article.ftl" FilenameFormat="/article/{first_channel}/{second_channel}/{yyyy}{mm}{dd}/{rand:6}{time}.html">
 		<Model>com.ftd.manage.release.model.ChannelModel</Model>
 	</Release>
 </ReleaseConfig>

@@ -9,6 +9,7 @@ import com.ftd.manage.article.Article;
 import com.ftd.manage.article.ArticleMgr;
 import com.ftd.manage.channel.Channel;
 import com.ftd.manage.channel.ChannelMgr;
+import com.ftd.system.SysMgr;
 
 public class ArticleIndexModel implements ModelProvider {
 
@@ -47,7 +48,10 @@ public class ArticleIndexModel implements ModelProvider {
 						ArticleModelAdapter ama = new ArticleModelAdapter();
 						ama.setChannel(cc);
 						ama.setArticleIndex(ArticleMgr.getInstance()
-								.getArticles(cc.getChannelId(), 5));
+								.getArticles(
+										cc.getChannelId(),
+										SysMgr.getInstance()
+												.getArticleIndexNum()));
 						am.add(ama);
 					}
 					model.put(channel1Key, am);

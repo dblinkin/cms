@@ -14,13 +14,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ftd.servlet.Handler;
+import com.ftd.util.StrUtil;
 import com.ftd.util.XmlUtil;
 import com.ftd.util.dbclient.DBClient;
 
 public class SysMgr {
 
+	// 默认首页栏目
+	private int mainPageChannel;
+	//
+	private int articleIndexNum;
 	// 默认语言
-	private String defaultLang = "zh_CN";
+	private String defaultLang;
 
 	private DBClient dbClient;
 
@@ -47,6 +52,14 @@ public class SysMgr {
 
 	public String getDefaultLang() {
 		return defaultLang;
+	}
+
+	public int getMainPageChannel() {
+		return mainPageChannel;
+	}
+
+	public int getArticleIndexNum() {
+		return articleIndexNum;
 	}
 
 	public boolean init(String filePath) {
@@ -94,6 +107,17 @@ public class SysMgr {
 			if (h != null)
 				this.handlerMap.put(hkv.get("Req"), h);
 		}
+
+		Element mainPageElement = root.element("MainPageChannel");
+		this.mainPageChannel = StrUtil.parseInt(mainPageElement.getTextTrim(),
+				256);
+
+		Element langElement = root.element("Lang");
+		this.defaultLang = StrUtil.parseStr(langElement.getTextTrim(), "zh_CN");
+
+		Element articleIndexNumElement = root.element("ArticleIndexNum");
+		this.articleIndexNum = StrUtil.parseInt(
+				articleIndexNumElement.getTextTrim(), 6);
 
 		return true;
 	}

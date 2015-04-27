@@ -20617,7 +20617,7 @@ define('bui/form/fieldcontainer',['bui/common','bui/form/field','bui/form/groupv
         //\u5982\u679c\u662f\u53ef\u52fe\u9009\u7684
         if(field instanceof Field.Check){
           var fieldValue = field.get('value');
-          if(value && (fieldValue === value || (BUI.isArray(value) && BUI.Array.contains(fieldValue,value)))){
+          if(typeof value && (fieldValue == value || (BUI.isArray(value) && BUI.Array.contains(fieldValue,value)))){
             field.set('checked',true);
           }else{
             field.set('checked',false);

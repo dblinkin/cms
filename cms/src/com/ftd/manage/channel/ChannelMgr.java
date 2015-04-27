@@ -11,7 +11,11 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ftd.manage.release.Release;
+import com.ftd.manage.release.ReleaseMgr;
 import com.ftd.servlet.FtdException;
+import com.ftd.system.SysMgr;
+import com.ftd.util.StrUtil;
 
 public class ChannelMgr {
 	private static final Logger logger = LoggerFactory
@@ -77,6 +81,38 @@ public class ChannelMgr {
 			}
 		}
 
+		if (!initChannelUrl()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean initChannelUrl() {
+		for (Channel c : channelId_channel.values()) {
+			if (c.getChannelId() == SysMgr.getInstance().getMainPageChannel()) {
+				String url = ReleaseMgr.getInstance().getReleaseFilename(
+						Release.Src.MAIN_PAGE.toString(), c.getChannelId());
+				c.setChannelUrl(url);
+				continue;
+			}
+
+			if (c.getParentChannelId() == 0) {
+				if (c.getIsNav() == 1 && StrUtil.isEmpty(c.getChannelUrl())) {
+					String url = ReleaseMgr.getInstance().getReleaseFilename(
+							Release.Src.FIRST_CHANNEL.toString(),
+							c.getChannelId());
+					c.setChannelUrl(url);
+				}
+			} else {
+				if (c.getIsNav() == 1 && StrUtil.isEmpty(c.getChannelUrl())) {
+					String url = ReleaseMgr.getInstance().getReleaseFilename(
+							Release.Src.SECOND_CHANNEL.toString(),
+							c.getParentChannelId(), c.getChannelId());
+					c.setChannelUrl(url);
+				}
+			}
+		}
 		return true;
 	}
 
@@ -117,12 +153,20 @@ public class ChannelMgr {
 
 		channelId_channel.put(channel.getChannelId(), channel);
 		if (channel.getParentChannelId() == 0) {
+			channel.setChannelUrl(ReleaseMgr.getInstance().getReleaseFilename(
+					Release.Src.FIRST_CHANNEL.toString(),
+					channel.getChannelId()));
 			channels.add(channel);
 			idMap.put(channel.getChannelId() >> OFFSET, new AtomicInteger());
 		} else {
 			Channel parentChannel = channelId_channel.get(channel
 					.getParentChannelId());
 			if (parentChannel != null) {
+				channel.setChannelUrl(ReleaseMgr.getInstance()
+						.getReleaseFilename(
+								Release.Src.FIRST_CHANNEL.toString(),
+								parentChannel.getChannelId(),
+								channel.getChannelId()));
 				parentChannel.addChild(channel);
 			}
 		}

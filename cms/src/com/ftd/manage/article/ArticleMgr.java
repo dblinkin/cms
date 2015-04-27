@@ -68,6 +68,14 @@ public class ArticleMgr {
 		return result;
 	}
 
+	public List<Article> getArticleAll() {
+		return new ArrayList<Article>(articles);
+	}
+
+	public Article getArticle(int articleId) {
+		return articleId_article.get(articleId);
+	}
+
 	public void addArticle(Article a) throws FtdException {
 		a.setArticleId(articleId.incrementAndGet());
 		ArticleDao.insert(a);
