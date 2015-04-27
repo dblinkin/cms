@@ -42,6 +42,15 @@
         </div>
       </div>
       <div class="row">
+			<div class="control-group span24">
+		        <label class="control-label"><s>*</s>显示在导航栏：</label>
+		        <div class="controls">
+		          <label class="radio" for=""><input type="radio" name="isNav" value="1">是</label>&nbsp;&nbsp;&nbsp;
+		          <label class="radio" for=""><input type="radio" name="isNav" value="0">否</label>
+		        </div>
+      		</div>
+		</div>
+      <div class="row">
       	<div class="control-group span15">
           <label class="control-label"><s>*</s>栏目模板：</label>
           <div class="controls">
@@ -66,7 +75,8 @@
 <script type="text/javascript">
 BUI.use(['bui/extensions/treegrid','bui/data'],function (TreeGrid, Data) {
 	
-	var editing = new BUI.Grid.Plugins.DialogEditing({
+	var enumBoolean = {"1":"是", "0":"否"},
+	editing = new BUI.Grid.Plugins.DialogEditing({
         contentId : 'content', //设置隐藏的Dialog内容
         triggerCls : 'btn-edit'
       });
@@ -122,6 +132,7 @@ BUI.use(['bui/extensions/treegrid','bui/data'],function (TreeGrid, Data) {
         {title : '栏目名称',dataIndex :'channelName',width:100}, 
         {title : 'URL显示名',dataIndex :'channelDesc',width:100}, 
         {title : '栏目ID',dataIndex : 'channelId',width:100},
+        {title : '导航栏显示',dataIndex : 'isNav',width:100,renderer:BUI.Grid.Format.enumRenderer(enumBoolean)},
         {title : '栏目模板',dataIndex : 'channelTpl',width:100},
         {title : '操作',width:100, renderer:function(){
         	var editStr = '<span class="grid-command btn-edit">编辑</span>',

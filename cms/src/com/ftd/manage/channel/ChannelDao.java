@@ -49,7 +49,7 @@ public class ChannelDao {
 		try {
 			dbClient.executeUpdate(sql, c.getParentChannelId(),
 					c.getChannelName(), c.getChannelDesc(), c.getChannelUrl(),
-					c.getChannelTpl(), c.getChannelId(), c.getIsNav());
+					c.getChannelTpl(), c.getIsNav(), c.getChannelId());
 		} catch (SQLException e) {
 			throw new FtdException(e, "db.sql.error");
 		}

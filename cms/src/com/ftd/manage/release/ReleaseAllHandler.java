@@ -35,6 +35,10 @@ public class ReleaseAllHandler extends Handler {
 				continue;
 			}
 
+			if (c.getIsNav() == 0) {
+				continue;
+			}
+
 			ReleaseMgr.getInstance().release(0,
 					Release.Src.FIRST_CHANNEL.toString(), c.getChannelId());
 			for (Channel cc : c.getChildren()) {
