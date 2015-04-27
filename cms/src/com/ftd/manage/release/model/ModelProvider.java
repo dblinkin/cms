@@ -2,6 +2,8 @@ package com.ftd.manage.release.model;
 
 import java.util.Map;
 
+import com.ftd.servlet.FtdException;
+
 public interface ModelProvider {
 	/**
 	 * 是否使用缓存，如果不使用先调用setModel 再调用getModel
@@ -29,6 +31,7 @@ public interface ModelProvider {
 	 *            各级别的栏目ID， chanel[0]-- 一级栏目ID， channel[2]-- 二级栏目ID
 	 * @return
 	 */
-	Map<String, Object> getModel(int articleId, int... channels);
+	Map<String, Object> getModel(int articleId, int... channels)
+			throws FtdException;
 
 }

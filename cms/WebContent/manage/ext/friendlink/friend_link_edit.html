@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <title>编辑新闻</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="../../assets/css/dpl-min.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/bui-min.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/page-min.css" rel="stylesheet" type="text/css" />
+    
+    <link href="../../ueditor/themes/default/css/ueditor.min.css" type="text/css" rel="stylesheet">
+ </head>
+ <body>
+  
+  <div class="container">
+    <div class="row">
+      <form id="J_Form" class="span24" action="manage_article_preview.do" target="_blank" method="post">
+        <div class="row">
+          <div class="control-group span24">
+            <label class="control-label"><s>*</s>链接标题：</label>
+            <div class="controls">
+              <input name="linkTitle" type="text" data-rules="{required:true}" class="input-normal control-text" style="width:300px">
+            </div>
+          </div>          
+        </div>
+        <div class="row">
+          <div class="control-group span24">
+            <label class="control-label"><s>*</s>链接URL：</label>
+            <div class="controls">
+              <input name="linkUrl" type="text" data-rules="{required:true}" class="input-normal control-text" style="width:300px">
+            </div>
+          </div>          
+        </div>
+        <div class="row">
+          <div class="control-group span24">
+            <label class="control-label">链接图片：</label>
+            <div class="controls">
+              <input id="linkImgUrl" name="linkImgUrl" type="text" class="input-normal control-text" style="width:300px">
+            </div>
+            <a href="#" id="selectImg" style="margin-left:10px">选择文件</a>
+          </div>
+        </div>
+		
+		<div class="row">
+			<div class="control-group span24">
+	        <label class="control-label"><s>*</s>显示在首页：</label>
+	        <div class="controls">
+	          <label class="radio" for=""><input type="radio" name="active" value="1">是</label>&nbsp;&nbsp;&nbsp;
+	          <label class="radio" for=""><input type="radio" name="active" value="0">否</label>
+	        </div>
+      </div>
+		</div>
+        
+        <div class="row form-actions actions-bar">
+            <div class="span13 offset3 ">
+              <!--  <button type="submit" class="button button-primary">预览</button>-->
+              <button type="button" id="add" class="button button-primary">保存</button>
+              <button type="reset" class="button button-primary">重置</button>
+            </div>
+        </div>
+        
+        <input type="hidden" name="linkId" value="0">
+      </form>
+       <script type="text/plain" id="imageUpload" style="width:700px;height:320px;display:none">
+		</script>
+    </div>
+    
+
+  </div>
+  <script type="text/javascript" src="../../assets/js/jquery-1.8.1.min.js"></script>
+  <script type="text/javascript" src="../../../lib/cms_manage.js"></script>
+  <script type="text/javascript" src="../../assets/js/bui.js"></script>
+  <script type="text/javascript" src="../../assets/js/config-min.js"></script>
+  
+  <script type="text/javascript" charset="utf-8" src="../../ueditor/ueditor.config.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../../ueditor/ueditor.all.min.js"></script>
+  <script type="text/javascript" src="../../ueditor/lang/zh-cn/zh-cn.js"></script>
+  <!--  <script type="text/javascript" src="../../../lib/cms_manage_image_upload.js"></script>-->
+  
+<script type="text/javascript">	
+	BUI.use('common/page');
+
+	//实例化编辑器
+	window.UEDITOR_HOME_URL = "../ueditor";
+	var ue = UE.getEditor('imageUpload', {toolbars: [["insertimage"]]});
+
+	$("#selectImg").click(function(){
+ 		var image = ue.getDialog("insertimage");
+    	image.render();
+    	image.open();
+	});
+	
+	ue.addListener('afterInsertImage', function(t, args) {
+        $("#linkImgUrl").val(args[0].src);
+    });
+
+</script> 
+<script type="text/javascript">
+BUI.use(['common/search','bui/form'],function (Search,Form) {
+	var form = new Form.HForm({
+		srcNode : '#J_Form'
+	}).render();
+	
+	var obj = BUI.JSON.parse(decodeURI(getHrefParam("obj")));
+	if(obj){
+		form.setRecord(obj);
+		bindSumbit('update', "更新");
+	}else{
+		bindSumbit('insert', "添加");
+	}
+	
+	function bindSumbit(type,msg){
+		$("#add").click(function(){
+			form.valid();
+			if(form.isValid()){
+				$.ajax({
+				  url : "manage_friend_link.do?opr=" + type,
+				  data : form.serializeToObject(),
+				  success : function(data){
+					  BUI.Message.Alert(msg+'成功','success');
+				  }
+			  	});
+			}else{
+				form.focusError();
+			}
+		});
+	}
+  });
+
+</script>
+
+<body>
+</html> 
