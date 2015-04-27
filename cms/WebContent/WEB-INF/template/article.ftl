@@ -134,8 +134,8 @@ padding-left: 3px;
 		
 		
     <div class="container-fluid" style="margin-top: 0.5em;">
-	         <div class="row">
-     
+	        <#--导航条开始-->
+           <div class="row">
 	 <div class="col-lg-12 col-md-12" style="text-align: center;font-family:'Micro YaHei',微软雅黑;padding-right:9em;padding-left:9em;">
 				<div class="panel panel-primary" style="margin-bottom: 0px;">
 			  <div class="panel-heading" style="padding:0" >
@@ -145,18 +145,20 @@ padding-left: 3px;
                            <#list channels as ch1>
                            <li class="dropdown " >
 										
-										<a  href="${ch1.channelUrl?if_exists}" >
+										
+										<a  href="${ch1.channelUrl?if_exists}" target="_blank">
 											${ch1.channelName} 
 											<#if ch1.children?size != 0>
 											<span class="caret"></span>
 											</#if>
 										</a>
+										
 										<#if ch1.children?size != 0>
 										<ul class="dropdown-menu mega-menu-2 transition" style="margin-top:-0.01em;width:9.8em;">
 										<ul style="margin-left:-1.5em;">
 											<#list ch1.children as ch2>
 											
-											<li><a href="${ch2.channelUrl?if_exists}">${ch2.channelName}</a></li>
+											<li><a href="${ch2.channelUrl?if_exists}" target="_blank">${ch2.channelName}</a></li>
 											
 											</#list>
 										</ul>
@@ -173,16 +175,18 @@ padding-left: 3px;
 		     </div>
       </div>
     </div>
-	</div>
+
+     <#--导航条结束-->
+     </div>
 <div class="row">
 	
 	<div class="col-lg-3 col-lg-offset-1">
 	<ol class="breadcrumb" style="background-color:#fff;">
-  <li ><a href="#">首页</a></li>
+  <li ><a href="/index.html"  target="_blank">首页</a></li>
   
   
-  <li><a href="#">${currentChannel.channelName}</a></li>
-  <li><a href="#">${currentChannel2.channelName}</a></li>
+  <li><a href="${currentChannel.channelUrl?if_exists}"  target="_blank">${currentChannel.channelName}</a></li>
+  <li><a href="${currentChannel2.channelUrl?if_exists}"  target="_blank">${currentChannel2.channelName}</a></li>
 	
   </ol>
 	
