@@ -3,24 +3,32 @@ package com.ftd.manage.release;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ftd.manage.release.check.AfterRelease;
 import com.ftd.manage.release.model.ModelProvider;
 
 public class Release {
+	// 发布的ID
+	private String id;
 	// 发布源
 	private Src src;
 	// 发布所需数据集
 	private List<ModelProvider> models = new ArrayList<ModelProvider>();
-	// 发布后所需要的一些操作
-	private List<AfterRelease> afterReleases = new ArrayList<AfterRelease>();
 	// 发布使用的模板
 	private String templateName;
 	// 发布后的文件名格式化
 	private String filenameFormat;
 
 	// -----------------setter----------getter
+
 	public Src getSrc() {
 		return src;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public void setSrc(Src src) {
@@ -49,14 +57,6 @@ public class Release {
 
 	public void setFilenameFormat(String filenameFormat) {
 		this.filenameFormat = filenameFormat;
-	}
-
-	public List<AfterRelease> getAfterReleases() {
-		return afterReleases;
-	}
-
-	public void setAfterReleases(List<AfterRelease> afterReleases) {
-		this.afterReleases = afterReleases;
 	}
 
 	public enum Src {

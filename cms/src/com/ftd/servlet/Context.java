@@ -14,14 +14,18 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+
 import org.apache.tomcat.util.http.fileupload.FileItem;
 
 import com.ftd.system.SysMgr;
+import com.ftd.util.StrUtil;
 
 public class Context {
 	public final HttpServletRequest request;
 	public final HttpServletResponse response;
 	public final String cmd;
+	public final String lang;
 	public Map<String, Object> paramMap;
 	public Connection connection;
 
@@ -32,7 +36,7 @@ public class Context {
 
 	private OPR opr = OPR.NULL;
 
-	private Map<String, Object> resultMap = new HashMap<String, Object>();
+	private JSONObject resultMap = new JSONObject();
 
 	private int retCode = DEFAULT_SUCCESS_CODE;
 	private String retMsg;
@@ -44,6 +48,8 @@ public class Context {
 		this.response = response;
 		this.cmd = cmd;
 		this.paramMap = getParameters();
+		this.lang = StrUtil.parseStr(request.getParameter("lang"), SysMgr
+				.getInstance().getDefaultLang());
 		setOpr();
 	}
 
@@ -55,6 +61,8 @@ public class Context {
 		this.response = response;
 		this.paramMap = getMultipartParameters(items);
 		this.cmd = (String) paramMap.get("cmd");
+		this.lang = StrUtil.parseStr(request.getParameter("lang"), SysMgr
+				.getInstance().getDefaultLang());
 		setOpr();
 	}
 
@@ -124,7 +132,7 @@ public class Context {
 		return resultMap.get(key);
 	}
 
-	public Map<String, Object> getResult() {
+	public JSONObject getResult() {
 		return resultMap;
 	}
 

@@ -10,7 +10,6 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ftd.manage.release.model.ReleaseModel;
 import com.ftd.servlet.FtdException;
 import com.ftd.system.SysMgr;
 import com.ftd.util.dbclient.DBClient;
@@ -27,7 +26,7 @@ public class ChannelDao {
 			dbClient.executeUpdate(sql, c.getChannelId(),
 					c.getParentChannelId(), c.getChannelName(),
 					c.getChannelDesc(), c.getChannelUrl(), c.getIsNav(),
-					c.getChannelTpl());
+					c.getReleaseId());
 		} catch (SQLException e) {
 			throw new FtdException(e, "db.sql.error");
 		}
@@ -44,23 +43,12 @@ public class ChannelDao {
 	}
 
 	public static void update(Channel c) throws FtdException {
-		String sql = "update channel set parent_channel_id=?,channel_name=?,channel_desc=?,channel_url=?,channel_tpl=?,is_nav=? where channel_id=?";
+		String sql = "update channel set parent_channel_id=?,channel_name=?,channel_desc=?,channel_url=?,release_id=?,is_nav=? where channel_id=?";
 		DBClient dbClient = SysMgr.getInstance().getDbClient();
 		try {
 			dbClient.executeUpdate(sql, c.getParentChannelId(),
 					c.getChannelName(), c.getChannelDesc(), c.getChannelUrl(),
-					c.getChannelTpl(), c.getIsNav(), c.getChannelId());
-		} catch (SQLException e) {
-			throw new FtdException(e, "db.sql.error");
-		}
-	}
-
-	public static void updateRelease(ReleaseModel rm) throws FtdException {
-		String sql = "update channel set channel_url=? where channel_id=?";
-		DBClient dbClient = SysMgr.getInstance().getDbClient();
-		try {
-			dbClient.executeUpdate(sql, rm.getReleaseFilename(),
-					rm.getChannelId());
+					c.getReleaseId(), c.getIsNav(), c.getChannelId());
 		} catch (SQLException e) {
 			throw new FtdException(e, "db.sql.error");
 		}
@@ -83,7 +71,7 @@ public class ChannelDao {
 					c.setChannelName(rs.getString("channel_name"));
 					c.setChannelDesc(rs.getString("channel_desc"));
 					c.setChannelUrl(rs.getString("channel_url"));
-					c.setChannelTpl(rs.getString("channel_tpl"));
+					c.setReleaseId(rs.getString("release_id"));
 					c.setIsNav(rs.getInt("is_nav"));
 					channels.add(c);
 				}

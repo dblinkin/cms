@@ -6,32 +6,32 @@ import com.ftd.servlet.FtdException;
 
 public interface ModelProvider {
 	/**
-	 * 是否使用缓存，如果不使用先调用setModel 再调用getModel
+	 * 设置数据ID(article ID, channel ID)
+	 * 
+	 * @param modelId
+	 */
+	void setModelId(int modelId);
+
+	/**
+	 * 取得数据ID
 	 * 
 	 * @return
 	 */
-	boolean isCached();
-
-	/**
-	 * 设置数据模型
-	 * 
-	 * @param articleId
-	 *            文章Id
-	 * @param channels
-	 *            各级别的栏目ID， chanel[0]-- 一级栏目ID， channel[2]-- 二级栏目ID
-	 */
-	void setModel(int articleId, int... channels);
+	int getModelId();
 
 	/**
 	 * 取得数据模型
 	 * 
-	 * @param articleId
-	 *            文章Id
-	 * @param channels
-	 *            各级别的栏目ID， chanel[0]-- 一级栏目ID， channel[2]-- 二级栏目ID
 	 * @return
 	 */
-	Map<String, Object> getModel(int articleId, int... channels)
+	Map<String, Object> getModel(int channelId, int articleId)
 			throws FtdException;
+
+	/**
+	 * 发布完成后需要做的操作
+	 * 
+	 * @throws FtdException
+	 */
+	void afterRelease(ReleaseModel rm) throws FtdException;
 
 }

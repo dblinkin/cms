@@ -1,25 +1,15 @@
 package com.ftd.manage.release.model;
 
 public class ReleaseModel {
-	private int articleId;
-	private int channelId;
+	private int modelId;
 	private long releaseTime;
-	private String releaseFilename;
 
-	public int getArticleId() {
-		return articleId;
+	public int getModelId() {
+		return modelId;
 	}
 
-	public void setArticleId(int articleId) {
-		this.articleId = articleId;
-	}
-
-	public int getChannelId() {
-		return channelId;
-	}
-
-	public void setChannelId(int channelId) {
-		this.channelId = channelId;
+	public void setModelId(int modelId) {
+		this.modelId = modelId;
 	}
 
 	public long getReleaseTime() {
@@ -28,14 +18,6 @@ public class ReleaseModel {
 
 	public void setReleaseTime(long releaseTime) {
 		this.releaseTime = releaseTime;
-	}
-
-	public String getReleaseFilename() {
-		return releaseFilename;
-	}
-
-	public void setReleaseFilename(String releaseFilename) {
-		this.releaseFilename = releaseFilename;
 	}
 
 }

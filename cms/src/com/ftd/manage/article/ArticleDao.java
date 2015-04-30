@@ -17,7 +17,7 @@ public class ArticleDao {
 
 	public static void insert(Article a) throws FtdException {
 		String sql = "insert into article(channel_id, article_title,article_url,create_time,is_released,released_time,article_src,"
-				+ "article_content) values(?,?,?,?,?,?,?,?)";
+				+ "article_content, release_id) values(?,?,?,?,?,?,?,?,?)";
 
 		DBClient dbClient = SysMgr.getInstance().getDbClient();
 
@@ -26,7 +26,8 @@ public class ArticleDao {
 					a.getArticleUrl(), a.getCreateTime(), a.isReleased() ? 1
 							: 0, a.getReleasedTime(), a.getArticleSrc(),
 					StrUtil.toHexString(StrZipUtil.compress(
-							a.getArticleContent()).getBytes()));
+							a.getArticleContent()).getBytes()), a
+							.getReleaseId());
 		} catch (SQLException e) {
 			throw new FtdException(e, "db.sql.error");
 		}
@@ -42,6 +43,19 @@ public class ArticleDao {
 		} catch (SQLException e) {
 			throw new FtdException(e, "db.sql.error");
 		}
+	}
+
+	public static void updateReleaseId(String releaseId, int articleId)
+			throws FtdException {
+		String sql = "update article set release_id=? where articleId=?";
+
+		DBClient dbClient = SysMgr.getInstance().getDbClient();
+		try {
+			dbClient.executeUpdate(sql, releaseId, articleId);
+		} catch (SQLException e) {
+			throw new FtdException(e, "db.sql.error");
+		}
+
 	}
 
 	public static void update(Article a) throws FtdException {
@@ -63,13 +77,13 @@ public class ArticleDao {
 	}
 
 	public static void updateRelease(ReleaseModel rm) throws FtdException {
-		String sql = "update article set article_url=?,is_released=?,released_time=? where article_id=?";
+		String sql = "update article set is_released=?,released_time=? where article_id=?";
 
 		DBClient dbClient = SysMgr.getInstance().getDbClient();
 
 		try {
-			dbClient.executeUpdate(sql, rm.getReleaseFilename(), 1,
-					StrUtil.datetime(rm.getReleaseTime()), rm.getArticleId());
+			dbClient.executeUpdate(sql, 1,
+					StrUtil.datetime(rm.getReleaseTime()), rm.getModelId());
 		} catch (SQLException e) {
 			throw new FtdException(e, "db.sql.error");
 		}
@@ -120,18 +134,16 @@ public class ArticleDao {
 	}
 
 	public static int selectNum(int channel1Id, int channel2Id,
-			String startDate, String endDate, int pageSize, int pageNum)
-			throws FtdException {
+			String startDate, String endDate) throws FtdException {
 
 		DBClient dbClient = SysMgr.getInstance().getDbClient();
 		String sql = String
 				.format("select count(1) from article where (0=%d or (channel_id>=%d and channel_id<%d+256)) "
 						+ "and (0=%d or channel_id=%d) "
 						+ "and ('%s'='' or released_time > '%s') and ('%s'='' or released_time < '%s') "
-						+ "order by create_time desc limit %d,%d", channel1Id,
-						channel1Id, channel1Id, channel2Id, channel2Id,
-						startDate, startDate, endDate, endDate, pageSize
-								* (pageNum - 1), pageSize);
+						+ "order by create_time desc", channel1Id, channel1Id,
+						channel1Id, channel2Id, channel2Id, startDate,
+						startDate, endDate, endDate);
 
 		CachedRowSet rs = null;
 		try {

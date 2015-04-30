@@ -10,6 +10,13 @@
     <link href="../../ueditor/themes/default/css/ueditor.min.css" type="text/css" rel="stylesheet">
  </head>
  <body>
+   <style>
+    /**内容超出 出现滚动条 **/
+    .bui-stdmod-body{
+      overflow-x : hidden;
+      overflow-y : auto;
+    }
+  </style>
   
   <div class="container">
     <div class="row">
@@ -80,7 +87,7 @@
 	      </form>
 	    </div>
 	    <div class="search-grid-container">
-	      <div id="grid"></div>
+	      <div id="grid" style="width:520px"></div>
 	    </div>
       </div>
        <script type="text/plain" id="imageUpload" style="width:700px;height:320px;display:none">
@@ -189,7 +196,7 @@ BUI.use(['common/search','bui/form','bui/overlay'],function (Search,Form,Overlay
           startParam : 'startNum', //起始记录
           method : 'POST'
         },
-        autoSync : true //保存数据后，自动更新
+        pageSize : 10
       }),
       gridCfg = Search.createGridCfg(columns,{
         forceFit: true,

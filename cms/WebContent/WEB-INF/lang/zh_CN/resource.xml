@@ -5,9 +5,17 @@
 	<String Id="error.msg.request.url.error" Msg="收到一个错误的请求[%1s]"/>
 	<String Id="error.msg.handler.not.found" Msg="处理器没有注册[%1s]"/>
 	<String Id="error.msg.server.internal.error" Msg="服务器异常"/>	
-	<Stirng id="error.msg.db.sql.error" Msg="数据库操作失败"/>
-	<Stirng id="error.msg.channel.id.not.found" Msg="所属的一级栏目不存在[%1s]"/>
-	<Stirng id="error.msg.channel.not.found" Msg="栏目不存在[%1s]"/>
-	<Stirng id="error.msg.release.manager.not.found" Msg="发布管理器不存在[%1s]"/>
+	<String Id="error.msg.db.sql.error" Msg="数据库操作失败"/>
+	<String Id="error.msg.channel.id.not.found" Msg="所属的一级栏目不存在[%1s]"/>
+	<String Id="error.msg.channel.not.found" Msg="栏目不存在[%1s]"/>
+	<String Id="error.msg.release.manager.not.found" Msg="发布管理器不存在[%1s]"/>
+	<String Id="error.msg.release.not.found" Msg="发布管理器不存在"/>
+	
+	<!-- ftl模板名称  -->
+	<String Id="main_page" Msg="默认首页模板"/>
+	<String Id="first_channel" Msg="默认一级栏目模板"/>
+	<String Id="second_channel" Msg="默认二级栏目模板"/>
+	<String Id="article" Msg="默认文章模板"/>
+	<String Id="user_define_purchase_project" Msg="受让项目文章模板"/>
 	
 </Resource>

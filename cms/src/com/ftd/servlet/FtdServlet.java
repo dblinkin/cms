@@ -104,6 +104,7 @@ public class FtdServlet extends HttpServlet {
 				break;
 			}
 
+			ctx.putResult(Context.RET_CODE, Context.DEFAULT_SUCCESS_CODE);
 			result.putAll(ctx.getResult());
 		} while (false);
 

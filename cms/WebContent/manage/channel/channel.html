@@ -15,10 +15,10 @@
     </div>
   </div>
   
-  <div id="content" class="hide">
+  <div id="content" class="hide" style="width:600px">
     <form id="J_Form" class="form-horizontal">
       <div class="row">
-        <div class="control-group span15">
+        <div class="control-group span8">
           <label class="control-label"><s>*</s>栏目名称：</label>
           <div class="controls">
             <input name="channelName" type="text" data-rules="{required:true}" class="input-normal control-text">
@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="control-group span15">
+        <div class="control-group span8">
           <label class="control-label"><s>*</s>URL显示名：</label>
           <div class="controls">
             <input name="channelDesc" type="text" data-rules="{required:true}" class="input-normal control-text">
@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="row">
-      	<div class="control-group span15">
+      	<div class="control-group span8">
           <label class="control-label">父栏目：</label>
           <div class="controls bui-form-field-select" data-loader="{url:'manage_query_channel.do',property:'items',dataType:'json'}">
             <input name="parentChannelId" type="hidden" value="0">
@@ -42,7 +42,7 @@
         </div>
       </div>
       <div class="row">
-			<div class="control-group span24">
+			<div class="control-group span8">
 		        <label class="control-label"><s>*</s>显示在导航栏：</label>
 		        <div class="controls">
 		          <label class="radio" for=""><input type="radio" name="isNav" value="1">是</label>&nbsp;&nbsp;&nbsp;
@@ -51,14 +51,10 @@
       		</div>
 		</div>
       <div class="row">
-      	<div class="control-group span15">
-          <label class="control-label"><s>*</s>栏目模板：</label>
-          <div class="controls">
-            <select  data-rules="{required:true}"  name="channelTpl" class="input-normal"> 
-              <option value="0">默认模板</option>
-              <option value="1">一级栏目模板</option>
-              <option value="2">二级栏目模板</option>
-            </select>
+      	<div class="control-group span8">
+          <label class="control-label">栏目模板：</label>
+          <div class="controls bui-form-field-select" data-loader="{url:'manage_release_query.do',property:'items',dataType:'json'}">
+            <input name="releaseId" type="hidden" value="0">
           </div>
         </div>
       </div>
@@ -130,13 +126,13 @@ BUI.use(['bui/extensions/treegrid','bui/data'],function (TreeGrid, Data) {
       render : '#t1',
       columns : [
         {title : '栏目名称',dataIndex :'channelName',width:100}, 
-        {title : 'URL显示名',dataIndex :'channelDesc',width:100}, 
-        {title : '栏目ID',dataIndex : 'channelId',width:100},
-        {title : '导航栏显示',dataIndex : 'isNav',width:100,renderer:BUI.Grid.Format.enumRenderer(enumBoolean)},
-        {title : '栏目模板',dataIndex : 'channelTpl',width:100},
-        {title : '操作',width:100, renderer:function(){
-        	var editStr = '<span class="grid-command btn-edit">编辑</span>',
-        		delStr = '<span class="grid-command btn-del" title="删除">删除</span>';
+        {title : 'URL显示名',dataIndex :'channelDesc',width:100,elCls:'center'}, 
+        {title : '栏目ID',dataIndex : 'channelId',width:100, elCls:'center'},
+        {title : '导航栏显示',dataIndex : 'isNav',width:100,elCls:'center',renderer:BUI.Grid.Format.enumRenderer(enumBoolean)},
+        {title : '栏目模板',dataIndex : 'releaseId',width:100,elCls:'center'},
+        {title : '操作',width:100, elCls:'center', renderer:function(){
+        	var editStr = '<i class="icon-edit"></i><span class="grid-command btn-edit">编辑</span>',
+        		delStr = '<i class="icon-remove"></i><span class="grid-command btn-del" title="删除">删除</span>';
         	return editStr + delStr;
         }}
       ],

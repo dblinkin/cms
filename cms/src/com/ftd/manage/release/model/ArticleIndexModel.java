@@ -9,6 +9,7 @@ import com.ftd.manage.article.Article;
 import com.ftd.manage.article.ArticleMgr;
 import com.ftd.manage.channel.Channel;
 import com.ftd.manage.channel.ChannelMgr;
+import com.ftd.servlet.FtdException;
 import com.ftd.system.SysMgr;
 
 public class ArticleIndexModel implements ModelProvider {
@@ -16,55 +17,57 @@ public class ArticleIndexModel implements ModelProvider {
 	private String channel1Key = "channel_articleIndex";
 	private String channel2Key = "articleIndex";
 
+	private int channelId;
+
 	@Override
-	public boolean isCached() {
-		return true;
+	public void setModelId(int modelId) {
+		this.channelId = modelId;
 	}
 
 	@Override
-	public void setModel(int articleId, int... channels) {
+	public int getModelId() {
+		return this.channelId;
+	}
+
+	@Override
+	public Map<String, Object> getModel(int channelId, int articleId)
+			throws FtdException {
+		if (channelId != 0)
+			this.channelId = channelId;
+
+		Map<String, Object> model = new HashMap<String, Object>();
+		Channel c = ChannelMgr.getInstance().getChannel(this.channelId);
+		if (c == null)
+			return model;
+
+		if (c.getParentChannelId() == 0) {
+			Channel parentChannel = ChannelMgr.getInstance().getChannel(
+					c.getChannelId());
+			if (parentChannel != null) {
+				List<ArticleModelAdapter> am = new ArrayList<ArticleIndexModel.ArticleModelAdapter>();
+				for (Channel cc : parentChannel.getChildren()) {
+					ArticleModelAdapter ama = new ArticleModelAdapter();
+					ama.setChannel(cc);
+					ama.setArticleIndex(ArticleMgr.getInstance().getArticles(
+							cc.getChannelId(),
+							SysMgr.getInstance().getArticleIndexNum()));
+					am.add(ama);
+				}
+				model.put(channel1Key, am);
+			}
+
+		} else {
+			model.put(channel2Key,
+					ArticleMgr.getInstance().getArticles(c.getChannelId(), -1));
+		}
+
+		return model;
+	}
+
+	@Override
+	public void afterRelease(ReleaseModel rm) throws FtdException {
 		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public Map<String, Object> getModel(int articleId, int... channels) {
-		Map<String, Object> model = new HashMap<String, Object>();
-
-		for (int i = channels.length; i > 0; i--) {
-			if (channels[i - 1] <= 0)
-				continue;
-
-			Channel c = ChannelMgr.getInstance().getChannel(channels[i - 1]);
-			if (c == null)
-				continue;
-
-			if (c.getParentChannelId() == 0) {
-				Channel parentChannel = ChannelMgr.getInstance().getChannel(
-						c.getChannelId());
-				if (parentChannel != null) {
-					List<ArticleModelAdapter> am = new ArrayList<ArticleIndexModel.ArticleModelAdapter>();
-					for (Channel cc : parentChannel.getChildren()) {
-						ArticleModelAdapter ama = new ArticleModelAdapter();
-						ama.setChannel(cc);
-						ama.setArticleIndex(ArticleMgr.getInstance()
-								.getArticles(
-										cc.getChannelId(),
-										SysMgr.getInstance()
-												.getArticleIndexNum()));
-						am.add(ama);
-					}
-					model.put(channel1Key, am);
-				}
-
-			} else {
-				model.put(
-						channel2Key,
-						ArticleMgr.getInstance().getArticles(c.getChannelId(),
-								-1));
-			}
-		}
-		return model;
 	}
 
 	public String getChannel1Key() {

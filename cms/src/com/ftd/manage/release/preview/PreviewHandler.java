@@ -1,11 +1,13 @@
 package com.ftd.manage.release.preview;
 
-import com.ftd.manage.channel.ChannelMgr;
+import com.ftd.manage.article.Article;
+import com.ftd.manage.article.ArticleMgr;
 import com.ftd.manage.release.Release;
 import com.ftd.manage.release.ReleaseMgr;
 import com.ftd.servlet.Context;
 import com.ftd.servlet.FtdException;
 import com.ftd.servlet.Handler;
+import com.ftd.system.SysMgr;
 import com.ftd.util.StrUtil;
 
 public class PreviewHandler extends Handler {
@@ -16,28 +18,28 @@ public class PreviewHandler extends Handler {
 				(String) ctx.paramMap.get("channel1Id"), 0);
 		int channel2Id = StrUtil.parseInt(
 				(String) ctx.paramMap.get("channel2Id"), 0);
-		if (channel2Id != 0) {
-			channel1Id = channel2Id & ChannelMgr.CHANNEL_1_MASK;
-		}
-
 		int articleId = StrUtil.parseInt(
 				(String) ctx.paramMap.get("articleId"), 0);
 
-		String releaseSrc = StrUtil.parseStr((String) ctx.paramMap.get("src"),
-				"");
-
-		if (articleId != 0)
-			releaseSrc = Release.Src.ARTICLE.toString();
-		else if (channel2Id != 0) {
-			releaseSrc = Release.Src.SECOND_CHANNEL.toString();
+		if (channel2Id != 0) {
+			if (articleId == 0) {
+				ReleaseMgr.getInstance().preview(Release.Src.SECOND_CHANNEL,
+						channel2Id, 0, ctx);
+			} else {
+				Article a = ArticleMgr.getInstance().getArticle(articleId);
+				if (a != null) {
+					ReleaseMgr.getInstance().preview(Release.Src.ARTICLE,
+							a.getChannelId(), articleId, ctx);
+				}
+			}
+			return;
 		} else if (channel1Id != 0) {
-			releaseSrc = Release.Src.FIRST_CHANNEL.toString();
-		} else {
-			releaseSrc = Release.Src.MAIN_PAGE.toString();
+			ReleaseMgr.getInstance().preview(Release.Src.FIRST_CHANNEL,
+					channel1Id, 0, ctx);
+			return;
 		}
 
-		ReleaseMgr.getInstance().preview(articleId, releaseSrc, ctx, null,
-				channel1Id, channel2Id);
+		ReleaseMgr.getInstance().preview(Release.Src.MAIN_PAGE,
+				SysMgr.getInstance().getMainPageChannel(), 0, ctx);
 	}
-
 }

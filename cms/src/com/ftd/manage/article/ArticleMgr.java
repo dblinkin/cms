@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 
 import com.ftd.manage.channel.Channel;
 import com.ftd.manage.channel.ChannelMgr;
+import com.ftd.manage.release.Release;
+import com.ftd.manage.release.ReleaseMgr;
 import com.ftd.manage.release.model.ReleaseModel;
 import com.ftd.servlet.FtdException;
 
@@ -78,6 +80,8 @@ public class ArticleMgr {
 
 	public void addArticle(Article a) throws FtdException {
 		a.setArticleId(articleId.incrementAndGet());
+		a.setArticleUrl(ReleaseMgr.getInstance().getReleaseFilename(
+				Release.Src.ARTICLE, a.getChannelId()));
 		ArticleDao.insert(a);
 
 		a.setArticleContent(null);
@@ -97,22 +101,21 @@ public class ArticleMgr {
 	}
 
 	public void updateArticle(Article a) throws FtdException {
-		ArticleDao.update(a);
 
 		Article old = articleId_article.get(a.getArticleId());
 		if (old != null) {
 			old.updateEdit(a);
+			ArticleDao.update(old);
 		}
 	}
 
 	public void releaseArticle(ReleaseModel rm) throws FtdException {
 		ArticleDao.updateRelease(rm);
 
-		Article a = articleId_article.get(rm.getArticleId());
+		Article a = articleId_article.get(rm.getModelId());
 		if (a != null) {
 			a.setReleased(true);
 			a.setReleasedTime(rm.getReleaseTime());
-			a.setArticleUrl(rm.getReleaseFilename());
 		}
 	}
 

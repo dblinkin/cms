@@ -1,4 +1,4 @@
-package com.ftd.manage.release;
+package com.ftd.manage.release.handler;
 
 import java.util.List;
 
@@ -6,6 +6,8 @@ import com.ftd.manage.article.Article;
 import com.ftd.manage.article.ArticleMgr;
 import com.ftd.manage.channel.Channel;
 import com.ftd.manage.channel.ChannelMgr;
+import com.ftd.manage.release.Release;
+import com.ftd.manage.release.ReleaseMgr;
 import com.ftd.servlet.Context;
 import com.ftd.servlet.FtdException;
 import com.ftd.servlet.Handler;
@@ -22,16 +24,14 @@ public class ReleaseAllHandler extends Handler {
 
 		List<Article> articles = ArticleMgr.getInstance().getArticleAll();
 		for (Article a : articles) {
-			ReleaseMgr.getInstance().release(a.getArticleId(),
-					Release.Src.ARTICLE.toString(),
-					a.getChannelId() & ChannelMgr.CHANNEL_1_MASK,
-					a.getChannelId());
+			ReleaseMgr.getInstance().release(Release.Src.ARTICLE,
+					a.getChannelId(), a.getArticleId());
 		}
 
 		for (Channel c : ChannelMgr.getInstance().getCopyChannels()) {
 			if (c.getChannelId() == SysMgr.getInstance().getMainPageChannel()) {
-				ReleaseMgr.getInstance().release(0,
-						Release.Src.MAIN_PAGE.toString(), c.getChannelId());
+				ReleaseMgr.getInstance().release(Release.Src.MAIN_PAGE,
+						c.getChannelId(), 0);
 				continue;
 			}
 
@@ -39,12 +39,11 @@ public class ReleaseAllHandler extends Handler {
 				continue;
 			}
 
-			ReleaseMgr.getInstance().release(0,
-					Release.Src.FIRST_CHANNEL.toString(), c.getChannelId());
+			ReleaseMgr.getInstance().release(Release.Src.FIRST_CHANNEL,
+					c.getChannelId(), 0);
 			for (Channel cc : c.getChildren()) {
-				ReleaseMgr.getInstance().release(0,
-						Release.Src.SECOND_CHANNEL.toString(),
-						c.getChannelId(), cc.getChannelId());
+				ReleaseMgr.getInstance().release(Release.Src.SECOND_CHANNEL,
+						cc.getChannelId(), 0);
 			}
 
 		}

@@ -92,7 +92,7 @@ public class ChannelMgr {
 		for (Channel c : channelId_channel.values()) {
 			if (c.getChannelId() == SysMgr.getInstance().getMainPageChannel()) {
 				String url = ReleaseMgr.getInstance().getReleaseFilename(
-						Release.Src.MAIN_PAGE.toString(), c.getChannelId());
+						Release.Src.MAIN_PAGE, c.getChannelId());
 				c.setChannelUrl(url);
 				continue;
 			}
@@ -100,15 +100,13 @@ public class ChannelMgr {
 			if (c.getParentChannelId() == 0) {
 				if (c.getIsNav() == 1 && StrUtil.isEmpty(c.getChannelUrl())) {
 					String url = ReleaseMgr.getInstance().getReleaseFilename(
-							Release.Src.FIRST_CHANNEL.toString(),
-							c.getChannelId());
+							Release.Src.FIRST_CHANNEL, c.getChannelId());
 					c.setChannelUrl(url);
 				}
 			} else {
 				if (c.getIsNav() == 1 && StrUtil.isEmpty(c.getChannelUrl())) {
 					String url = ReleaseMgr.getInstance().getReleaseFilename(
-							Release.Src.SECOND_CHANNEL.toString(),
-							c.getParentChannelId(), c.getChannelId());
+							Release.Src.SECOND_CHANNEL, c.getChannelId());
 					c.setChannelUrl(url);
 				}
 			}
@@ -153,9 +151,16 @@ public class ChannelMgr {
 
 		channelId_channel.put(channel.getChannelId(), channel);
 		if (channel.getParentChannelId() == 0) {
-			channel.setChannelUrl(ReleaseMgr.getInstance().getReleaseFilename(
-					Release.Src.FIRST_CHANNEL.toString(),
-					channel.getChannelId()));
+			if (channel.getChannelId() == SysMgr.getInstance()
+					.getMainPageChannel()) {
+				channel.setChannelUrl(ReleaseMgr.getInstance()
+						.getReleaseFilename(Release.Src.MAIN_PAGE,
+								channel.getChannelId()));
+			} else {
+				channel.setChannelUrl(ReleaseMgr.getInstance()
+						.getReleaseFilename(Release.Src.FIRST_CHANNEL,
+								channel.getChannelId()));
+			}
 			channels.add(channel);
 			idMap.put(channel.getChannelId() >> OFFSET, new AtomicInteger());
 		} else {
@@ -163,9 +168,7 @@ public class ChannelMgr {
 					.getParentChannelId());
 			if (parentChannel != null) {
 				channel.setChannelUrl(ReleaseMgr.getInstance()
-						.getReleaseFilename(
-								Release.Src.FIRST_CHANNEL.toString(),
-								parentChannel.getChannelId(),
+						.getReleaseFilename(Release.Src.SECOND_CHANNEL,
 								channel.getChannelId()));
 				parentChannel.addChild(channel);
 			}

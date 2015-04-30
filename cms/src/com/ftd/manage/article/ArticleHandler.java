@@ -45,7 +45,7 @@ public class ArticleHandler extends Handler {
 
 				ctx.putResult("rows", ja);
 				ctx.putResult("results", ArticleDao.selectNum(channel1Id,
-						channel2Id, startDate, endDate, pageSize, pageNum));
+						channel2Id, startDate, endDate));
 			} else {
 				int articleId = StrUtil.parseInt(articleIdStr, 0);
 				if (articleId != 0) {

@@ -15,7 +15,7 @@ public class Channel {
 	// 栏目跳转的URL
 	private String channelUrl;
 	// 栏目使用的模板
-	private String channelTpl;
+	private String releaseId;
 
 	private int isNav;
 
@@ -28,7 +28,8 @@ public class Channel {
 		channelName = c.channelName;
 		channelDesc = c.channelDesc;
 		channelUrl = c.channelUrl;
-		channelTpl = c.channelTpl;
+		releaseId = c.releaseId;
+		isNav = c.isNav;
 	}
 
 	public void removeChild(Channel c) {
@@ -75,12 +76,12 @@ public class Channel {
 		this.channelUrl = channelUrl;
 	}
 
-	public String getChannelTpl() {
-		return channelTpl;
+	public String getReleaseId() {
+		return releaseId;
 	}
 
-	public void setChannelTpl(String channelTpl) {
-		this.channelTpl = channelTpl;
+	public void setReleaseId(String releaseId) {
+		this.releaseId = releaseId;
 	}
 
 	public List<Channel> getChildren() {

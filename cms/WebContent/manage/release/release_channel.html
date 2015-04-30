@@ -86,7 +86,7 @@ BUI.use('bui/form',function (Form) {
   
   $("#release").click(function(){
 	  $.ajax({
-		  url : "manage_release.do",
+		  url : "manage_release_channel.do",
 		  data : form.serializeToObject(),
 		  success : function(data){
 			  BUI.Message.Alert('发布成功','success');

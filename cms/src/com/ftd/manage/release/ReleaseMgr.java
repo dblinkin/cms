@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,19 +13,25 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ftd.manage.article.Article;
+import com.ftd.manage.article.ArticleMgr;
+import com.ftd.manage.channel.Channel;
+import com.ftd.manage.channel.ChannelMgr;
 import com.ftd.manage.release.Release.Src;
-import com.ftd.manage.release.check.AfterRelease;
 import com.ftd.manage.release.model.ModelProvider;
 import com.ftd.manage.release.model.ReleaseModel;
 import com.ftd.servlet.Context;
 import com.ftd.servlet.FtdException;
 import com.ftd.system.FilePath;
+import com.ftd.system.SysMgr;
 import com.ftd.util.StrUtil;
 import com.ftd.util.XmlUtil;
 
@@ -35,8 +42,10 @@ import freemarker.template.TemplateExceptionHandler;
 
 public class ReleaseMgr {
 
-	// 并发给以后扩展
-	private Map<String, Release> releaseSrc_release = new ConcurrentHashMap<String, Release>();
+	// 并发给以后扩展 默认发布方式 releaseSrc-Release
+	private Map<String, Release> default_release = new ConcurrentHashMap<String, Release>();
+	// releaseId-Release
+	private Map<String, Release> releaseId_release = new ConcurrentHashMap<String, Release>();
 
 	private Configuration cfg;
 
@@ -62,37 +71,29 @@ public class ReleaseMgr {
 		return true;
 	}
 
-	public Release getRelease(String src) {
-		return releaseSrc_release.get(src);
-	}
-
-	/**
-	 * 发布一个网页
-	 * 
-	 * @param releaseSrc
-	 *            网页种类
-	 * @param releaseId
-	 *            栏目Id 或者文章Id
-	 * @throws FtdException
-	 */
-	public void release(int articleId, String releaseSrc, int... channelIds)
+	public void release(Release.Src src, int channelId, int articleId)
 			throws FtdException {
-		Release r = releaseSrc_release.get(releaseSrc);
-		if (r == null)
-			throw new FtdException(null, "release.manager.not.found",
-					releaseSrc);
+		ReleaseMsg releaseMsg = getReleaseMsg(src, channelId, articleId);
+		if (releaseMsg == null) {
+			throw new FtdException(null, "release.not.found");
+		}
+
+		Release release = null;
+		if (!StrUtil.isEmpty(releaseMsg.releaseId)) {
+			release = releaseId_release.get(releaseMsg.releaseId);
+		}
+		if (release == null) {
+			release = default_release.get(src.toString());
+		}
 
 		// 取得数据
 		Map<String, Object> models = new HashMap<String, Object>();
-		for (ModelProvider model : r.getModels()) {
-			if (!model.isCached()) {
-				model.setModel(articleId, channelIds);
-			}
-			models.putAll(model.getModel(articleId, channelIds));
+		for (ModelProvider model : release.getModels()) {
+			models.putAll(model.getModel(channelId, articleId));
 		}
 
 		// 得到文件名
-		String filename = getReleaseFilename(releaseSrc, channelIds);
+		String filename = releaseMsg.fileName;
 		int i = filename.lastIndexOf("/");
 		if (i > 0) {
 			String dirStr = FilePath.ROOT_PATH + filename.substring(0, i);
@@ -102,57 +103,112 @@ public class ReleaseMgr {
 		}
 
 		// 发布网页
-		writeFile(FilePath.ROOT_PATH + filename, models, r.getTemplateName());
+		writeFile(FilePath.ROOT_PATH + filename, models,
+				release.getTemplateName());
 
 		// 发布网页后的数据
 		ReleaseModel rm = new ReleaseModel();
-		rm.setArticleId(articleId);
-		rm.setReleaseFilename(filename);
 		rm.setReleaseTime(System.currentTimeMillis());
-		for (int j = channelIds.length; j > 0; j--) {
-			if (channelIds[j - 1] > 0) {
-				rm.setChannelId(channelIds[j - 1]);
-				break;
-			}
-		}
-
-		// 发布后需要做的一些操作
-		for (AfterRelease ar : r.getAfterReleases()) {
-			ar.afterRelease(rm);
+		for (ModelProvider model : release.getModels()) {
+			model.afterRelease(rm);
 		}
 
 	}
 
-	public String getReleaseFilename(String src, int... channelIds) {
+	private ReleaseMsg getReleaseMsg(Release.Src src, int channelId,
+			int articleId) {
+		String releaseId = null;
+		if (src == Release.Src.ARTICLE) {
+			Article a = ArticleMgr.getInstance().getArticle(articleId);
+			if (a == null)
+				return null;
+			if (!StrUtil.isEmpty(a.getReleaseId())) {
+				releaseId = a.getReleaseId();
+			}
+			return new ReleaseMsg(releaseId, a.getArticleUrl());
+
+		} else if (src == Release.Src.FIRST_CHANNEL
+				|| src == Release.Src.SECOND_CHANNEL) {
+			Channel c = ChannelMgr.getInstance().getChannel(channelId);
+			if (c == null)
+				return null;
+			if (!StrUtil.isEmpty(c.getReleaseId())) {
+				releaseId = c.getReleaseId();
+			}
+			return new ReleaseMsg(releaseId, c.getChannelUrl());
+		} else if (src == Release.Src.MAIN_PAGE) {
+			int cid = SysMgr.getInstance().getMainPageChannel();
+			Channel c = ChannelMgr.getInstance().getChannel(cid);
+			if (c == null)
+				return null;
+			if (!StrUtil.isEmpty(c.getReleaseId())) {
+				releaseId = c.getReleaseId();
+			}
+			return new ReleaseMsg(releaseId, c.getChannelUrl());
+		}
+		return null;
+	}
+
+	public String getReleaseFilename(Release.Src src, int channelId) {
 		String filename = null;
-		Release r = releaseSrc_release.get(src);
+		Release r = default_release.get(src.toString());
 		if (r != null) {
 			filename = PathFormat.parse(
-					PathFormat.format(r.getFilenameFormat()), channelIds);
+					PathFormat.format(r.getFilenameFormat()), channelId);
 		}
 		return filename;
 
 	}
 
-	public void preview(int articleId, String releaseSrc, Context ctx,
-			Map<String, Object> article, int... channelIds) throws FtdException {
-		Release r = releaseSrc_release.get(releaseSrc);
-		if (r == null)
-			throw new FtdException(null, "release.manager.not.found",
-					releaseSrc);
+	public void preview(Release.Src src, int channelId, int articleId,
+			Context ctx) throws FtdException {
+		ReleaseMsg releaseMsg = getReleaseMsg(src, channelId, articleId);
+		if (releaseMsg == null) {
+			throw new FtdException(null, "release.not.found");
+		}
+
+		Release release = null;
+		if (!StrUtil.isEmpty(releaseMsg.releaseId)) {
+			release = releaseId_release.get(releaseMsg.releaseId);
+		}
+		if (release == null) {
+			release = default_release.get(src.toString());
+		}
 
 		// 取得数据
 		Map<String, Object> models = new HashMap<String, Object>();
-		for (ModelProvider model : r.getModels()) {
-			if (!model.isCached()) {
-				model.setModel(articleId, channelIds);
-			}
-			models.putAll(model.getModel(articleId, channelIds));
+		for (ModelProvider model : release.getModels()) {
+			models.putAll(model.getModel(channelId, articleId));
 		}
-		if (article != null)
-			models.putAll(article);
 
-		writeResponse(ctx.response, models, r.getTemplateName());
+		writeResponse(ctx.response, models, release.getTemplateName());
+	}
+
+	public void realTimePreview(Release.Src src, int channelId, int articleId,
+			Context ctx) throws FtdException {
+
+		String releaseId = StrUtil.parseStr(
+				(String) ctx.paramMap.get("releaseId"), "");
+		Release release = null;
+		if (StrUtil.isEmpty(releaseId)) {
+			release = default_release.get(src.toString());
+		} else {
+			release = releaseId_release.get(releaseId);
+		}
+		if (release == null) {
+			throw new FtdException(null, "release.not.found");
+		}
+
+		// 取得数据
+		Map<String, Object> models = new HashMap<String, Object>();
+		for (ModelProvider model : release.getModels()) {
+			models.putAll(model.getModel(channelId, articleId));
+		}
+		JSONObject obj = JSONObject.fromObject(ctx.paramMap);
+		Article a = (Article) JSONObject.toBean(obj, Article.class);
+		models.put("article", a);
+
+		writeResponse(ctx.response, models, release.getTemplateName());
 	}
 
 	// 初始化freemarker模板引擎
@@ -221,6 +277,7 @@ public class ReleaseMgr {
 			HashMap<String, String> kv = XmlUtil.getAttribute(releaseElement);
 
 			Release release = new Release();
+			release.setId(StrUtil.parseStr(kv.get("Id"), ""));
 			release.setSrc(Src.valueOf(kv.get("Src").toUpperCase()));
 			release.setTemplateName(StrUtil.parseStr(kv.get("Template"), ""));
 			release.setFilenameFormat(StrUtil.parseStr(
@@ -239,32 +296,56 @@ public class ReleaseMgr {
 						| ClassNotFoundException e) {
 					logger.error(ExceptionUtils.getStackTrace(e));
 				}
-				if (mp != null)
+				if (mp != null) {
+					HashMap<String, String> mpkv = XmlUtil
+							.getAttribute(releaseElement);
+					int modelId = StrUtil.parseInt(mpkv.get("ModelId"), 0);
+					if (modelId != 0)
+						mp.setModelId(modelId);
 					release.getModels().add(mp);
-			}
-
-			for (Element aftercheckElement : releaseElement
-					.elements("AfterRelease")) {
-				String aftercheckClass = StrUtil.parseStr(
-						aftercheckElement.getTextTrim(), "");
-				if (StrUtil.isEmpty(aftercheckClass))
-					continue;
-				AfterRelease ac = null;
-				try {
-					ac = (AfterRelease) Class.forName(aftercheckClass)
-							.newInstance();
-				} catch (InstantiationException | IllegalAccessException
-						| ClassNotFoundException e) {
-					logger.error(ExceptionUtils.getStackTrace(e));
 				}
-				if (ac != null)
-					release.getAfterReleases().add(ac);
-
 			}
-			releaseSrc_release.put(release.getSrc().toString(), release);
+
+			releaseId_release.put(release.getId(), release);
+		}
+
+		for (Element defaultElement : root.elements("Default")) {
+			HashMap<String, String> kv = XmlUtil.getAttribute(defaultElement);
+			String src = StrUtil.parseStr(kv.get("Src"), "");
+			Src s = Release.Src.valueOf(src);
+			if (s == null)
+				continue;
+
+			String id = StrUtil.parseStr(kv.get("ReleaseId"), "");
+			if (StrUtil.isEmpty(id))
+				continue;
+			Release r = releaseId_release.get(id);
+			if (r == null)
+				continue;
+
+			default_release.put(s.toString(), r);
 		}
 
 		return true;
+	}
+
+	public Release getRelease(Release.Src src) {
+		return default_release.get(src.toString());
+	}
+
+	public Collection<Release> getReleases() {
+		return releaseId_release.values();
+	}
+
+	public static class ReleaseMsg {
+		public final String releaseId;
+		public final String fileName;
+
+		public ReleaseMsg(String releaseId, String fileName) {
+			this.releaseId = releaseId;
+			this.fileName = fileName;
+		}
+
 	}
 
 }

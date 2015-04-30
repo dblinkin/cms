@@ -24,7 +24,7 @@ public class PathFormat {
 
 	private static Date currentDate = null;
 
-	public static String parse(String input, int... channelId) {
+	public static String parse(String input, int channelId) {
 
 		Pattern pattern = Pattern.compile("\\{([^\\}]+)\\}",
 				Pattern.CASE_INSENSITIVE);
@@ -89,7 +89,7 @@ public class PathFormat {
 		return sb.toString();
 	}
 
-	private static String getString(String pattern, int... channelIds) {
+	private static String getString(String pattern, int channelId) {
 
 		pattern = pattern.toLowerCase();
 
@@ -113,9 +113,9 @@ public class PathFormat {
 		} else if (pattern.indexOf(PathFormat.RAND) != -1) {
 			return PathFormat.getRandom(pattern);
 		} else if (pattern.indexOf(PathFormat.FIRST_CHANNEL) != -1) {
-			return PathFormat.getFirstChannel(channelIds);
+			return PathFormat.getFirstChannel(channelId);
 		} else if (pattern.indexOf(PathFormat.SECOND_CHANNEL) != -1) {
-			return PathFormat.getSecondChannel(channelIds);
+			return PathFormat.getSecondChannel(channelId);
 		}
 
 		return pattern;
@@ -165,17 +165,24 @@ public class PathFormat {
 
 	}
 
-	private static String getFirstChannel(int... channelIds) {
-		if (channelIds.length >= 1) {
-			Channel c = ChannelMgr.getInstance().getChannel(channelIds[0]);
+	private static String getFirstChannel(int channelId) {
+		Channel c = ChannelMgr.getInstance().getChannel(channelId);
+		if (c == null) {
+			return "";
+		}
+
+		if (c.getParentChannelId() != 0) {
+			Channel pc = ChannelMgr.getInstance().getChannel(
+					c.getParentChannelId());
+			return pc.getChannelDesc();
+		} else {
 			return c.getChannelDesc();
 		}
-		return "";
 	}
 
-	private static String getSecondChannel(int... channelIds) {
-		if (channelIds.length >= 2) {
-			Channel c = ChannelMgr.getInstance().getChannel(channelIds[1]);
+	private static String getSecondChannel(int channelId) {
+		Channel c = ChannelMgr.getInstance().getChannel(channelId);
+		if (c != null && c.getParentChannelId() == 0) {
 			return c.getChannelDesc();
 		}
 		return "";

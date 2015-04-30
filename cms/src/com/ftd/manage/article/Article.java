@@ -21,11 +21,14 @@ public class Article {
 	private String articleSrc;
 	// 文章内容
 	private String articleContent;
+	// 发布器ID
+	private String releaseId;
 
 	public void updateEdit(Article a) {
 		this.channelId = a.channelId;
 		this.articleTitle = a.articleTitle;
 		this.articleSrc = a.articleSrc;
+		this.releaseId = a.releaseId;
 	}
 
 	// -----------getter setter-------------
@@ -108,6 +111,14 @@ public class Article {
 
 	public void setArticleSrc(String articleSrc) {
 		this.articleSrc = articleSrc;
+	}
+
+	public String getReleaseId() {
+		return releaseId;
+	}
+
+	public void setReleaseId(String releaseId) {
+		this.releaseId = releaseId;
 	}
 
 }
