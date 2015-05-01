@@ -71,6 +71,42 @@ public class ReleaseMgr {
 		return true;
 	}
 
+	public void release(int channelId, Releasable r) throws FtdException {
+
+		// 取得发布配置
+		Release rc = releaseId_release.get(r.getReleaseId());
+		if (rc == null) {
+			throw new FtdException(null, "release.not.found");
+		}
+
+		// 取得数据
+		Map<String, Object> models = new HashMap<String, Object>();
+		for (ModelProvider model : rc.getModels()) {
+			models.putAll(model.getModel(channelId, 0));
+		}
+
+		// 得到文件名
+		String filename = r.getReleaseUrl();
+		if (StrUtil.isEmpty(filename)) {
+			filename = PathFormat.parse(
+					PathFormat.format(rc.getFilenameFormat()), channelId);
+		}
+		int i = filename.lastIndexOf("/");
+		if (i > 0) {
+			String dirStr = FilePath.ROOT_PATH + filename.substring(0, i);
+			File dir = new File(dirStr);
+			if (!dir.exists())
+				dir.mkdirs();
+		}
+
+		// 发布网页
+		writeFile(FilePath.ROOT_PATH + filename, models, rc.getTemplateName());
+
+		// 发布后的更新
+		r.afterRelease(new AfterRelease(filename));
+
+	}
+
 	public void release(Release.Src src, int channelId, int articleId)
 			throws FtdException {
 		ReleaseMsg releaseMsg = getReleaseMsg(src, channelId, articleId);

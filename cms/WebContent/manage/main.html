@@ -55,9 +55,9 @@
             },{
             	text: "交易项目",
             	items:[
-           	       	{id:"purchaseProject", text:"受让项目", href:"content/project/purchase_project_query.html"},
+           	       	{id:"purchaseProject", text:"受让项目", href:"ext/pchsproject/purchase_project.html"},
            	   	   	{id:"recommendedProject", text:"推荐项目", href:"ext/rcmdproject/recommend_project.html"},
-           			{id:"listedProject", text:"挂牌项目", href:"content/project/listed_project_query.html"}
+           			{id:"listedProject", text:"挂牌项目", href:"ext/listedproject/listed_project.html"}
             	]
             }]
           },{
@@ -69,7 +69,13 @@
                   {id:'channel',text:'栏目页发布',href:'release/release_channel.html'},
                   {id:'article',text:'文章发布',href:'release/release_article.html'}
                 ]
-              }]
+              },{
+                  text:'项目发布',
+                  items:[
+                    {id:'listed',text:'挂牌项目发布',href:'release/release_project_listed.html'},
+                    {id:'purchase',text:'受让项目发布',href:'release/release_project_purchase.html'}
+                  ]
+                }]
           },{
             id:'user',
             menu:[{

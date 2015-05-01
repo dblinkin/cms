@@ -12,18 +12,6 @@
   <div class="container">
     <div class="row">
       <form id="searchForm" class="form-horizontal span24">
-        <div class="row">
-          <div class="control-group span8">
-            <label class="control-label">文章类型：</label>
-            <div class="controls bui-form-group-select" data-type="channel">
-	          <select class="input-small" name="channel1Id"><option>一级栏目</option></select>&nbsp;&nbsp;
-	          <select class="input-small" name="channel2Id"><option>二级栏目</option></select>
-	        </div>
-          </div>
-          <div class="span3 offset2">
-            <button  type="button" id="btnSearch" class="button button-primary">搜索</button>
-          </div>
-        </div>
       </form>
     </div>
     <div class="search-grid-container">
@@ -46,41 +34,15 @@
   </script>
 <script type="text/javascript">
   BUI.use(['common/search','bui/form'],function (Search,Form) {
-	// 自定义类型
-    BUI.Form.Group.Select.addType('channel',{
-   	  proxy : {//加载数据的配置项
-	 	url : 'manage_query_channel.do',
-	    dataType : 'json'
-	  },
-      root : {id : '0'}
-    });
-	
-	$(":input[name='channel1Id']").change(function(){
-		$.ajax({
-			url : 'manage_query_channel.do',
-			data : {id : $(this).val()},
-			success : function(data){
-				var first = $("option:first",":input[name='channel2Id']");
-				$(":input[name='channel2Id']").empty().append(first);	
-				if(data.nodes && data.nodes.length){									
-					$(data.nodes).each(function(i){
-						var str = "<option value='"+data.nodes[i].id + "'>" +data.nodes[i].text +"</option>";
-						$(":input[name='channel2Id']").append(str);
-					});
-				}
-			}
-		});
-	});
 	  
 	
     var enumBoolean = {"true":"是", "false":"否"},
       columns = [
-          {title:'文章ID',dataIndex:'articleId',width:80,elCls:'center',},
-          {title:'文章标题',dataIndex:'articleTitle',width:200,elCls:'center'},
-          {title:'文章模板',dataIndex:'releaseId',width:100,elCls:'center'},
-          {title:'是否发布',dataIndex:'released',width:60,elCls:'center',renderer:BUI.Grid.Format.enumRenderer(enumBoolean)},
-          {title:'创建时间',dataIndex:'createTime',width:100,elCls:'center',renderer:BUI.Grid.Format.dateRenderer},
-          {title:'上次发布时间',dataIndex:'releasedTime',width:100,elCls:'center',renderer:BUI.Grid.Format.dateRenderer},
+          {title:'项目ID',dataIndex:'projectId',width:80,elCls:'center'},
+          {title:'项目编号',dataIndex:'projectNum',width:80,elCls:'center'},
+          {title:'项目标题',dataIndex:'projectTitle',width:200,elCls:'center'},
+          {title:'项目类型',dataIndex:'projectType',width:100,elCls:'center'},
+          {title:'文章模板',dataIndex:'releaseId',width:60,elCls:'center',renderer:BUI.Grid.Format.enumRenderer(enumBoolean)},
           {title:'操作',dataIndex:'',width:100,elCls:'center',renderer : function(value,obj){
             var releaseStr = '<i class="icon-upload"></i><span class="grid-command btn-release" title="发布">发布</span>',
             	previewStr = '<i class="icon-eye-open"></i><span class="grid-command btn-preview" title="预览">预览</span>';
@@ -88,11 +50,11 @@
             return releaseStr + previewStr;
           }}
         ],
-      store = Search.createStore('manage_article.do?opr=query',{
+      store = Search.createStore('manage_listed_project.do?opr=query',{
         proxy : {
           save : { //也可以是一个字符串，那么增删改，都会往那么路径提交数据，同时附加参数saveType
             addUrl : 'manage_article.do?opr=insert',
-            updateUrl : 'manage_release_article.do',
+            updateUrl : 'manage_release_listed_project.do',
             removeUrl : 'manage_article.do?opr=delete'
           },
           pageStart : 1,

@@ -72,6 +72,10 @@ public class StrUtil {
 		return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date);
 	}
 
+	public static String date(long date) {
+		return new SimpleDateFormat("yyyy-MM-dd").format(date);
+	}
+
 	public static long parseDatetime(String dateTime, long defaultValue) {
 		if (StrUtil.isEmpty(dateTime))
 			return defaultValue;
@@ -79,6 +83,21 @@ public class StrUtil {
 		Date d = null;
 		try {
 			d = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateTime);
+		} catch (ParseException e) {
+			// do nothing
+		}
+		if (d != null)
+			value = d.getTime();
+		return value;
+	}
+
+	public static long parseDate(String dateTime, long defaultValue) {
+		if (StrUtil.isEmpty(dateTime))
+			return defaultValue;
+		long value = defaultValue;
+		Date d = null;
+		try {
+			d = new SimpleDateFormat("yyyy-MM-dd").parse(dateTime);
 		} catch (ParseException e) {
 			// do nothing
 		}

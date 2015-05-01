@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <System>
-	 <Database JdbcUrl="jdbc:mysql://123.57.207.129:3306/cms" User="root" Password="root"/>
-	<!--<Database JdbcUrl="jdbc:mysql://192.168.1.101:3306/cms" User="lvlv" Password="123456"/> -->
+	 <Database JdbcUrl="jdbc:mysql://localhost:3306/cms" User="root" Password="root"/>
+	<!-- <Database JdbcUrl="jdbc:mysql://123.57.207.129:3306/cms" User="root" Password="root"/> -->
 	
 	<MainPageChannel>256</MainPageChannel>
 	<Lang>zh_CN</Lang>
@@ -12,27 +12,26 @@
 		<Handler Req="manage_channel.do" Class="com.ftd.manage.channel.ChannelHandler"/>
 		<Handler Req="manage_query_channel.do" Class="com.ftd.manage.channel.ChannelHandlerQueryFirst"/>
 	
+		<Handler Req="manage_article.do" Class="com.ftd.manage.article.ArticleHandler"/>
 		<!-- 网页发布前的预览 -->
 		<Handler Req="manage_article_preview.do" Class="com.ftd.manage.release.preview.RealtimePreviewHandler"/>
 		<Handler Req="manage_preview.do" Class="com.ftd.manage.release.preview.PreviewHandler"/>
-		<Handler Req="manage_article.do" Class="com.ftd.manage.article.ArticleHandler"/>
 		
-		<Handler Req="manage_release.do" Class="com.ftd.manage.release.ReleaseHandler"/>
-		<Handler Req="manage_release_all.do" Class="com.ftd.manage.release.ReleaseAllHandler"/>
+		<Handler Req="manage_release_query.do" Class="com.ftd.manage.release.handler.ReleaseQueryHandler"/>
+		<Handler Req="manage_release_article.do" Class="com.ftd.manage.release.handler.ReleaseArticleHandler"/>
+		<Handler Req="manage_release_channel.do" Class="com.ftd.manage.release.handler.ReleaseChannelHandler"/>
+		<Handler Req="manage_release_mainpage.do" Class="com.ftd.manage.release.handler.ReleaseMainPageHandler"/>
+		<Handler Req="manage_release_all.do" Class="com.ftd.manage.release.handler.ReleaseAllHandler"/>
+		
+		<!-- 扩展发布方式 -->
+		<Handler Req="manage_release_listed_project.do" Class="com.ext.release.ReleaseListedProjectHandler"/>
+		<Handler Req="manage_release_purchase_project.do" Class="com.ext.release.ReleasePchsProjectHandler"/>
 	
-		<!-- 轮播新闻-->
+		<!-- 扩展部分 -->
 		<Handler Req="manage_poll_news.do" Class="com.ext.newspoll.NewsPollHandler"/>
 		<Handler Req="manage_recommend_project.do" Class="com.ext.project.recommend.RcmdProjectHandler"/>
+		<Handler Req="manage_purchase_project.do" Class="com.ext.project.purchase.PurchaseProjectHandler"/>
+		<Handler Req="manage_listed_project.do" Class="com.ext.project.listed.ListedProjectHandler"/>
 		<Handler Req="manage_friend_link.do" Class="com.ext.friendlink.FriendLinkHandler"/>
-		
-		<Handler Req="manage_news_add.do" Class="com.ftd.manage.news.NewsHandlerAdd"/>
-		<Handler Req="manage_news_modify.do" Class="com.ftd.manage.news.NewsHandlerUpdate"/>
-		<Handler Req="manage_news_delete.do" Class="com.ftd.manage.news.NewsHandlerDelete"/>
-		
-		<!-- 通知公告 -->
-		
-		<!-- 交易项目 -->
-		
-		<!-- 友情链接 -->
 	</Handlers>
 </System>

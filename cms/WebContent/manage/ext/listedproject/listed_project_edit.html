@@ -1,0 +1,167 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <title>编辑新闻</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="../../assets/css/dpl-min.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/bui-min.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/page-min.css" rel="stylesheet" type="text/css" />
+    
+    <link href="../../ueditor/themes/default/css/ueditor.min.css" type="text/css" rel="stylesheet">
+ </head>
+ <body>
+  
+  <div class="container">
+    <div class="row">
+      <form id="J_Form" class="span24" action="manage_article_preview.do" target="_blank" method="post">
+        <h3>基本信息</h3>
+        <div class="row">
+          <div class="control-group span12">
+            <label class="control-label"><s>*</s>项目标题：</label>
+            <div class="controls">
+              <input name="projectTitle" type="text" data-rules="{required:true}" class="input-large control-text">
+            </div>
+          </div>      
+        </div>
+        <h3>项目信息</h3>
+        <div class="row">
+          <div class="control-group span12">
+            <label class="control-label"><s>*</s>项目编号：</label>
+            <div class="controls">
+              <input name="projectNum" type="text" data-rules="{required:true}" class="input-normal control-text">
+            </div>
+          </div> 
+          <div class="control-group span12">
+            <label class="control-label"><s>*</s>项目类别：</label>
+            <div class="controls">
+              <input name="projectType" type="text" data-rules="{required:true}" class="input-normal control-text">
+            </div>
+          </div>      
+        </div>
+        <div class="row">
+	        <div class="control-group span15 ">
+	          <label class="control-label"><s>*</s>挂牌起始日期：</label>
+	          <div id="range" class="controls bui-form-group" data-rules="{dateRange : true}">
+	            <input name="listedStartTime" class="calendar" type="text"><label> - </label><input name="listedEndTime" class="calendar" type="text">
+	          </div>
+	        </div>
+	    </div>
+		<h3>流转信息</h3>
+		<div class="row">
+          <div class="control-group span12">
+            <label class="control-label"><s>*</s>转出方名称：</label>
+            <div class="controls">
+              <input name="assetTransfor" type="text" data-rules="{required:true}" class="input-normal control-text">
+            </div>
+          </div> 
+          <div class="control-group span12">
+            <label class="control-label"><s>*</s>成交状态：</label>
+            <div class="controls">
+              <input name="isDeal" type="text" data-rules="{required:true}" class="input-normal control-text">
+            </div>
+          </div>          
+        </div>
+        <div class="row">
+          <div class="control-group span12">
+            <label class="control-label"><s>*</s>所在区域：</label>
+            <div class="controls">
+              <input name="district" type="text" data-rules="{required:true}" class="input-normal control-text">
+            </div>
+          </div> 
+          <div class="control-group span12">
+            <label class="control-label"><s>*</s>流转面积：</label>
+            <div class="controls">
+              <input name="transferArea" type="text" data-rules="{required:true}" class="input-normal control-text">
+            </div>
+          </div>          
+        </div>
+        <div class="row">
+          <div class="control-group span12">
+            <label class="control-label"><s>*</s>流转方式：</label>
+            <div class="controls">
+              <input name="transferType" type="text" data-rules="{required:true}" class="input-normal control-text">
+            </div>
+          </div> 
+          <div class="control-group span12">
+            <label class="control-label"><s>*</s>挂牌价格：</label>
+            <div class="controls">
+              <input name="transferPrice" type="text" data-rules="{required:true}" class="input-normal control-text">
+            </div>
+          </div>          
+        </div>
+        <div class="row">
+	        <div class="control-group span15 ">
+	          <label class="control-label"><s>*</s>流转期限：</label>
+	          <div id="range" class="controls bui-form-group" data-rules="{dateRange : true}">
+	            <input name="transferStartTime" class="calendar" type="text"><label> - </label><input name="transferEndTime" class="calendar" type="text">
+	          </div>
+	        </div>
+	    </div>
+	    <div class="row">
+          <div class="control-group span12">
+            <label class="control-label">备注：</label>
+            <div class="controls">
+              <input name="remark" type="text" class="input-large control-text">
+            </div>
+          </div>      
+        </div>
+        <div class="row form-actions actions-bar">
+            <div class="span13 offset3 ">
+              <!--  <button type="submit" class="button button-primary">预览</button>-->
+              <button type="button" id="add" class="button button-primary">保存</button>
+              <button type="reset" class="button button-primary">重置</button>
+            </div>
+        </div>
+        
+        <input type="hidden" name="projectId" value="0">
+      </form>
+    </div>
+    
+
+  </div>
+  <script type="text/javascript" src="../../assets/js/jquery-1.8.1.min.js"></script>
+  <script type="text/javascript" src="../../../lib/cms_manage.js"></script>
+  <script type="text/javascript" src="../../assets/js/bui.js"></script>
+  <script type="text/javascript" src="../../assets/js/config-min.js"></script>
+  
+  <!--  <script type="text/javascript" src="../../../lib/cms_manage_image_upload.js"></script>-->
+  
+<script type="text/javascript">	
+	BUI.use('common/page');
+</script> 
+<script type="text/javascript">
+BUI.use(['common/search','bui/form'],function (Search,Form) {
+	var form = new Form.HForm({
+		srcNode : '#J_Form'
+	}).render();
+	
+	var obj = BUI.JSON.parse(decodeURI(getHrefParam("obj")));
+	if(obj){
+		form.setRecord(obj);
+		bindSumbit('update', "更新");
+	}else{
+		bindSumbit('insert', "添加");
+	}
+	
+	function bindSumbit(type,msg){
+		$("#add").click(function(){
+			form.valid();
+			if(form.isValid()){
+				$.ajax({
+				  url : "manage_listed_project.do?opr=" + type,
+				  data : form.serializeToObject(),
+				  success : function(data){
+					  BUI.Message.Alert(msg+'成功','success');
+				  }
+			  	});
+			}else{
+				form.focusError();
+			}
+		});
+	}
+  });
+
+</script>
+
+<body>
+</html> 
