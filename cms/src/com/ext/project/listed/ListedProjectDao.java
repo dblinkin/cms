@@ -94,6 +94,9 @@ public class ListedProjectDao {
 					p.setProjectTitle(rs.getString("project_title"));
 					p.setProjectNum(rs.getString("project_num"));
 					p.setProjectType(rs.getInt("project_type"));
+					p.setListedStartTime(rs.getString("listed_start_time"));
+					p.setListedEndTime(rs.getString("listed_end_time"));
+					p.setTransferPrice(rs.getString("transfer_price"));
 					
 					p.setReleaseUrl(rs.getString("release_url"));
 					
@@ -131,16 +134,16 @@ public class ListedProjectDao {
 					p.setProjectTitle(rs.getString("project_title"));
 					p.setProjectNum(rs.getString("project_num"));
 					p.setProjectType(rs.getInt("project_type"));
-					p.setListedStartTime(rs.getDate("listed_start_time").getTime());
-					p.setListedEndTime(rs.getDate("listed_end_time").getTime());
+					p.setListedStartTime(rs.getString("listed_start_time"));
+					p.setListedEndTime(rs.getString("listed_end_time"));
 					
 					p.setAssetTransfor(rs.getString("asset_transfor"));
 					p.setIsDeal(rs.getString("is_deal"));
 					p.setDistrict(rs.getString("district"));
 					p.setTransferArea(rs.getString("transfer_area"));
 					p.setTransferType(rs.getString("transfer_type"));
-					p.setTransferStartTime(rs.getDate("transfer_start_time").getTime());
-					p.setTransferEndTime(rs.getDate("transfer_end_time").getTime());
+					p.setTransferStartTime(rs.getString("transfer_start_time"));
+					p.setTransferEndTime(rs.getString("transfer_end_time"));
 					p.setTransferPrice(rs.getString("transfer_price"));
 					p.setRemark(rs.getString("remark"));
 					
