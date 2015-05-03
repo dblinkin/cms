@@ -250,8 +250,9 @@ public class ArticleDao {
 					a.setChannelId(rs.getInt("channel_id"));
 					a.setArticleTitle(rs.getString("article_title"));
 					a.setArticleUrl(rs.getString("article_url"));
+					a.setCreateTime(rs.getString("create_time"));
 					a.setReleased(rs.getBoolean("is_released"));
-					a.setReleasedTime(rs.getDate("released_time").getTime());
+					a.setReleasedTime(rs.getString("released_time"));
 					a.setArticleSrc(rs.getString("article_src"));
 					a.setReleaseId(rs.getString("release_id"));
 
