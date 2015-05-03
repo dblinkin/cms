@@ -54,6 +54,17 @@ public class ChannelDao {
 		}
 	}
 
+	public static void updateReleaseId(int channelId, String releaseId)
+			throws FtdException {
+		String sql = "update channel set release_id=? where channel_id=?";
+		DBClient dbClient = SysMgr.getInstance().getDbClient();
+		try {
+			dbClient.executeUpdate(sql, releaseId, channelId);
+		} catch (SQLException e) {
+			throw new FtdException(e, "db.sql.error");
+		}
+	}
+
 	public static List<Channel> selectAll() throws FtdException {
 		List<Channel> channels = new ArrayList<Channel>();
 		String sql = "select * from channel";

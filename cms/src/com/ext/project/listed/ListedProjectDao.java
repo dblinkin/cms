@@ -49,6 +49,17 @@ public class ListedProjectDao {
 			throw new FtdException(e, "db.sql.error");
 		}
 	}
+	
+	public static void updateReleaseId(int projectId, String releaseId) throws FtdException {
+		String sql = "update project_listed set release_id=? where project_id=?";
+		DBClient dbClient = SysMgr.getInstance().getDbClient();
+
+		try {
+			dbClient.executeUpdate(sql, releaseId, projectId);
+		} catch (SQLException e) {
+			throw new FtdException(e, "db.sql.error");
+		}
+	}
 
 	public static void update(ListedProject p) throws FtdException {
 		String sql = "update project_listed set project_title=?,project_num=?,project_type=?,listed_start_time=?, listed_end_time=?,"
@@ -71,7 +82,7 @@ public class ListedProjectDao {
 		List<ListedProject> listedProjects = new ArrayList<ListedProject>();
 
 		DBClient dbClient = SysMgr.getInstance().getDbClient();
-		String sql = "select * from project_listed order by project_id desc";
+		String sql = "select * from project_listed order by project_type asc project_id desc";
 
 		CachedRowSet rs = null;
 		try {

@@ -76,20 +76,6 @@ BUI.use(['bui/extensions/treegrid','bui/data'],function (TreeGrid, Data) {
         contentId : 'content', //设置隐藏的Dialog内容
         triggerCls : 'btn-edit'
       });
-
-	/*
-	editing.on("editorshow", function(e, form){
-		var form = this.get('form');
-		var field = form.getField("parentChannelId");
-		field.set("remote", {
-			url : "manage_query_channel.do",
-			dataType : "json",
-			callback :function(data){
-				field.setItems(data.channels);
-			}
-		});
-	});
-	/**/
 	
 	editing.on("accept", function(e, form){
 		var editType = this.get('editType');
@@ -113,10 +99,7 @@ BUI.use(['bui/extensions/treegrid','bui/data'],function (TreeGrid, Data) {
     	}
     });
       
-	var data = [ 
-      {channelName : '新闻动态',channelDesc : '12',channelId:'256',channelTpl:'tpl',children: 
-    	  [{channelName : '热点动态',channelDesc : 'adasdf',channelId:'257',channelTpl:'tpl2'}]}
-    ];
+	var data = [];
 	
 	var store = new Data.Store({
 		data : data

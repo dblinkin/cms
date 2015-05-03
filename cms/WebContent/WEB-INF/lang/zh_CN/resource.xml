@@ -10,6 +10,7 @@
 	<String Id="error.msg.channel.not.found" Msg="栏目不存在[%1s]"/>
 	<String Id="error.msg.release.manager.not.found" Msg="发布管理器不存在[%1s]"/>
 	<String Id="error.msg.release.not.found" Msg="发布管理器不存在"/>
+	<String Id="error.msg.article.not.found" Msg="发布的文章[%1s]不存在"/>
 	
 	<!-- ftl模板名称  -->
 	<String Id="main_page" Msg="默认首页模板"/>

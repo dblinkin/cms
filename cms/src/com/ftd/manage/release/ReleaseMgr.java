@@ -196,6 +196,25 @@ public class ReleaseMgr {
 
 	}
 
+	public void preview(int channelId, Releasable r, Context ctx)
+			throws FtdException {
+
+		// 取得发布配置
+		Release rc = releaseId_release.get(r.getReleaseId());
+		if (rc == null) {
+			throw new FtdException(null, "release.not.found");
+		}
+
+		// 取得数据
+		Map<String, Object> models = new HashMap<String, Object>();
+		for (ModelProvider model : rc.getModels()) {
+			models.putAll(model.getModel(channelId, 0));
+		}
+
+		writeResponse(ctx.response, models, rc.getTemplateName());
+
+	}
+
 	public void preview(Release.Src src, int channelId, int articleId,
 			Context ctx) throws FtdException {
 		ReleaseMsg releaseMsg = getReleaseMsg(src, channelId, articleId);
@@ -367,6 +386,10 @@ public class ReleaseMgr {
 
 	public Release getRelease(Release.Src src) {
 		return default_release.get(src.toString());
+	}
+
+	public Release getRelease(String releaseId) {
+		return releaseId_release.get(releaseId);
 	}
 
 	public Collection<Release> getReleases() {

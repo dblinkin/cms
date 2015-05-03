@@ -30,6 +30,19 @@
       <div id="grid"></div>
     </div>
     
+    <div id="content" class="hide" style="width:600px">
+	    <form id="J_Form" class="form-horizontal">
+	      <div class="row">
+	      	<div class="control-group span8">
+	          <label class="control-label">栏目模板：</label>
+	          <div class="controls bui-form-field-select" data-loader="{url:'manage_release_query.do',property:'items',dataType:'json'}">
+	            <input name="releaseId" type="hidden" value="0">
+	          </div>
+	        </div>
+	      </div>
+	    </form>
+	</div>
+    
     <form id="preview" action="manage_preview.do" target="_blank" method="post">
     	<input type="hidden" id="channel2Id" name="channel2Id"/>
     	<input type="hidden" id="articleId" name="articleId"/>
@@ -74,18 +87,22 @@
 	  
 	
     var enumBoolean = {"true":"是", "false":"否"},
+      editing = new BUI.Grid.Plugins.DialogEditing({
+        contentId : 'content', //设置隐藏的Dialog内容
+        triggerCls : 'btn-edit'
+      }),
       columns = [
-          {title:'文章ID',dataIndex:'articleId',width:80,elCls:'center',},
+          {title:'文章ID',dataIndex:'articleId',width:40,elCls:'center',},
           {title:'文章标题',dataIndex:'articleTitle',width:200,elCls:'center'},
           {title:'文章模板',dataIndex:'releaseId',width:100,elCls:'center'},
           {title:'是否发布',dataIndex:'released',width:60,elCls:'center',renderer:BUI.Grid.Format.enumRenderer(enumBoolean)},
           {title:'创建时间',dataIndex:'createTime',width:100,elCls:'center',renderer:BUI.Grid.Format.dateRenderer},
           {title:'上次发布时间',dataIndex:'releasedTime',width:100,elCls:'center',renderer:BUI.Grid.Format.dateRenderer},
-          {title:'操作',dataIndex:'',width:100,elCls:'center',renderer : function(value,obj){
+          {title:'操作',dataIndex:'',width:150,elCls:'center',renderer : function(value,obj){
             var releaseStr = '<i class="icon-upload"></i><span class="grid-command btn-release" title="发布">发布</span>',
-            	previewStr = '<i class="icon-eye-open"></i><span class="grid-command btn-preview" title="预览">预览</span>';
-            	
-            return releaseStr + previewStr;
+            	previewStr = '<i class="icon-eye-open"></i><span class="grid-command btn-preview" title="预览">预览</span>',
+            	tplStr = '<i class="icon-edit"></i><span class="grid-command btn-edit" title="更换模板">更换模板</span>';
+            return releaseStr + previewStr + tplStr;
           }}
         ],
       store = Search.createStore('manage_article.do?opr=query',{
@@ -111,8 +128,21 @@
           ]
         },
         forceFit: true,
-        plugins : [BUI.Grid.Plugins.CheckSelection,BUI.Grid.Plugins.AutoFit] // 插件形式引入多选表格
+        plugins : [editing,BUI.Grid.Plugins.CheckSelection,BUI.Grid.Plugins.AutoFit] // 插件形式引入多选表格
       });
+    
+    editing.on("accept", function(e, form){
+		var editType = this.get('editType');
+		if(editType == "edit"){
+    		$.ajax({
+    			url : "manage_article_change_tpl.do",
+    			data : e.record,
+    			success : function(data){
+    				top.topManager.reloadPage();
+    			}
+    		});
+    	}
+    });
 
     var  search = new Search({
         store : store,

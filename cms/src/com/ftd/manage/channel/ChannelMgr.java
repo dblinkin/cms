@@ -212,4 +212,20 @@ public class ChannelMgr {
 
 	}
 
+	public void updateChannelTpl(int channelId, String releaseId)
+			throws FtdException {
+		Channel c = channelId_channel.get(channelId);
+		if (c == null) {
+			throw new FtdException(null, "channel.not.found", channelId);
+		}
+
+		Release r = ReleaseMgr.getInstance().getRelease(releaseId);
+		if (r == null) {
+			throw new FtdException(null, "release.not.found");
+		}
+
+		ChannelDao.updateReleaseId(channelId, releaseId);
+		c.setReleaseId(releaseId);
+	}
+
 }

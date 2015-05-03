@@ -89,6 +89,19 @@ public class ArticleDao {
 		}
 	}
 
+	public static void updateReleaseId(int articleId, String releaseId)
+			throws FtdException {
+		String sql = "update article set release_id=? where article_id=?";
+
+		DBClient dbClient = SysMgr.getInstance().getDbClient();
+
+		try {
+			dbClient.executeUpdate(sql, releaseId, articleId);
+		} catch (SQLException e) {
+			throw new FtdException(e, "db.sql.error");
+		}
+	}
+
 	public static Article select(int articleId) throws FtdException {
 		DBClient dbClient = SysMgr.getInstance().getDbClient();
 		String sql = "select * from article where article_id=" + articleId
@@ -175,7 +188,7 @@ public class ArticleDao {
 
 		DBClient dbClient = SysMgr.getInstance().getDbClient();
 		String sql = String
-				.format("select article_id,channel_id,article_title,article_url,create_time,is_released,released_time,article_src from article "
+				.format("select article_id,channel_id,article_title,article_url,create_time,is_released,released_time,article_src,release_id from article "
 						+ "where (0=%d or (channel_id>=%d and channel_id<%d+256)) "
 						+ "and (0=%d or channel_id=%d) "
 						+ "and ('%s'='' or released_time > '%s') and ('%s'='' or released_time < '%s') "
@@ -199,6 +212,7 @@ public class ArticleDao {
 					a.setReleased(rs.getBoolean("is_released"));
 					a.setReleasedTime(rs.getString("released_time"));
 					a.setArticleSrc(rs.getString("article_src"));
+					a.setReleaseId(rs.getString("release_id"));
 					articles.add(a);
 				}
 			}
@@ -239,6 +253,7 @@ public class ArticleDao {
 					a.setReleased(rs.getBoolean("is_released"));
 					a.setReleasedTime(rs.getDate("released_time").getTime());
 					a.setArticleSrc(rs.getString("article_src"));
+					a.setReleaseId(rs.getString("release_id"));
 
 					if (loadContent) {
 						byte[] content = rs.getBytes("article_content");

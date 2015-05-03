@@ -18,9 +18,23 @@
       <div id="grid"></div>
     </div>
     
-    <form id="preview" action="manage_preview.do" target="_blank" method="post">
+    <div id="content" class="hide" style="width:600px">
+	    <form id="J_Form" class="form-horizontal">
+	      <div class="row">
+	      	<div class="control-group span8">
+	          <label class="control-label">栏目模板：</label>
+	          <div class="controls bui-form-field-select" data-loader="{url:'manage_release_query.do',property:'items',dataType:'json'}">
+	            <input name="releaseId" type="hidden" value="0">
+	          </div>
+	        </div>
+	      </div>
+	    </form>
+	</div>
+    
+    <form id="preview" action="manage_preview_ext.do" target="_blank" method="post">
     	<input type="hidden" id="channel2Id" name="channel2Id"/>
     	<input type="hidden" id="articleId" name="articleId"/>
+    	<input type="hidden" name="type" value="purchase"/>
     </form>
 
   </div>
@@ -35,6 +49,10 @@
 <script type="text/javascript">
   BUI.use(['common/search','bui/form'],function (Search,Form) {
     var enumBoolean = {"true":"是", "false":"否"},
+      editing = new BUI.Grid.Plugins.DialogEditing({
+        contentId : 'content', //设置隐藏的Dialog内容
+        triggerCls : 'btn-edit'
+      }),
       columns = [
           {title:'项目ID',dataIndex:'projectId',width:80,elCls:'center',},
           {title:'项目标题',dataIndex:'projectTitle',width:200,elCls:'center'},
@@ -43,9 +61,9 @@
           {title:'文章模板',dataIndex:'releaseId',width:100,elCls:'center'},
           {title:'操作',dataIndex:'',width:100,elCls:'center',renderer : function(value,obj){
             var releaseStr = '<i class="icon-upload"></i><span class="grid-command btn-release" title="发布">发布</span>',
-            	previewStr = '<i class="icon-eye-open"></i><span class="grid-command btn-preview" title="预览">预览</span>';
-            	
-            return releaseStr + previewStr;
+            	previewStr = '<i class="icon-eye-open"></i><span class="grid-command btn-preview" title="预览">预览</span>',
+            	tplStr = '<i class="icon-edit"></i><span class="grid-command btn-edit" title="更换模板">更换模板</span>';
+            return releaseStr + previewStr + tplStr;
           }}
         ],
       store = Search.createStore('manage_purchase_project.do?opr=query',{
@@ -71,8 +89,21 @@
           ]
         },
         forceFit: true,
-        plugins : [BUI.Grid.Plugins.CheckSelection,BUI.Grid.Plugins.AutoFit] // 插件形式引入多选表格
+        plugins : [editing, BUI.Grid.Plugins.CheckSelection,BUI.Grid.Plugins.AutoFit] // 插件形式引入多选表格
       });
+    
+    editing.on("accept", function(e, form){
+		var editType = this.get('editType');
+		if(editType == "edit"){
+    		$.ajax({
+    			url : "manage_purchase_project_change_tpl.do",
+    			data : e.record,
+    			success : function(data){
+    				top.topManager.reloadPage();
+    			}
+    		});
+    	}
+    });
 
     var  search = new Search({
         store : store,

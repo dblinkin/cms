@@ -119,6 +119,22 @@ public class ArticleMgr {
 		}
 	}
 
+	public void updateArticleTpl(int articleId, String releaseId)
+			throws FtdException {
+		Article a = articleId_article.get(articleId);
+		if (a == null) {
+			throw new FtdException(null, "article.not.found", articleId);
+		}
+
+		Release r = ReleaseMgr.getInstance().getRelease(releaseId);
+		if (r == null) {
+			throw new FtdException(null, "release.not.found");
+		}
+
+		ArticleDao.updateReleaseId(articleId, releaseId);
+		a.setReleaseId(releaseId);
+	}
+
 	public Comparator<Article> articleComparator = new Comparator<Article>() {
 		@Override
 		public int compare(Article o1, Article o2) {

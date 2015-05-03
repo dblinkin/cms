@@ -51,6 +51,17 @@ public class PurchaseProjectDao {
 			throw new FtdException(e, "db.sql.error");
 		}
 	}
+	
+	public static void updateReleaseId(int projectId, String releaseId) throws FtdException {
+		String sql = "update project_purchase set release_id=? where project_id=?";
+		DBClient dbClient = SysMgr.getInstance().getDbClient();
+
+		try {
+			dbClient.executeUpdate(sql, releaseId, projectId);
+		} catch (SQLException e) {
+			throw new FtdException(e, "db.sql.error");
+		}
+	}
 
 	public static void update(PurchaseProject p) throws FtdException {
 		String sql = "update project_purchase set project_title=?,project_src=?,create_time=?,"

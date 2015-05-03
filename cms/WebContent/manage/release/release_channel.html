@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
  <head>
-  <title>文章发布</title>
+  <title> 搜索表单</title>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="../assets/css/dpl-min.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/bui-min.css" rel="stylesheet" type="text/css" />
@@ -10,36 +10,28 @@
  <body>
   
   <div class="container">
-    <div class="row">
-      <form id="J_Form" class="form-horizontal span24" action="manage_preview.do" target="_blank" method="post">
-        <div class="row">
-          <div class="control-group span13">
-            <label class="control-label">一级栏目：</label>
-              <div class="controls bui-form-field-select" data-rules="{required:true}" data-loader="{url:'manage_query_channel.do',property:'items',dataType:'json'}">
-            	<input name="channel1Id" type="hidden">
-          	  </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="control-group span13">
-            <label class="control-label">二级栏目：</label>
-            <div class="controls bui-form-field-select">
-	          <select name="channel2Id" class="input-normal"> 
-                <option value="">请选择</option>
-              </select>
-	        </div>
-          </div>
-        </div>
-        <div class="row form-actions actions-bar">
-            <div class="span13 offset3 ">
-              <button type="submit" id="preview" class="button button-primary">预览</button>
-              <button type="button" id="release" class="button button-primary">发布</button>
-            </div>
-        </div>
-      </form>
+	<div class="search-grid-container">
+      <div id="t1"></div>
     </div>
-
   </div>
+  
+  <div id="content" class="hide" style="width:600px">
+    <form id="J_Form" class="form-horizontal">
+      <div class="row">
+      	<div class="control-group span8">
+          <label class="control-label">栏目模板：</label>
+          <div class="controls bui-form-field-select" data-loader="{url:'manage_release_query.do',property:'items',dataType:'json'}">
+            <input name="releaseId" type="hidden" value="0">
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+  <form id="preview" action="manage_preview.do" target="_blank" method="post">
+    	<input type="hidden" id="channel1Id" name="channel1Id"/>
+    	<input type="hidden" id="channel2Id" name="channel2Id"/>
+  </form>
   
   <script type="text/javascript" src="../assets/js/jquery-1.8.1.min.js"></script>
   <script type="text/javascript" src="../../lib/cms_manage.js"></script>
@@ -49,53 +41,115 @@
     BUI.use('common/page');
   </script>
 <script type="text/javascript">
-BUI.use('bui/form',function (Form) {
-	//自定义类型
-  BUI.Form.Group.Select.addType('channel',{
- 	  proxy : {//加载数据的配置项
-	 	url : 'manage_query_channel.do',
-	    dataType : 'json'
-	  },
-    root : {id : '0'}
-  });
-
-  $(":input[name='channel1Id']").change(function(){
-		$.ajax({
-			url : 'manage_query_channel.do',
-			data : {id : $(this).val()},
-			success : function(data){
-				var first = $("option:first",":input[name='channel2Id']");
-				$(":input[name='channel2Id']").empty().append(first);	
-				if(data.nodes && data.nodes.length){									
-					$(data.nodes).each(function(i){
-						var str = "<option value='"+data.nodes[i].id + "'>" +data.nodes[i].text +"</option>";
-						$(":input[name='channel2Id']").append(str);
-					});
-				}
-			}
-		});
-	});
-  var form = new Form.HForm({
-     srcNode : '#J_Form'
-   });
-  form.render();
-  
-  $("#preview").click(function(){
-	  
-  });
-  
-  $("#release").click(function(){
-	  $.ajax({
-		  url : "manage_release_channel.do",
-		  data : form.serializeToObject(),
-		  success : function(data){
-			  BUI.Message.Alert('发布成功','success');
-		  }
-	  });
-  });
+BUI.use(['bui/extensions/treegrid','bui/data'],function (TreeGrid, Data) {
 	
-});
+	var enumBoolean = {"1":"是", "0":"否"},
+	editing = new BUI.Grid.Plugins.DialogEditing({
+        contentId : 'content', //设置隐藏的Dialog内容
+        triggerCls : 'btn-edit'
+      });
+	
+	editing.on("accept", function(e, form){
+		var editType = this.get('editType');
+		if(editType == "edit"){
+    		delete e.record.children;
+    		$.ajax({
+    			url : "manage_channel_change_tpl.do",
+    			data : e.record,
+    			success : function(data){
+    				top.topManager.reloadPage();
+    			}
+    		});
+    	}
+    });
+      
+	var data = [ ];
+	var store = new Data.Store({
+		data : data
+	});
+   
+    var tree = new TreeGrid({
+      render : '#t1',
+      columns : [
+        {title : '栏目名称',dataIndex :'channelName',width:100}, 
+        {title : 'URL显示名',dataIndex :'channelDesc',width:100,elCls:'center'}, 
+        {title : '栏目ID',dataIndex : 'channelId',width:100, elCls:'center'},
+        {title : '导航栏显示',dataIndex : 'isNav',width:100,elCls:'center',renderer:BUI.Grid.Format.enumRenderer(enumBoolean)},
+        {title : '栏目模板',dataIndex : 'releaseId',width:100,elCls:'center'},
+        {title : '操作',width:100, elCls:'center', renderer:function(){
+        	var releaseStr = '<i class="icon-upload"></i><span class="grid-command btn-release" title="发布">发布</span>',
+        	previewStr = '<i class="icon-eye-open"></i><span class="grid-command btn-preview" title="预览">预览</span>',
+        	tplStr = '<i class="icon-edit"></i><span class="grid-command btn-edit" title="更换模板">更换模板</span>';
+        	return releaseStr + previewStr + tplStr;
+        }}
+      ],
+      nodes   : data,
+      tbar : {
+          items : [
+            //{text : '<i class="icon-upload"></i>发布',btnCls : 'button button-small',handler : releaseFunction},
+            {text : '<i class="icon-refresh"></i>刷新',btnCls : 'button button-small',handler : function(){top.topManager.reloadPage();}}
+          ]
+        },
+      forceFit: true,
+      plugins : [editing,BUI.Grid.Plugins.AutoFit] // 插件形式引入多选表格
+    });
+    tree.render();
+    
+    queryData();
+    
+    function releaseFunction(){
+      var selections = grid.getSelection();
+      releaseItem(selections);
+    }
+
+    function releaseItem(item){
+    	var data = {};
+    	if(item.parentChannelId){
+    		data.channel1Id = item.parentChannelId;
+    		data.channel2Id = item.channelId;
+    	}else{
+    		data.channel1Id = item.channelId;
+    	}
+    	
+    	if(data){
+    		BUI.Message.Confirm('确认要发布选中的记录么？',function(){
+           	 $.ajax({
+          		  url : "manage_release_channel.do",
+          		  data : data,
+          		  success : function(data){
+          			  BUI.Message.Alert('发布成功','success');
+          			  top.topManager.reloadPage();
+          		  }
+          	  });
+           },'question');
+    	}
+    }
+
+    //监听事件，删除一条记录
+    tree.on('cellclick',function(ev){
+      var sender = $(ev.domTarget); //点击的Dom
+      if(sender.hasClass('btn-release')){
+        releaseItem(ev.record);
+      }else if(sender.hasClass('btn-preview')){
+    	  $("#channel2Id", "#preview").val(ev.record.channelId);
+    	  $("#articleId", "#preview").val(ev.record.articleId);
+    	  $("#preview").submit();
+      }
+    });
+    
+    function queryData(){
+    	$.ajax({
+    		url : "manage_channel.do?opr=query",
+    		type : "get",
+    		success : function(data){
+    			tree.showData(data.rows);
+    			tree.expandAll();
+    		}
+    	});
+    }
+    
+  });
 </script>
 
 <body>
-</html> 
+</html>  

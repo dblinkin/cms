@@ -13,15 +13,25 @@
 		<Handler Req="manage_query_channel.do" Class="com.ftd.manage.channel.ChannelHandlerQueryFirst"/>
 	
 		<Handler Req="manage_article.do" Class="com.ftd.manage.article.ArticleHandler"/>
+		
 		<!-- 网页发布前的预览 -->
 		<Handler Req="manage_article_preview.do" Class="com.ftd.manage.release.preview.RealtimePreviewHandler"/>
 		<Handler Req="manage_preview.do" Class="com.ftd.manage.release.preview.PreviewHandler"/>
+		<Handler Req="manage_preview_ext.do" Class="com.ftd.manage.release.preview.PreviewExtHandler"/>
 		
+		<!-- 网页发布 -->
 		<Handler Req="manage_release_query.do" Class="com.ftd.manage.release.handler.ReleaseQueryHandler"/>
 		<Handler Req="manage_release_article.do" Class="com.ftd.manage.release.handler.ReleaseArticleHandler"/>
 		<Handler Req="manage_release_channel.do" Class="com.ftd.manage.release.handler.ReleaseChannelHandler"/>
 		<Handler Req="manage_release_mainpage.do" Class="com.ftd.manage.release.handler.ReleaseMainPageHandler"/>
 		<Handler Req="manage_release_all.do" Class="com.ftd.manage.release.handler.ReleaseAllHandler"/>
+		
+		<!-- 模板 -->
+		<Handler Req="manage_channel_change_tpl.do" Class="com.ftd.manage.channel.ChannelChangeTplHandler"/>
+		<Handler Req="manage_article_change_tpl.do" Class="com.ftd.manage.article.ArticleChangeTplHandler"/>
+		<Handler Req="manage_listed_project_change_tpl.do" Class="com.ext.project.listed.ListedProjectChangeTplHandler"/>
+		<Handler Req="manage_purchase_project_change_tpl.do" Class="com.ext.project.purchase.PurchaseProjectChangeTplHandler"/>
+		
 		
 		<!-- 扩展发布方式 -->
 		<Handler Req="manage_release_listed_project.do" Class="com.ext.release.ReleaseListedProjectHandler"/>
