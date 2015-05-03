@@ -80,6 +80,7 @@ public class ArticleMgr {
 
 	public void addArticle(Article a) throws FtdException {
 		a.setArticleId(articleId.incrementAndGet());
+		a.setCreateTime(System.currentTimeMillis());
 		a.setArticleUrl(ReleaseMgr.getInstance().getReleaseFilename(
 				Release.Src.ARTICLE, a.getChannelId()));
 		ArticleDao.insert(a);

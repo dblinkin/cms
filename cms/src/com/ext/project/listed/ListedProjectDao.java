@@ -13,9 +13,8 @@ import com.ftd.util.dbclient.DBClient;
 public class ListedProjectDao {
 	public static void insert(ListedProject p) throws FtdException {
 		String sql = "insert into project_listed(project_title,project_num,project_type,listed_start_time, listed_end_time,"
-				+ "asset_transfor, is_deal, district, transfer_area,transfer_type,transfer_start_time,transfer_end_time,transfer_price,remark,"
-				+ "release_id)"
-				+ " values(?,?,?,?,?,   ?,?,?,?,?,?,?,?,?, ?)";
+				+ "asset_transfor, is_deal, district, transfer_area,transfer_type,transfer_start_time,transfer_end_time,transfer_price,remark)"
+				+ " values(?,?,?,?,?,   ?,?,?,?,?,?,?,?,?)";
 
 		DBClient dbClient = SysMgr.getInstance().getDbClient();
 
@@ -136,7 +135,7 @@ public class ListedProjectDao {
 					p.setListedEndTime(rs.getDate("listed_end_time").getTime());
 					
 					p.setAssetTransfor(rs.getString("asset_transfor"));
-					p.setIsDeal(rs.getInt("is_deal"));
+					p.setIsDeal(rs.getString("is_deal"));
 					p.setDistrict(rs.getString("district"));
 					p.setTransferArea(rs.getString("transfer_area"));
 					p.setTransferType(rs.getString("transfer_type"));
@@ -185,7 +184,7 @@ public class ListedProjectDao {
 					p.setListedEndTime(rs.getDate("listed_end_time").getTime());
 					
 					p.setAssetTransfor(rs.getString("asset_transfor"));
-					p.setIsDeal(rs.getInt("is_deal"));
+					p.setIsDeal(rs.getString("is_deal"));
 					p.setDistrict(rs.getString("district"));
 					p.setTransferArea(rs.getString("transfer_area"));
 					p.setTransferType(rs.getString("transfer_type"));

@@ -17,7 +17,7 @@ public class ListedProject implements Releasable {
 	private long listedEndTime;
 
 	private String assetTransfor;
-	private int isDeal;
+	private String isDeal;
 	private String district;
 	private String transferArea;
 	private String transferType;
@@ -127,11 +127,11 @@ public class ListedProject implements Releasable {
 		this.assetTransfor = assetTransfor;
 	}
 
-	public int getIsDeal() {
+	public String getIsDeal() {
 		return isDeal;
 	}
 
-	public void setIsDeal(int isDeal) {
+	public void setIsDeal(String isDeal) {
 		this.isDeal = isDeal;
 	}
 
