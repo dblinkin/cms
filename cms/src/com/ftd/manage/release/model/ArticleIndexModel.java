@@ -32,11 +32,11 @@ public class ArticleIndexModel implements ModelProvider {
 	@Override
 	public Map<String, Object> getModel(int channelId, int articleId)
 			throws FtdException {
-		if (channelId != 0)
-			this.channelId = channelId;
+		if (this.channelId != 0)
+			channelId = this.channelId;
 
 		Map<String, Object> model = new HashMap<String, Object>();
-		Channel c = ChannelMgr.getInstance().getChannel(this.channelId);
+		Channel c = ChannelMgr.getInstance().getChannel(channelId);
 		if (c == null)
 			return model;
 

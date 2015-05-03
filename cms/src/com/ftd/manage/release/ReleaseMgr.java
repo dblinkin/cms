@@ -353,7 +353,7 @@ public class ReleaseMgr {
 				}
 				if (mp != null) {
 					HashMap<String, String> mpkv = XmlUtil
-							.getAttribute(releaseElement);
+							.getAttribute(modElement);
 					int modelId = StrUtil.parseInt(mpkv.get("ModelId"), 0);
 					if (modelId != 0)
 						mp.setModelId(modelId);

@@ -82,7 +82,7 @@ public class ListedProjectDao {
 		List<ListedProject> listedProjects = new ArrayList<ListedProject>();
 
 		DBClient dbClient = SysMgr.getInstance().getDbClient();
-		String sql = "select * from project_listed order by project_type asc project_id desc";
+		String sql = "select * from project_listed order by project_type asc, project_id desc";
 
 		CachedRowSet rs = null;
 		try {

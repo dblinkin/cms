@@ -13,6 +13,8 @@
 		<Model>com.ext.newspoll.NewsPollModel</Model><!-- 轮播广告 -->
 		<Model>com.ext.project.recommend.RcmdProjectModel</Model><!-- 推荐项目 -->
 		<Model>com.ext.friendlink.FriendLinkModel</Model><!-- 友情链接 -->
+		<Model>com.ext.project.purchase.PurchaseProjectModel</Model><!-- 受让项目 -->
+		<Model>com.ext.project.listed.ListedProjectModel</Model><!-- 挂牌项目 -->
 	</Release>	
 	<!-- 默认一级栏目 -->
 	<Release Id="first_channel" Src="FIRST_CHANNEL" Template="first_channel.ftl" FilenameFormat="/article/{first_channel}.html">
