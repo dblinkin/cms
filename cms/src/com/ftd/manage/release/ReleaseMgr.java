@@ -144,6 +144,8 @@ public class ReleaseMgr {
 
 		// 发布网页后的数据
 		ReleaseModel rm = new ReleaseModel();
+		rm.setChannelId(channelId);
+		rm.setArticleId(articleId);
 		rm.setReleaseTime(System.currentTimeMillis());
 		for (ModelProvider model : release.getModels()) {
 			model.afterRelease(rm);

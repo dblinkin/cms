@@ -83,7 +83,7 @@ public class ArticleDao {
 
 		try {
 			dbClient.executeUpdate(sql, 1,
-					StrUtil.datetime(rm.getReleaseTime()), rm.getModelId());
+					StrUtil.datetime(rm.getReleaseTime()), rm.getArticleId());
 		} catch (SQLException e) {
 			throw new FtdException(e, "db.sql.error");
 		}
