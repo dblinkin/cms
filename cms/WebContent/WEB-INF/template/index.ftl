@@ -70,8 +70,9 @@ margin-bottom:0px;
 }
 .panel-primary>.panel-heading {
   color: #fff;
-  background-color: #337ab7;
-  border-color: #337ab7;
+  background-color: #fff;
+  background-image: url(/image/repeat.jpg);
+  border-color: #85cee1;
 }
 .panel-title {
   margin-top: 0;
@@ -102,7 +103,14 @@ padding-left: 3px;
 a.tjxmdesc:link{font-size:14px;font-family:"微软雅黑";text-decoration:none;color:#000;}
 a.tjxmdesc:visited{font-size:14px;font-family:"微软雅黑";text-decoration:none;color:#000; }
 a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;color:#000; }
-
+.btn {
+  width: 61px;
+  height: 30px;
+  background: url(/image/search.jpg) no-repeat;
+  border: 0;
+  float: right;
+  cursor: pointer;
+}
 
 </style>
   </head>
@@ -115,26 +123,32 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
    <a title="手机报征订" target="_blank" href=""><img src="/image/ad_2.jpg"></a>
 <br></div>
 -->
-    <div class="page-header" style="margin:0 9em;background-image:url(/image/logo-8.jpg);height:8.5em;">
-    <div >
+    <div class="page-header" style="margin-top:0;background-image:url(/image/logo-19.jpg);height:20em;margin-bottom:-12em;border-bottom: none;">
+    
    
   
-  <div  style="width:20em;height:4em;float:right;margin-right:1em;margin-top:0em;">
-  <div style="margin-left:6em;">
+  <div  style="width:20em;height:4em;float:right;margin-right:5.5em;margin-top:2em;">
+ 
+	<div class="input-group">
+	<form target="_blank" action="http://www.baidu.com/baidu" name="searchform">
+            	<!--<input type="button" class="btn" value=""><input type="text" class="txt" value="站内搜索"onfocus="if(this.value=='站内搜索'){this.value='';}" onblur="if(this.value==''){this.value='站内搜索';}">
+                -->
+                <input name="" type="button" onclick="searchform.action='http://www.baidu.com/baidu'; searchform.submit();"  value="" class="btn" />
+                <input type="text" value="站内搜索"onfocus="if(this.value=='站内搜索'){this.value='';}" onblur="if(this.value==''){this.value='站内搜索';}" name="word"  class="txt" style="height:2.1em;"/>
+                
+                <input type="hidden" value="bds" name="tn">
+                <input type="hidden" value="3" name="cl">
+                <input type="hidden" value="2097152" name="ct">
+                <input type="hidden" value="utf-8" name="ie">
+                <input type="hidden" value="gb2312" name="oe">
+                <input type="hidden" value="http://123.57.207.129/" name="si">
+             </form>
+    </div>
+     <div style="margin-left:2em;">
 <iframe allowtransparency="true" frameborder="0" width="195" height="36" scrolling="no" src="http://tianqi.2345.com/plugin/widget/index.htm?s=3&z=2&t=0&v=0&d=3&bd=0&k=000000&f=&q=1&e=1&a=1&c=70878&w=180&h=36&align=right"></iframe>
     
 	</div>
-	<div class="input-group">
-	<input type="text" class="form-control" placeholder="站内搜索">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button">搜索</button>
-      </span>
-      
-    </div>
   </div>
-
-</div>
-
 		</div>
 		
     <div class="container-fluid" style="margin-top: 0.5em;">
@@ -145,7 +159,7 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
 	 <div class="col-lg-12 col-md-12" style="text-align: center;font-family:'Micro YaHei',微软雅黑;padding-right:9em;padding-left:9em;">
 				<div class="panel panel-primary" style="margin-bottom: 0px;">
 			  <div class="panel-heading" style="padding:0" >
-        <h3 class="panel-title" id="panel-title" style="font-size: 1.6em;">
+        <h3 class="panel-title" id="panel-title" style="font-size: 1.5em;">
 		
 		                <ul class="nav nav-pills  "  style="display: inline-block;float: none; border:none;margin-top:-0.3em;">
                            <#list channels as ch1>
@@ -160,7 +174,7 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
 										</a>
 										
 										<#if ch1.children?size != 0>
-										<ul class="dropdown-menu mega-menu-2 transition" style="margin-top:-0.01em;width:9.8em;">
+										<ul class="dropdown-menu mega-menu-2 transition" style="margin-top:-0.01em;width:9.3em;">
 										<ul style="margin-left:-1.5em;">
 											<#list ch1.children as ch2>
 											
@@ -200,25 +214,28 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
   </ol>
 
   <!-- Wrapper for slides -->
+  
   <div class="carousel-inner" role="listbox">
+  
+  <#list newspolls as poll>
+  <#if poll_index = 0>
     <div class="item active">
-      <img src="/image/1.jpg" alt="...">
+    <img src="${poll.pollImgUrl}" alt="..."> 
       <div class="carousel-caption">
-        测试
+       ${poll.newsTitle}
       </div>
     </div>
+    <#else>
      <div class="item">
-      <img src="/image/2.jpg" alt="...">
+    <img src="${poll.pollImgUrl}" alt="..."> 
       <div class="carousel-caption">
-        测试
+       ${poll.newsTitle}
       </div>
     </div>
-	 <div class="item">
-      <img src="/image/3.jpg" alt="...">
-      <div class="carousel-caption">
-        测试
-      </div>
-    </div>
+    </#if>
+    </#list>
+  
+
   </div>
 
   <!-- Controls -->
@@ -232,6 +249,7 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
   </a>
 </div>
 	</div>
+	
 		<#--通知公告开始-->
 		  <div class="col-lg-5 col-md-5" style="margin-left:-2em;padding-right:7em;padding-left:15px" >
 		
@@ -277,7 +295,7 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
 
 
 				</a> 
-				<span style="right:.5em;position:absolute;">${article.releasedTime[0..10]}</span>
+				<span style="right:.5em;position:absolute;">${article.createTime[0..10]}</span>
 				</li>
 		  </#list>
 			</ul>
@@ -301,7 +319,7 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
 
 
 				</a>
-				<span style="right:.5em;position:absolute;">${article.releasedTime[0..10]}</span>
+				<span style="right:.5em;position:absolute;">${article.createTime[0..10]}</span>
 				</li>
 		  </#list>
 			</ul>
@@ -362,7 +380,7 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
 				
 				
 				<a href="${article.articleUrl}" target="_blank" title="${article.articleTitle}">${article.articleTitle}</a>
-				<span style="right:0.5em;position:absolute;">${article.releasedTime[0..10]}</span>
+				<span style="right:0.5em;position:absolute;">${article.createTime[0..10]}</span>
 				</li>
 			</#if>
 		  </#list>
@@ -380,7 +398,7 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
 			<#if article_index lt 5>
 			<li style="width:24em;margin-top:1.3em;overflow-x: hidden;white-space: nowrap;text-overflow: ellipsis;list-style-position: inside;">
 				<a href="${article.articleUrl}" target="_blank" title="${article.articleTitle}">${article.articleTitle}</a>
-				<span style="right:0.5em;position:absolute;">${article.releasedTime[0..10]}</span>
+				<span style="right:0.5em;position:absolute;">${article.createTime[0..10]}</span>
 				</li>
 				</#if>
 		  </#list>
@@ -408,7 +426,7 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
 		
           <div class="panel panel-primary">
       <div class="panel-heading" style="font-family:'Micro YaHei',微软雅黑;">
-        <h3 class="panel-title" id="panel-title">出让项目<a class="anchorjs-link" href="#panel-title"><span class="anchorjs-icon"></span></a></h3>
+        <h3 class="panel-title" id="panel-title">受让项目<a class="anchorjs-link" href="#panel-title"><span class="anchorjs-icon"></span></a></h3>
       </div>
       
         		<table class="table table-hover table-condensed" style="margin-top:0.3em">
@@ -423,48 +441,19 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
         </tr>
       </thead>
       <tbody>
+      <#if pchsprojects?size != 0>
+      	<#list pchsprojects as pchspro>
+       <#if pchspro_index lt 6 >
         <tr>
-          <th scope="row">实物资产</th>
-          <td>求租陆良县五百平米房屋</td>
-          <td>陆良县</td>
-          <td>未设定</td>
-		   <td>个人画室</td>
+          <th scope="row">${pchspro.projectType}</th>
+          <td><a href="${pchspro.releaseUrl?if_exists}" target="_blank">${pchspro.projectTitle}</a></td>
+          <td>${pchspro.intentionDistrict}</td>
+          <td>${pchspro.intentionMoney}</td>
+		   <td>${pchspro.purpose}</td>
         </tr>
-      <tr>
-          <th scope="row">一般农用地</th>
-          <td>求租陆良县三百亩耕地</td>
-          <td>陆良县</td>
-          <td>价格面议</td>
-		   <td>蔬菜种植</td>
-        </tr> 
-		<tr>
-          <th scope="row">养殖用地</th>
-          <td>求租陆良县五十亩养殖用地</td>
-          <td>陆良县</td>
-          <td>价格好说</td>
-		   <td>畜禽养殖</td>
-        </tr>
-		<tr>
-          <th scope="row">养殖用地</th>
-          <td>求租陆良县五十亩养殖用地</td>
-          <td>陆良县</td>
-          <td>价格好说</td>
-		   <td>畜禽养殖</td>
-        </tr>
-		<tr>
-          <th scope="row">养殖用地</th>
-          <td>求租陆良县五十亩养殖用地</td>
-          <td>陆良县</td>
-          <td>价格好说</td>
-		   <td>畜禽养殖</td>
-        </tr>
-		<tr>
-          <th scope="row">养殖用地</th>
-          <td>求租陆良县五十亩养殖用地</td>
-          <td>陆良县</td>
-          <td>价格好说</td>
-		   <td>畜禽养殖</td>
-        </tr>
+        </#if>
+     </#list>
+     </#if>
        
       </tbody>
     </table>
@@ -494,75 +483,21 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
 <tr>
 <!--这里放组件 -->
 <td>
+<#if rcmdprojects?size != 0>
+<#list rcmdprojects as rcmd>
+
    <td align="center" valign="top">
 <table border="0" cellpadding="0" cellspacing="0" style="text-align: center;">
 <tr>
-<td class="tjxmtdsize"><a title="陆良某镇2万平米厂房" target="_blank" href=""><img src="/image/r1.jpg" class="tjxmimg"></a></td>
+<td class="tjxmtdsize"><a title="${rcmd.projectTitle}" target="_blank" href="${rcmd.articleUrl?if_exists}"><img src="${rcmd.projectImgUrl}" class="tjxmimg"></a></td>
 </tr>
 <tr>
-<td valign="top" class="tjxmline"><a title="陆良某镇2万平米厂房" target="_blank" href="" class="tjxmdesc">陆良某镇2万平米厂房</a></td>
+<td valign="top" class="tjxmline"><a title="${rcmd.projectTitle}" target="_blank" href="${rcmd.articleUrl?if_exists}" class="tjxmdesc">${rcmd.projectTitle}</a></td>
 </tr>
 </table>
 </td>
-
-<td align="center" valign="top">
-<table border="0" cellpadding="0" cellspacing="0" style="text-align: center;">
-<tr>
-<td class="tjxmtdsize"><a title="陆良某张山营镇200亩荒山" target="_blank" href=""><img src="/image/r2.jpg" class="tjxmimg"></a></td>
-</tr>
-<tr>
-<td valign="top" class="tjxmline"><a title="陆良某张山营镇200亩荒山" target="_blank" href="" class="tjxmdesc">陆良某张山营镇200亩荒山</a></td>
-</tr>
-</table>
-</td>
-
-
-<td align="center" valign="top">
-<table border="0" cellpadding="0" cellspacing="0" style="text-align: center;">
-<tr>
-<td class="tjxmtdsize"><a title="陆良某镇200亩山林" target="_blank" href=""><img src="/image/r3.jpg" class="tjxmimg"></a></td>
-</tr>
-<tr>
-<td valign="top" class="tjxmline"><a title="陆良某镇200亩山林" target="_blank" href="" class="tjxmdesc">陆良某镇200亩山林</a></td>
-</tr>
-</table>
-</td>
-
-
-<td align="center" valign="top">
-<table border="0" cellpadding="0" cellspacing="0" style="text-align: center;">
-<tr>
-<td class="tjxmtdsize"><a title="陆良某镇200亩果园" target="_blank" href=""><img src="/image/r4.jpg" class="tjxmimg"></a></td>
-</tr>
-<tr>
-<td valign="top" class="tjxmline"><a title="陆良某镇200亩果园" target="_blank" href="" class="tjxmdesc">陆良某镇200亩果园</a></td>
-</tr>
-</table>
-</td>
-
-
-<td align="center" valign="top">
-<table border="0" cellpadding="0" cellspacing="0" style="text-align: center;">
-<tr>
-<td class="tjxmtdsize"><a title="陆良某镇200亩果园" target="_blank" href=""><img src="/image/r5.jpg" class="tjxmimg"></a></td>
-</tr>
-<tr>
-<td valign="top" class="tjxmline"><a title="陆良某镇200亩果园" target="_blank" href="" class="tjxmdesc">陆良某镇200亩果园</a></td>
-</tr>
-</table>
-</td>
-
-
-<td align="center" valign="top">
-<table border="0" cellpadding="0" cellspacing="0" style="text-align: center;">
-<tr>
-<td class="tjxmtdsize"><a title="陆良某镇200亩果园" target="_blank" href=""><img src="/image/r5.jpg" class="tjxmimg"></a></td>
-</tr>
-<tr>
-<td valign="top" class="tjxmline"><a title="陆良某镇200亩果园" target="_blank" href="" class="tjxmdesc">陆良某镇200亩果园</a></td>
-</tr>
-</table>
-</td>
+</#list>
+</#if>
 
 
 </td>
@@ -592,27 +527,26 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
 		<div class="row" style="margin-top:2em;">
 		
 		<div class="col-lg-2 col-md-2">
-			<a href="#" ><img src="image/gp1.jpg" alt="" class="img-rounded img-responsive center-block"/><div class="caption text-center">农村土地</div></a>
+			<a href="#" ><img src="/image/gp1.jpg" alt="" class="img-rounded img-responsive center-block"/><div class="caption text-center">农村土地</div></a>
+		</div>
+		<div class="col-lg-2 col-md-2">
+			<a href="#" ><img src="/image/gp2.jpg" alt="" class="img-rounded img-responsive center-block"/><div class="caption text-center">生产经营股权</div></a>
 		
 		</div>
 		<div class="col-lg-2 col-md-2">
-			<a href="#" ><img src="image/gp2.jpg" alt="" class="img-rounded img-responsive center-block"/><div class="caption text-center">生产经营股权</div></a>
+			<a href="#" ><img src="/image/gp3.jpg" alt="" class="img-rounded img-responsive center-block"/><div class="caption text-center">实物资产</div></a>
 		
 		</div>
 		<div class="col-lg-2 col-md-2">
-			<a href="#" ><img src="image/gp3.jpg" alt="" class="img-rounded img-responsive center-block"/><div class="caption text-center">实物资产</div></a>
+			<a href="#" ><img src="/image/gp4.jpg" alt="" class="img-rounded img-responsive center-block"/><div class="caption text-center">农业知识产权</div></a>
 		
 		</div>
 		<div class="col-lg-2 col-md-2">
-			<a href="#" ><img src="image/gp4.jpg" alt="" class="img-rounded img-responsive center-block"/><div class="caption text-center">农业知识产权</div></a>
+			<a href="#" ><img src="/image/gp5.jpg" alt="" class="img-rounded img-responsive center-block"/><div class="caption text-center">农村经济事项</div></a>
 		
 		</div>
 		<div class="col-lg-2 col-md-2">
-			<a href="#" ><img src="image/gp5.jpg" alt="" class="img-rounded img-responsive center-block"/><div class="caption text-center">农村经济事项</div></a>
-		
-		</div>
-		<div class="col-lg-2 col-md-2">
-			<a href="#" ><img src="image/gp6.jpg" alt="" class="img-rounded img-responsive center-block"/><div class="caption text-center">林权</div></a>
+			<a href="#" ><img src="/image/gp6.jpg" alt="" class="img-rounded img-responsive center-block"/><div class="caption text-center">林权</div></a>
 		
 		</div>
 		
@@ -640,47 +574,21 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
         </tr>
       </thead>
       <tbody>
+      <#if listedprojects?size != 0>
+      	<#list listedprojects as listPro>
+      	<#if listPro_index < 5>
+      
         <tr>
-          <th scope="row">2015-PG/01-0001</th>
-          <td>陆良大华山镇陈庄子村东南975亩荒山</td>
+          <th scope="row">${listPro.projectNum}</th>
+          <td><a href="${listPro.releaseUrl?if_exists}">${listPro.projectTitle}</a></td>
           <td>农村土地</td>
-          <td>700</td>
-		   <td>2015-04-03</td>
-		    <td>2015-04-17</td>
+          <td>${listPro.transferPrice?if_exists}</td>
+		   <td>${listPro.listedStartTime}</td>
+		    <td>${listPro.listedEndTime}</td>
         </tr>
-      <tr>
-          <th scope="row">2015-PG/01-0001</th>
-          <td>陆良大华山镇陈庄子村东南975亩荒山</td>
-          <td>农村土地</td>
-          <td>700</td>
-		   <td>2015-04-03</td>
-		    <td>2015-04-17</td>
-        </tr>
-		<tr>
-          <th scope="row">2015-PG/01-0001</th>
-          <td>陆良大华山镇陈庄子村东南975亩荒山</td>
-          <td>农村土地</td>
-          <td>700</td>
-		   <td>2015-04-03</td>
-		    <td>2015-04-17</td>
-        </tr>
-		<tr>
-          <th scope="row">2015-PG/01-0001</th>
-          <td>陆良大华山镇陈庄子村东南975亩荒山</td>
-          <td>农村土地</td>
-          <td>700</td>
-		   <td>2015-04-03</td>
-		    <td>2015-04-17</td>
-        </tr>
-		<tr>
-          <th scope="row">2015-PG/01-0001</th>
-          <td>陆良大华山镇陈庄子村东南975亩荒山</td>
-          <td>农村土地</td>
-          <td>700</td>
-		   <td>2015-04-03</td>
-		    <td>2015-04-17</td>
-        </tr>
-		
+ </#if>
+		</#list>
+		</#if>
        
       </tbody>
     </table>
@@ -695,7 +603,7 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
 
 <div class="row" style="margin-top:0.5em;">
 		<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
-			<img src="image/ad.jpg" alt="" class="img-rounded img-responsive center-block"/>
+			<img src="/image/ad.jpg" alt="" class="img-rounded img-responsive center-block"/>
 		</div>
 </div>
 
@@ -703,16 +611,16 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
 	<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
 			
 		<div class="col-lg-3 col-md-3  ">
-			<a><img src="image/tu6.jpg" alt="" class="img-rounded img-responsive"/></a>
+			<a><img src="/image/tu6.jpg" alt="" class="img-rounded img-responsive"/></a>
 		</div>
 		<div class="col-lg-3 col-md-3">
-			<a><img src="image/tu7.jpg" alt="" class="img-rounded img-responsive"/></a>
+			<a><img src="/image/tu7.jpg" alt="" class="img-rounded img-responsive"/></a>
 		</div>
 		<div class="col-lg-3 col-md-3">
-			<a><img src="image/tu8.jpg" alt="" class="img-rounded img-responsive "/></a>
+			<a><img src="/image/tu8.jpg" alt="" class="img-rounded img-responsive "/></a>
 		</div>
 		<div class="col-lg-3 col-md-3">
-			<a><img src="image/tu9.jpg" alt="" class="img-rounded img-responsive "/></a>
+			<a><img src="/image/tu9.jpg" alt="" class="img-rounded img-responsive "/></a>
 		</div>
 	</div>
 </div>
@@ -726,14 +634,12 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
       		<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1" style="text-align:center;">
 		                <ul class="nav nav-tabs " >
 						<li><a href="#" >友情链接</a></li>
-						<li><a href="#" >云南农村委员会</a></li>
-						<li><a href="#" > 云南联合产权交易所 </a></li>
-						<li><a href="#" >云南产权交易中心</a></li>
-						<li><a href="#" >云南市环保局</a></li>
-						<li><a href="#" >云南市公安局</a></li>
-						<li><a href="#" >云南市民政局</a></li>
-						<li><a href="#" >云南市财政局</a></li>
-						
+						<#if friendlinks?size != 0>
+						<#list friendlinks as link>
+						<li><a href="${link.linkUrl}" title="${link.linkTitle}" target="_blank">${link.linkTitle}</a></li>
+						</#list>
+						</#if>
+						<li><a href="#" >云南税务局</a></li>
 						</ul>
 		
 	</div>
