@@ -70,9 +70,10 @@ border-radius:10px 10px 10px 10px;
 margin-bottom:0px;
 }
 .panel-primary>.panel-heading {
-  color: #fff;
-  background-color: #337ab7;
-  border-color: #337ab7;
+  color: #333;
+   background-color: #fff;
+  background-image: url(/image/repeat.jpg);
+  border-color: #85cee1;
 }
 .panel-title {
   margin-top: 0;
@@ -97,11 +98,20 @@ padding-left: 3px;
 .dropdown-menu{
 	min-width:120px;
 }
+.btn {
+  width: 61px;
+  height: 30px;
+  background: url(/image/search.jpg) no-repeat;
+  border: 0;
+  float: right;
+  cursor: pointer;
+}
 
 </style>
   </head>
+    <body style="background-color:#fff;">
 <!--
-  <body style="background-color:#fff;">
+
   <div class="ad" style="left: 0.5em; position: absolute; top: 10em;z-index:999;">
    <a title="项目路演" target="_blank" href=""><img src="image/ad_1.jpg"></a>
 <br></div>
@@ -109,26 +119,32 @@ padding-left: 3px;
    <a title="手机报征订" target="_blank" href=""><img src="image/ad_2.jpg"></a>
 <br></div>
 -->
-       <div class="page-header" style="margin:0 9em;background-image:url(/image/logo-8.jpg);height:8.5em;">
-    <div >
+    <div class="page-header" style="margin-top:0;background-image:url(/image/logo-19.jpg);height:20em;margin-bottom:-12em;border-bottom: none;">
+    
    
   
-  <div  style="width:20em;height:4em;float:right;margin-right:1em;margin-top:0em;">
-  <div style="margin-left:6em;">
+  <div  style="width:20em;height:4em;float:right;margin-right:5.5em;margin-top:2em;">
+ 
+	<div class="input-group">
+	<form target="_blank" action="http://www.baidu.com/baidu" name="searchform">
+            	<!--<input type="button" class="btn" value=""><input type="text" class="txt" value="站内搜索"onfocus="if(this.value=='站内搜索'){this.value='';}" onblur="if(this.value==''){this.value='站内搜索';}">
+                -->
+                <input name="" type="button" onclick="searchform.action='http://www.baidu.com/baidu'; searchform.submit();"  value="" class="btn" />
+                <input type="text" value="站内搜索"onfocus="if(this.value=='站内搜索'){this.value='';}" onblur="if(this.value==''){this.value='站内搜索';}" name="word"  class="txt" style="height:2.1em;"/>
+                
+                <input type="hidden" value="bds" name="tn">
+                <input type="hidden" value="3" name="cl">
+                <input type="hidden" value="2097152" name="ct">
+                <input type="hidden" value="utf-8" name="ie">
+                <input type="hidden" value="gb2312" name="oe">
+                <input type="hidden" value="http://123.57.207.129/" name="si">
+             </form>
+    </div>
+     <div style="margin-left:2em;">
 <iframe allowtransparency="true" frameborder="0" width="195" height="36" scrolling="no" src="http://tianqi.2345.com/plugin/widget/index.htm?s=3&z=2&t=0&v=0&d=3&bd=0&k=000000&f=&q=1&e=1&a=1&c=70878&w=180&h=36&align=right"></iframe>
     
 	</div>
-	<div class="input-group">
-	<input type="text" class="form-control" placeholder="站内搜索">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button">搜索</button>
-      </span>
-      
-    </div>
   </div>
-
-</div>
-
 		</div>
 		
 		
@@ -204,7 +220,7 @@ padding-left: 3px;
 <div class="row">
 	<div class="col-lg-10 col-lg-offset-1" style="margin-top: -1em;">
 	<div class="panel panel-primary" style="">
-			  <div class="panel-heading" style="background-color:#fff;padding:0; border-bottom: none;font-family:'Micro YaHei',微软雅黑;">
+			  <div class="panel-heading" style="background-image: none;background-color:#fff;padding:0; border-bottom: none;font-family:'Micro YaHei',微软雅黑;">
         <h3 class="panel-title" id="panel-title" style="padding-top:20px;" >${article.articleTitle}
 		
 		<div class="row"> 
@@ -219,7 +235,7 @@ padding-left: 3px;
 				</div>
 				
 				<div class="col-lg-12" style="text-align:center;font-size:16px;">
-				<p>来源：${article.articleSrc}&nbsp;&nbsp;时间:${article.releasedTime[0..10]}</p>
+				<p>来源：${article.articleSrc}&nbsp;&nbsp;时间:${article.createTime[0..10]}</p>
 				</div>
 		</div>
 		
