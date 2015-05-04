@@ -281,12 +281,16 @@ padding-left: 3px;
 	 <div role="tabpanel" class="tab-pane active" id="${ch1.channel.channelDesc}">
 		<div class="panel panel-primary" style="">
   <!-- Default panel contents -->
-  <div class="panel-heading">${ch1.channel.channelName}</div>
+  <div class="panel-heading">${ch1.channel.channelName}
+  <a href="${ch1.channel.channelUrl}" target="_blank" style="float:right;">更多>></a>
+  </div>
   <div class="panel-body">
 	
 	<ul> 
 	<#list ch1.articleIndex as article>
+	<#if article_index lt 10>
 	<li><span style="float:right;">${article.createTime[0..10]}</span><a href="${article.articleUrl}" target="_blank">${article.articleTitle}</a></li>
+	</#if>
 	</#list>
 	</ul>
 	
@@ -298,12 +302,16 @@ padding-left: 3px;
 <div role="tabpanel" class="tab-pane" id="${ch1.channel.channelDesc}">
 		<div class="panel panel-primary" style="">
   <!-- Default panel contents -->
-  <div class="panel-heading">${ch1.channel.channelName}</div>
+  <div class="panel-heading">${ch1.channel.channelName}
+    <a href="${ch1.channel.channelUrl}" target="_blank" style="float:right;">更多>></a>
+  </div>
   <div class="panel-body">
 	
 	<ul> 
 	<#list ch1.articleIndex as article>
+	<#if article_index lt 10>
 	<li><span style="float:right;">${article.createTime[0..10]}</span><a href="${article.articleUrl}">${article.articleTitle}</a></li>
+	</#if>
 	</#list>
 	</ul>
 	

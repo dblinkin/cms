@@ -153,9 +153,10 @@ padding-left: 3px;
 		</div>
 		
 		
+		
     <div class="container-fluid" style="margin-top: 0.5em;">
 	   <#--导航条开始-->
-   <div class="row">
+           <div class="row">
 	 <div class="col-lg-12 col-md-12" style="text-align: center;font-family:'Micro YaHei',微软雅黑;padding-right:9em;padding-left:9em;">
 				<div class="panel panel-primary" style="margin-bottom: 0px;">
 			  <div class="panel-heading" style="padding:0" >
@@ -197,6 +198,7 @@ padding-left: 3px;
     </div>
 
      <#--导航条结束-->
+     
     
     
     
@@ -209,7 +211,7 @@ padding-left: 3px;
   <li ><a href="/index.html"  >首页</a></li>
   
   
-  <li><a href="${currentChannel.channelUrl?if_exists}"   >${currentChannel.channelName}</a></li>
+  <li><a href=""  >关于我们</a></li>
   
 	
   </ol>
@@ -229,92 +231,68 @@ padding-left: 3px;
 	
 <div class="panel panel-primary" style="text-align:center;">
   <!-- Default panel contents -->
-  <div class="panel-heading" style="font-size:1.5em;padding-left:0.1em;border-bottom:none;font-family:'Micro YaHei',微软雅黑;">${currentChannel.channelName}</div>
+  <div class="panel-heading" style="font-size:1.5em;padding-left:0.1em;border-bottom:none;font-family:'Micro YaHei',微软雅黑;">新闻动态</div>
  
 <ul class="nav nav-tabs">
 	<li class="divider"></li>
    </ul>
   <!-- List group -->
   <ul class="list-group">
-  	
-  		<#if currentChannel.children?size != 0>
-  		  <#list currentChannel.children as ch2>
-  		  	<#if ch2.channelId = currentChannel2.channelId>
-  				  <li class="list-group-item active" style="margin-top:0;"><a href="${ch2.channelUrl}" target="_blank" style="text-decoration:none;">${ch2.channelName}</a></li>
-   			 <#else>
-       		 <li class="list-group-item" style="margin-top:0;"><a href="${ch2.channelUrl}" target="_blank"  style="text-decoration:none;">${ch2.channelName}</a></li>
-    
-    		</#if>
-   		 </#list>
-   		 </#if>
-   	 
-  
-  </ul>
-</div>
-<div class="panel panel-primary" style="margin-top:0.5em;text-align:center;">
-  <!-- Default panel contents -->
-  <div class="panel-heading" style="font-size:1.5em;padding-left:0.1em;border-bottom:none;font-family:'Micro YaHei',微软雅黑;">关于我们</div>
-   
-   <ul class="nav nav-tabs">
-	<li class="divider"></li>
-   </ul>
-
-
-  <!-- List group -->
-  <ul class="list-group">
-    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">农交所介绍</a></li>
-    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">组织机构</a></li>
-    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">企业文化</a></li>
-    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">大事记</a></li>
-    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">联系我们</a></li>
+    <li class="list-group-item active" style="margin-top:0;"><a href="#hotNews" aria-controls="hotNews" role="tab" data-toggle="pill" style="text-decoration:none;">热点动态</a></li>
+    <li class="list-group-item" style="margin-top:0;"><a href="#industryNews" aria-controls="industryNews" role="tab" data-toggle="pill" style="text-decoration:none;">业内动态</a></li>
+    <li class="list-group-item" style="margin-top:0;"><a href="#ourNews" aria-controls="ourNews" role="tab" data-toggle="pill" style="text-decoration:none;">本所动态</a></li>
   </ul>
 </div>
 
       </div>
-       
-      
 	  <div class="col-lg-8 " style="margin-top:-1em;">
 	  <div class="tab-content">
-	
-	  
-	 <div role="tabpanel" class="tab-pane active" id="${currentChannel2.channelDesc}">
+	 <div role="tabpanel" class="tab-pane active" id="hotNews">
 		<div class="panel panel-primary" style="">
   <!-- Default panel contents -->
-  <div class="panel-heading">${currentChannel2.channelName}</div>
+  <div class="panel-heading">农交所介绍</div>
   <div class="panel-body">
 	
-	<ul> 
-	<#list articleIndex as article>
-	<#if article_index lt 10>
-	<li><span style="float:right;">${article.createTime[0..10]}</span><a href="${article.articleUrl}" target="_blank">${article.articleTitle}</a></li>
-	</#if>
-	</#list>
-	</ul>
+	关于我们fdsfdsfsdffsdfsdfdsfsdfsdfsdfsdfsdfsd
 	
-	<nav style="float:right;">
-  <ul class="pagination">
-    <li>
-      <a href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <li><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li>
-      <a href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav>
-
   </div>
+
+  
+ 
 </div>
 </div>
 
+	 <div role="tabpanel" class="tab-pane" id="industryNews">
+		<div class="panel panel-primary" style="">
+  <!-- Default panel contents -->
+  <div class="panel-heading">组织机构</div>
+  <div class="panel-body">
+	
+	fsdfsdfs
+	
+  </div>
+
+  
+ 
+</div>
+</div>
+
+	 <div role="tabpanel" class="tab-pane" id="ourNews">
+		<div class="panel panel-primary" style="">
+  <!-- Default panel contents -->
+  <div class="panel-heading">企业文化</div>
+  <div class="panel-body">
+	
+	fdsdfjfkdsfjsdkfsdklf
+	
+  </div>
+
+  
+ 
+</div>
+</div>
+
+	
 
 
 </div>

@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>陆良农村产权交易所</title>
+    <title>陆良农村产权交易所</title> 
 
     <!-- Bootstrap core CSS -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -106,17 +106,12 @@ padding-left: 3px;
   float: right;
   cursor: pointer;
 }
-.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
-  z-index: 2;
-  color: #fff;
-  background-color: #80c6e0;
-  border-color: #337ab7;
-}
+
 </style>
   </head>
-  <body style="background-color:#fff;">
+    <body style="background-color:#fff;">
 <!--
-  
+
   <div class="ad" style="left: 0.5em; position: absolute; top: 10em;z-index:999;">
    <a title="项目路演" target="_blank" href=""><img src="image/ad_1.jpg"></a>
 <br></div>
@@ -153,9 +148,10 @@ padding-left: 3px;
 		</div>
 		
 		
+		
     <div class="container-fluid" style="margin-top: 0.5em;">
-	   <#--导航条开始-->
-   <div class="row">
+	        <#--导航条开始-->
+           <div class="row">
 	 <div class="col-lg-12 col-md-12" style="text-align: center;font-family:'Micro YaHei',微软雅黑;padding-right:9em;padding-left:9em;">
 				<div class="panel panel-primary" style="margin-bottom: 0px;">
 			  <div class="panel-heading" style="padding:0" >
@@ -197,20 +193,16 @@ padding-left: 3px;
     </div>
 
      <#--导航条结束-->
-    
-    
-    
-	</div>
-	
+     </div>
 <div class="row">
 	
 	<div class="col-lg-3 col-lg-offset-1">
 	<ol class="breadcrumb" style="background-color:#fff;">
-  <li ><a href="/index.html"  >首页</a></li>
+  <li ><a href="/index.html">首页</a></li>
   
   
-  <li><a href="${currentChannel.channelUrl?if_exists}"   >${currentChannel.channelName}</a></li>
-  
+  <li><a href="${currentChannel.channelUrl?if_exists}" >${currentChannel.channelName}</a></li>
+  <li><a href="${currentChannel2.channelUrl?if_exists}"  >${currentChannel2.channelName}</a></li>
 	
   </ol>
 	
@@ -224,115 +216,101 @@ padding-left: 3px;
 	</div>
 	
 </div>
-<div class="row" >
-	<div class="col-lg-2 col-lg-offset-1" style="margin-top:-1em;">
-	
-<div class="panel panel-primary" style="text-align:center;">
-  <!-- Default panel contents -->
-  <div class="panel-heading" style="font-size:1.5em;padding-left:0.1em;border-bottom:none;font-family:'Micro YaHei',微软雅黑;">${currentChannel.channelName}</div>
+
+<div class="row">
+	<div class="col-lg-10 col-lg-offset-1" style="margin-top: -1em;">
+	<div class="panel panel-primary" style="">
+			  <div class="panel-heading" style="background-color:#fff;padding:0; border-bottom: none;font-family:'Micro YaHei',微软雅黑;">
+        <h3 class="panel-title" id="panel-title" style="padding-top:20px;" >${article.articleTitle}
+		
+		<div class="row"> 
+			
+				
+				
+				<div class="col-lg-12" style="margin-top:0.5em;">
+				<ul class="nav nav-tabs">
  
-<ul class="nav nav-tabs">
-	<li class="divider"></li>
-   </ul>
-  <!-- List group -->
-  <ul class="list-group">
-  	
-  		<#if currentChannel.children?size != 0>
-  		  <#list currentChannel.children as ch2>
-  		  	<#if ch2.channelId = currentChannel2.channelId>
-  				  <li class="list-group-item active" style="margin-top:0;"><a href="${ch2.channelUrl}" target="_blank" style="text-decoration:none;">${ch2.channelName}</a></li>
-   			 <#else>
-       		 <li class="list-group-item" style="margin-top:0;"><a href="${ch2.channelUrl}" target="_blank"  style="text-decoration:none;">${ch2.channelName}</a></li>
-    
-    		</#if>
-   		 </#list>
-   		 </#if>
-   	 
-  
-  </ul>
-</div>
-<div class="panel panel-primary" style="margin-top:0.5em;text-align:center;">
-  <!-- Default panel contents -->
-  <div class="panel-heading" style="font-size:1.5em;padding-left:0.1em;border-bottom:none;font-family:'Micro YaHei',微软雅黑;">关于我们</div>
-   
-   <ul class="nav nav-tabs">
-	<li class="divider"></li>
-   </ul>
-
-
-  <!-- List group -->
-  <ul class="list-group">
-    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">农交所介绍</a></li>
-    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">组织机构</a></li>
-    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">企业文化</a></li>
-    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">大事记</a></li>
-    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">联系我们</a></li>
-  </ul>
-</div>
-
+				<li class="divider"></li>
+			</ul>
+				</div>
+				
+				<div class="col-lg-12" style="text-align:center;font-size:16px;">
+				<p>来源：${article.articleSrc}&nbsp;&nbsp;时间:${article.createTime[0..10]}</p>
+				</div>
+		</div>
+		
+		</h3>
       </div>
-       
-      
-	  <div class="col-lg-8 " style="margin-top:-1em;">
-	  <div class="tab-content">
-	
-	  
-	 <div role="tabpanel" class="tab-pane active" id="${currentChannel2.channelDesc}">
-		<div class="panel panel-primary" style="">
-  <!-- Default panel contents -->
-  <div class="panel-heading">${currentChannel2.channelName}</div>
-  <div class="panel-body">
-	
-	<ul> 
-	<#list articleIndex as article>
-	<#if article_index lt 10>
-	<li><span style="float:right;">${article.createTime[0..10]}</span><a href="${article.articleUrl}" target="_blank">${article.articleTitle}</a></li>
-	</#if>
-	</#list>
-	</ul>
-	
-	<nav style="float:right;">
-  <ul class="pagination">
-    <li>
-      <a href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <li><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li>
-      <a href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav>
-
-  </div>
-</div>
-</div>
-
-
-
-</div>
-	  </div>
      
+      <div class="panel-body" style="">
+	
+		<div class="row">
+				
+				<div class="col-lg-10 col-lg-offset-1">
+						<table class="table table-bordered table-striped">
+				<tr style="text-align:center;">
+					<td colspan=4 style="background-color:#80c6e0;">项目信息</td>
+				</tr>
+					<tr>
+						<th style="background-color:#cccccc;">项目类别</th>
+						<td>实物资产</td>
+						<th style="background-color:#cccccc;">意向区县</th>
+						<td>陆良</td>
+						
+					</tr>
+				<tr>
+					<th style="background-color:#cccccc;">投资用途</th>
+						<td>个人画室</td>
+						<th style="background-color:#cccccc;">投资金额</th>
+						<td>未设定</td>
+				</tr>
+				
+				<tr>
+						<th style="background-color:#cccccc;">需求面积</th>
+						<td>500平方米</td>
+						<th style="background-color:#cccccc;">需求年限</th>
+						<td>未设定</td>
+						
+					</tr>
+				<tr>
+					<th style="background-color:#cccccc;">环境和配套说明</th>
+						<td colspan=3>租赁</td>
+						
+				</tr>
+				<tr style="text-align:center;">
+					<td colspan=4 style="background-color:#80c6e0;">需求方信息</td>
+				</tr>
+				<tr>
+					<th style="background-color:#cccccc;">需求方名称</th>
+						<td>朱先生</td>
+						<th style="background-color:#cccccc;">需求方地址</th>
+						<td>北京</td>
+				</tr>
+				<tr>
+					<th style="background-color:#cccccc;">交易所联系人</th>
+						<td>李先生</td>
+						<th style="background-color:#cccccc;">联系电话</th>
+						<td>2015-050-03</td>
+				</tr>
+				<tr>
+					<th style="background-color:#cccccc;">电子邮箱</th>
+					<td >2015-050-03</td>
+					<th style="background-color:#cccccc;">联系传真</th>
+					<td >2015-050-03</td>
+						
+				</tr>
+				</table>
+				</div>
+	</div>
+</div>
+</div>
+</div>
 </div>
 
 
       <!-- Site footer -->
       <footer class="footer"  style="text-align:center; margin-top:0.5em;">
-    <div class="row" >
-      		<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1" style="text-align:center;">
-		                <ul class="nav nav-tabs " >
-						
-						
-						</ul>
-		
-	</div>
+    
 	<div style="margin-top:1.5em;">
 	 <address>
 		<strong>&copy; 2005-2015 陆良农交所 滇ICP备05070218号</strong></br>
