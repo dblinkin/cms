@@ -182,7 +182,7 @@ public class PathFormat {
 
 	private static String getSecondChannel(int channelId) {
 		Channel c = ChannelMgr.getInstance().getChannel(channelId);
-		if (c != null && c.getParentChannelId() == 0) {
+		if (c != null && c.getParentChannelId() != 0) {
 			return c.getChannelDesc();
 		}
 		return "";

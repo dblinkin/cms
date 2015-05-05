@@ -123,14 +123,14 @@
       var ids = [];
       BUI.each(items,function(item){
     	  var obj = {};
-    	  obj.articleId = item.articleId;
+    	  obj.projectId = item.projectId;
     	  obj.channelId = item.channelId;
         ids.push(obj);
       });
 
       if(ids.length){
         BUI.Message.Confirm('确认要发布选中的记录么？',function(){
-          store.save('update',{ids : BUI.JSON.stringify(ids), src : "ARTICLE"});
+          store.save('update',{ids : BUI.JSON.stringify(ids)});
         },'question');
       }
     }

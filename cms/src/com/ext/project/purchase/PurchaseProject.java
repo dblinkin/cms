@@ -51,7 +51,8 @@ public class PurchaseProject implements Releasable {
 
 	@Override
 	public void afterRelease(AfterRelease ar) throws FtdException {
-		if (this.releaseUrl != null && this.releaseUrl.equals(ar.releaseUrl)) {
+		if (this.releaseUrl == null || !this.releaseUrl.equals(ar.releaseUrl)) {
+			this.releaseUrl = ar.releaseUrl;
 			PurchaseProjectDao.updateRelease(this);
 		}
 
