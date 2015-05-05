@@ -153,9 +153,10 @@ padding-left: 3px;
 		</div>
 		
 		
+		
     <div class="container-fluid" style="margin-top: 0.5em;">
 	   <#--导航条开始-->
-   <div class="row">
+           <div class="row">
 	 <div class="col-lg-12 col-md-12" style="text-align: center;font-family:'Micro YaHei',微软雅黑;padding-right:9em;padding-left:9em;">
 				<div class="panel panel-primary" style="margin-bottom: 0px;">
 			  <div class="panel-heading" style="padding:0" >
@@ -197,6 +198,7 @@ padding-left: 3px;
     </div>
 
      <#--导航条结束-->
+     
     
     
     
@@ -209,7 +211,7 @@ padding-left: 3px;
   <li ><a href="/index.html"  >首页</a></li>
   
   
-  <li><a href="${currentChannel.channelUrl?if_exists}"   >${currentChannel.channelName}</a></li>
+  <li><a href="${currentChannel.channelUrl?if_exists}"  >${currentChannel.channelName}</a></li>
   
 	
   </ol>
@@ -236,18 +238,12 @@ padding-left: 3px;
    </ul>
   <!-- List group -->
   <ul class="list-group">
+  	<#list channel_articleIndex as ch1>
   	
-  		<#if currentChannel.children?size != 0>
-  		  <#list currentChannel.children as ch2>
-  		  	<#if ch2.channelId = currentChannel2.channelId>
-  				  <li class="list-group-item active" style="margin-top:0;"><a href="${ch2.channelUrl}" target="_blank" style="text-decoration:none;">${ch2.channelName}</a></li>
-   			 <#else>
-       		 <li class="list-group-item" style="margin-top:0;"><a href="${ch2.channelUrl}" target="_blank"  style="text-decoration:none;">${ch2.channelName}</a></li>
+        <li class="list-group-item" style="margin-top:0;"><a href="${ch1.channel.channelUrl}" target="_blank" style="text-decoration:none;">${ch1.channel.channelName}</a></li>
     
-    		</#if>
-   		 </#list>
-   		 </#if>
-   	 
+    
+    </#list>  
   
   </ul>
 </div>
@@ -258,7 +254,7 @@ padding-left: 3px;
    <ul class="nav nav-tabs">
 	<li class="divider"></li>
    </ul>
-
+ 
 
   <!-- List group -->
   <ul class="list-group">
@@ -271,20 +267,24 @@ padding-left: 3px;
 </div>
 
       </div>
-       
+      
       
 	  <div class="col-lg-8 " style="margin-top:-1em;">
 	  <div class="tab-content">
-	
 	  
-	 <div role="tabpanel" class="tab-pane active" id="${currentChannel2.channelDesc}">
+	  <#list channel_articleIndex as ch1>
+	 
+	  
+	 <div role="tabpanel" class="tab-pane active" id="${ch1.channel.channelDesc}" style="margin-bottom: 10px;">
 		<div class="panel panel-primary" style="">
   <!-- Default panel contents -->
-  <div class="panel-heading">${currentChannel2.channelName}</div>
+  <div class="panel-heading">${ch1.channel.channelName}
+  <a href="${ch1.channel.channelUrl}" target="_blank" style="float:right;">更多>></a>
+  </div>
   <div class="panel-body">
 	
 	<ul> 
-	<#list articleIndex as article>
+	<#list ch1.articleIndex as article>
 	<#if article_index lt 10>
 	<li><span style="float:right;">${article.createTime[0..10]}</span><a href="${article.articleUrl}" target="_blank">${article.articleTitle}</a></li>
 	</#if>
@@ -347,30 +347,16 @@ padding-left: 3px;
        
       </tbody>
     </table>
-	<nav style="float:right;">
-  <ul class="pagination">
-    <li>
-      <a href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <li><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li>
-      <a href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav>
-
   </div>
 </div>
 </div>
 
+
+</#list>
+
+
+
+	
 
 
 </div>
