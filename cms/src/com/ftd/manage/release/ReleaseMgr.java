@@ -84,6 +84,7 @@ public class ReleaseMgr {
 		for (ModelProvider model : rc.getModels()) {
 			models.putAll(model.getModel(channelId, 0));
 		}
+		models.putAll(r.getReleaseModel());
 
 		// 得到文件名
 		String filename = r.getReleaseUrl();
@@ -212,6 +213,7 @@ public class ReleaseMgr {
 		for (ModelProvider model : rc.getModels()) {
 			models.putAll(model.getModel(channelId, 0));
 		}
+		models.putAll(r.getReleaseModel());
 
 		writeResponse(ctx.response, models, rc.getTemplateName());
 

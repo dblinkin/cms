@@ -32,8 +32,8 @@
 	</div>
     
     <form id="preview" action="manage_preview_ext.do" target="_blank" method="post">
-    	<input type="hidden" id="channel2Id" name="channel2Id"/>
-    	<input type="hidden" id="articleId" name="articleId"/>
+    	<input type="hidden" id="channelId" name="channelId"/>
+    	<input type="hidden" id="projectId" name="projectId"/>
     	<input type="hidden" name="type" value="purchase"/>
     </form>
 
@@ -140,8 +140,8 @@
         var record = ev.record;
         releaseItems([record]);
       }else if(sender.hasClass('btn-preview')){
-    	  $("#channel2Id", "#preview").val(ev.record.channelId);
-    	  $("#articleId", "#preview").val(ev.record.articleId);
+    	  $("#channelId", "#preview").val(1025);
+    	  $("#projectId", "#preview").val(ev.record.projectId);
     	  $("#preview").submit();
       }
     });

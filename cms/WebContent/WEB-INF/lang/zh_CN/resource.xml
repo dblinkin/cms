@@ -1,22 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Resource>	
 	<!-- 错误码 -->
-	<String Id="error.msg.session.time.out" Msg="您长时间没有活动，请重新登录"/>
-	<String Id="error.msg.request.url.error" Msg="收到一个错误的请求[%1s]"/>
-	<String Id="error.msg.handler.not.found" Msg="处理器没有注册[%1s]"/>
-	<String Id="error.msg.server.internal.error" Msg="服务器异常"/>	
-	<String Id="error.msg.db.sql.error" Msg="数据库操作失败"/>
-	<String Id="error.msg.channel.id.not.found" Msg="所属的一级栏目不存在[%1s]"/>
-	<String Id="error.msg.channel.not.found" Msg="栏目不存在[%1s]"/>
-	<String Id="error.msg.release.manager.not.found" Msg="发布管理器不存在[%1s]"/>
-	<String Id="error.msg.release.not.found" Msg="发布管理器不存在"/>
-	<String Id="error.msg.article.not.found" Msg="发布的文章[%1s]不存在"/>
+	<Group Id="error">
+		<String Id="session.time.out" Msg="您长时间没有活动，请重新登录"/>
+		<String Id="request.url.error" Msg="收到一个错误的请求[%1s]"/>
+		<String Id="handler.not.found" Msg="处理器没有注册[%1s]"/>
+		<String Id="server.internal.error" Msg="服务器异常"/>	
+		<String Id="db.sql.error" Msg="数据库操作失败"/>
+		<String Id="channel.id.not.found" Msg="所属的一级栏目不存在[%1s]"/>
+		<String Id="channel.not.found" Msg="栏目不存在[%1s]"/>
+		<String Id="release.manager.not.found" Msg="发布管理器不存在[%1s]"/>
+		<String Id="release.not.found" Msg="发布管理器不存在"/>
+		<String Id="article.not.found" Msg="发布的文章[%1s]不存在"/>
+	</Group>
 	
 	<!-- ftl模板名称  -->
-	<String Id="main_page" Msg="默认首页模板"/>
-	<String Id="first_channel" Msg="默认一级栏目模板"/>
-	<String Id="second_channel" Msg="默认二级栏目模板"/>
-	<String Id="article" Msg="默认文章模板"/>
-	<String Id="user_define_purchase_project" Msg="受让项目文章模板"/>
+	<Group Id="ftl">
+		<String Id="main_page" Msg="默认首页模板"/>
+		<String Id="first_channel" Msg="默认一级栏目模板"/>
+		<String Id="second_channel" Msg="默认二级栏目模板"/>
+		<String Id="article" Msg="默认文章模板"/>
+		<String Id="purchase_project" Msg="受让项目文章模板"/>
+		<String Id="list_project" Msg="挂牌项目文章模板"/>
+	</Group>
 	
+	<!-- listedProjectType 挂牌项目类型 -->
+	<Group Id="lpType">
+		<String Id="main_page" Msg="默认首页模板"/>
+		<String Id="first_channel" Msg="默认一级栏目模板"/>
+		<String Id="second_channel" Msg="默认二级栏目模板"/>
+		<String Id="article" Msg="默认文章模板"/>
+		<String Id="user_define_purchase_project" Msg="受让项目文章模板"/>
+	</Group>
 </Resource>

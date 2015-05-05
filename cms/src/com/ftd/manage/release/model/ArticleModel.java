@@ -29,12 +29,12 @@ public class ArticleModel implements ModelProvider {
 	@Override
 	public Map<String, Object> getModel(int channelId, int articleId)
 			throws FtdException {
-		if (articleId != 0)
-			this.articleId = articleId;
+		if (this.articleId != 0)
+			articleId = this.articleId;
 
 		Map<String, Object> model = new HashMap<String, Object>();
 
-		if (this.articleId != 0) {
+		if (articleId != 0) {
 			model.put("article", ArticleDao.select(this.articleId));
 		}
 		return model;

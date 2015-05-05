@@ -221,7 +221,7 @@ padding-left: 3px;
 	<div class="col-lg-10 col-lg-offset-1" style="margin-top: -1em;">
 	<div class="panel panel-primary" style="">
 			  <div class="panel-heading" style="background-color:#fff;padding:0; border-bottom: none;font-family:'Micro YaHei',微软雅黑;">
-        <h3 class="panel-title" id="panel-title" style="padding-top:20px;" >${article.articleTitle}
+        <h3 class="panel-title" id="panel-title" style="padding-top:20px;" >${pchsProject.projectTitle}
 		
 		<div class="row"> 
 			
@@ -235,7 +235,7 @@ padding-left: 3px;
 				</div>
 				
 				<div class="col-lg-12" style="text-align:center;font-size:16px;">
-				<p>来源：${article.articleSrc}&nbsp;&nbsp;时间:${article.createTime[0..10]}</p>
+				<p>来源：${pchsProject.projectSrc}&nbsp;&nbsp;时间:${pchsProject.createTime[0..10]}</p>
 				</div>
 		</div>
 		
@@ -253,28 +253,28 @@ padding-left: 3px;
 				</tr>
 					<tr>
 						<th style="background-color:#cccccc;">项目类别</th>
-						<td>实物资产</td>
+						<td>${pchsProject.projectType}</td>
 						<th style="background-color:#cccccc;">意向区县</th>
-						<td>陆良</td>
+						<td>${pchsProject.intentionDistrict}</td>
 						
 					</tr>
 				<tr>
 					<th style="background-color:#cccccc;">投资用途</th>
-						<td>个人画室</td>
+						<td>${pchsProject.purpose}</td>
 						<th style="background-color:#cccccc;">投资金额</th>
-						<td>未设定</td>
+						<td>${pchsProject.intentionMoney}</td>
 				</tr>
 				
 				<tr>
 						<th style="background-color:#cccccc;">需求面积</th>
-						<td>500平方米</td>
+						<td>${pchsProject.intentionArea}</td>
 						<th style="background-color:#cccccc;">需求年限</th>
-						<td>未设定</td>
+						<td>${pchsProject.intentionYear}</td>
 						
 					</tr>
 				<tr>
 					<th style="background-color:#cccccc;">环境和配套说明</th>
-						<td colspan=3>租赁</td>
+						<td colspan=3>${pchsProject.remark}</td>
 						
 				</tr>
 				<tr style="text-align:center;">
@@ -282,21 +282,21 @@ padding-left: 3px;
 				</tr>
 				<tr>
 					<th style="background-color:#cccccc;">需求方名称</th>
-						<td>朱先生</td>
+						<td>${pchsProject.demandName}</td>
 						<th style="background-color:#cccccc;">需求方地址</th>
-						<td>北京</td>
+						<td>${pchsProject.demandAddress}</td>
 				</tr>
 				<tr>
 					<th style="background-color:#cccccc;">交易所联系人</th>
-						<td>李先生</td>
+						<td>${pchsProject.contractName}</td>
 						<th style="background-color:#cccccc;">联系电话</th>
-						<td>2015-050-03</td>
+						<td>${pchsProject.contractPhone}</td>
 				</tr>
 				<tr>
 					<th style="background-color:#cccccc;">电子邮箱</th>
-					<td >2015-050-03</td>
+					<td >${pchsProject.contractMail}</td>
 					<th style="background-color:#cccccc;">联系传真</th>
-					<td >2015-050-03</td>
+					<td >${pchsProject.contractFax}</td>
 						
 				</tr>
 				</table>

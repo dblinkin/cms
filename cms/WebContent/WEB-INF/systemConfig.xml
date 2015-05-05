@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <System>
-	 <Database JdbcUrl="jdbc:mysql://localhost:3306/cms" User="root" Password="root"/>
+	 <Database JdbcUrl="jdbc:mysql://123.57.207.129:3306/cms" User="root" Password="root"/>
 	<!-- <Database JdbcUrl="jdbc:mysql://123.57.207.129:3306/cms" User="root" Password="root"/> -->
 	
 	<MainPageChannel>256</MainPageChannel>
+	<ListedProjectChannel>1024</ListedProjectChannel>
+	
 	<Lang>zh_CN</Lang>
 	
 	<ArticleIndexNum>6</ArticleIndexNum><!-- 一级栏目文章索引数目 -->
@@ -42,6 +44,7 @@
 		<Handler Req="manage_recommend_project.do" Class="com.ext.project.recommend.RcmdProjectHandler"/>
 		<Handler Req="manage_purchase_project.do" Class="com.ext.project.purchase.PurchaseProjectHandler"/>
 		<Handler Req="manage_listed_project.do" Class="com.ext.project.listed.ListedProjectHandler"/>
+		<Handler Req="manage_listed_project_type.do" Class="com.ext.project.listed.ListedProjectTypeQueryHandler"/>
 		<Handler Req="manage_friend_link.do" Class="com.ext.friendlink.FriendLinkHandler"/>
 	</Handlers>
 </System>

@@ -41,4 +41,11 @@
 	<Release Id="user_define_purchase_project" Src="USER_DEFINE" Template="article.ftl" FilenameFormat="/article/{first_channel}/{second_channel}/{yyyy}{mm}{dd}/{rand:6}{time}.html">
 		<Model>com.ftd.manage.release.model.ChannelModel</Model>
 	</Release>
+	
+	<Release Id="list_project" Src="USER_DEFINE" Template="list_project.ftl" FilenameFormat="/article/{first_channel}/{second_channel}/{yyyy}{mm}{dd}/{rand:6}{time}.html">
+		<Model>com.ftd.manage.release.model.ChannelModel</Model>
+	</Release>
+	<Release Id="purchase_project" Src="USER_DEFINE" Template="pchs_project.ftl" FilenameFormat="/article/{first_channel}/{second_channel}/{yyyy}{mm}{dd}/{rand:6}{time}.html">
+		<Model>com.ftd.manage.release.model.ChannelModel</Model>
+	</Release>
 </ReleaseConfig>

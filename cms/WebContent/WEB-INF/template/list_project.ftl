@@ -221,7 +221,7 @@ padding-left: 3px;
 	<div class="col-lg-10 col-lg-offset-1" style="margin-top: -1em;">
 	<div class="panel panel-primary" style="">
 			  <div class="panel-heading" style="background-color:#fff;padding:0; border-bottom: none;font-family:'Micro YaHei',微软雅黑;">
-        <h3 class="panel-title" id="panel-title" style="padding-top:20px;" >${article.articleTitle}
+        <h3 class="panel-title" id="panel-title" style="padding-top:20px;" >${listedProject.projectTitle}
 		
 		<div class="row"> 
 			
@@ -254,48 +254,48 @@ padding-left: 3px;
 				</tr>
 					<tr>
 						<th style="background-color:#cccccc;">项目编号</th>
-						<td>2015-CP/04-0003</td>
+						<td>${listedProject.projectNum}</td>
 						<th style="background-color:#cccccc;">项目类别</th>
-						<td>实物资产</td>
+						<td>${listedProject.projectType}</td>
 						
 					</tr>
 				<tr>
 					<th style="background-color:#cccccc;">挂牌开始时间</th>
-						<td>2015-050-03</td>
+						<td>${listedProject.listedStartTime}</td>
 						<th style="background-color:#cccccc;">挂牌截止时间</th>
-						<td>2015-050-03</td>
+						<td>${listedProject.listedEndTime}</td>
 				</tr>
 				<tr style="text-align:center;">
 					<td colspan=4 style="background-color:#80c6e0;">流转信息</td>
 				</tr>
 				<tr>
 						<th style="background-color:#cccccc;">转出方名称</th>
-						<td>村委会</td>
+						<td>${listedProject.assetTransfor}</td>
 						<th style="background-color:#cccccc;">所在区域</th>
-						<td>陆良</td>
+						<td>${listedProject.district}</td>
 						
 					</tr>
 				<tr>
 					<th style="background-color:#cccccc;">流转方式</th>
-						<td>租赁</td>
+						<td>${listedProject.transferType}</td>
 						<th style="background-color:#cccccc;">挂牌价格</th>
-						<td>1333</td>
+						<td>${listedProject.transferPrice}</td>
 				</tr>
 				<tr>
 					<th style="background-color:#cccccc;">成交状态</th>
-						<td>未成交</td>
+						<td>${listedProject.isDeal}</td>
 						<th style="background-color:#cccccc;">流转面积</th>
-						<td>2015</td>
+						<td>${listedProject.transferArea}</td>
 				</tr>
 				<tr>
 					<th style="background-color:#cccccc;">流转开始时间</th>
-						<td>2015-050-03</td>
+						<td>${listedProject.transferStartTime}</td>
 						<th style="background-color:#cccccc;">流转结束时间</th>
-						<td>2015-050-03</td>
+						<td>${listedProject.transferEndTime}</td>
 				</tr>
 				<tr>
 					<th style="background-color:#cccccc;">备注</th>
-					<td colspan=3>2015-050-03</td>
+					<td colspan=3>${listedProject.remark}</td>
 						
 				</tr>
 				</table>

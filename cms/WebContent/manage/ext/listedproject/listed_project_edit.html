@@ -31,12 +31,13 @@
               <input name="projectNum" type="text" data-rules="{required:true}" class="input-normal control-text">
             </div>
           </div> 
-          <div class="control-group span12">
-            <label class="control-label"><s>*</s>项目类别：</label>
-            <div class="controls">
-              <input name="projectType" type="text" data-rules="{required:true}" class="input-normal control-text">
-            </div>
-          </div>      
+        
+	      <div class="control-group span12">
+	          <label class="control-label"><s>*</s>项目类别：</label>
+	          <div class="controls bui-form-field-select" data-loader="{url:'manage_listed_project_type.do',property:'items',dataType:'json'}">
+	            <input name="projectType" type="hidden" value="0">
+	          </div>
+	      </div>     
         </div>
         <div class="row">
 	        <div class="control-group span15 ">

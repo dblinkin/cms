@@ -131,8 +131,12 @@ BUI.use(['bui/extensions/treegrid','bui/data'],function (TreeGrid, Data) {
       if(sender.hasClass('btn-release')){
         releaseItem(ev.record);
       }else if(sender.hasClass('btn-preview')){
-    	  $("#channel2Id", "#preview").val(ev.record.channelId);
-    	  $("#articleId", "#preview").val(ev.record.articleId);
+    	  if(ev.record.parentChannelId){
+        	  $("#channel1Id", "#preview").val(ev.record.parentChannelId)
+    		  $("#channel2Id", "#preview").val(ev.record.channelId);
+    	  }else{
+    	 	 $("#channel1Id", "#preview").val(ev.record.channelId);    		  
+    	  }
     	  $("#preview").submit();
       }
     });

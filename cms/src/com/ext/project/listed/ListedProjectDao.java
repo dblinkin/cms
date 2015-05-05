@@ -62,15 +62,14 @@ public class ListedProjectDao {
 
 	public static void update(ListedProject p) throws FtdException {
 		String sql = "update project_listed set project_title=?,project_num=?,project_type=?,listed_start_time=?, listed_end_time=?,"
-				+ "asset_transfor=?, is_deal=?, district=?, transfer_area=?,transfer_type=?,transfer_start_time=?,transfer_end_time=?,transfer_price=?,remark=?, "
-				+ "release_id=? where project_id=?";
+				+ "asset_transfor=?, is_deal=?, district=?, transfer_area=?,transfer_type=?,transfer_start_time=?,transfer_end_time=?,transfer_price=?,remark=?"
+				+ " where project_id=?";
 		DBClient dbClient = SysMgr.getInstance().getDbClient();
 
 		try {
 			dbClient.executeUpdate(sql, p.getProjectTitle(),p.getProjectNum(),p.getProjectType(),p.getListedStartTime(), p.getListedEndTime(),
 					p.getAssetTransfor(), p.getIsDeal(), p.getDistrict(), p.getTransferArea(), p.getTransferType(), p.getTransferStartTime(), p.getTransferEndTime(), 
 					p.getTransferPrice(), p.getRemark(),
-					p.getReleaseId(),
 					p.getProjectId());
 		} catch (SQLException e) {
 			throw new FtdException(e, "db.sql.error");
@@ -170,7 +169,7 @@ public class ListedProjectDao {
 	public static ListedProject select(int projectId) throws FtdException {
 
 		DBClient dbClient = SysMgr.getInstance().getDbClient();
-		String sql = String.format("select * from project_listed where project_id=? limit 1", projectId);
+		String sql = String.format("select * from project_listed where project_id=%d limit 1", projectId);
 
 		CachedRowSet rs = null;
 		try {

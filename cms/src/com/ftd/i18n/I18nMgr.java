@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONObject;
+
+import org.apache.commons.collections.OrderedMap;
+import org.apache.commons.collections.map.LinkedMap;
 import org.dom4j.Document;
 import org.dom4j.Element;
 
@@ -30,7 +34,7 @@ public class I18nMgr {
 	 *            the name of resource , eg : zh_cn, en...
 	 * @return
 	 */
-	public String getMsg(String resourceName, String strId) {
+	public String getMsg(String resourceName, String groupId, String strId) {
 		Resource resource = langResourceMap.get(resourceName);
 		if (resource == null) {
 			String filePath = FilePath.LANG_RESOURCE_PATH + "/" + resourceName
@@ -40,7 +44,19 @@ public class I18nMgr {
 
 		if (resource == null)
 			return strId;
-		return resource.getMsg(strId);
+		return resource.getMsg(groupId, strId);
+	}
+
+	public JSONObject getGroup(String resourceName, String groupId) {
+		Resource resource = langResourceMap.get(resourceName);
+		if (resource == null) {
+			String filePath = FilePath.LANG_RESOURCE_PATH + "/" + resourceName
+					+ "/resource.xml";
+			resource = loadResource(filePath);
+		}
+		if (resource == null)
+			return new JSONObject();
+		return resource.getJsonGroup(groupId);
 	}
 
 	private Resource loadResource(String filePath) {
@@ -51,15 +67,22 @@ public class I18nMgr {
 
 		Resource resource = new Resource();
 		Element root = document.getRootElement();
-		List<Element> strElements = root.elements("String");
+		List<Element> groupElements = root.elements("Group");
+		for (Element groupElement : groupElements) {
+			Map<String, String> kv = XmlUtil.getAttribute(groupElement);
+			String groupId = StrUtil.parseStr(kv.get("Id"), null);
+			if (groupId == null)
+				continue;
 
-		for (Element element : strElements) {
-			Map<String, String> kv = XmlUtil.getAttribute(element);
+			OrderedMap map = new LinkedMap();
+			for (Element strElement : groupElement.elements("String")) {
+				Map<String, String> strkv = XmlUtil.getAttribute(strElement);
 
-			String strId = StrUtil.parseStr(kv.get("Id"), "");
-			String msg = StrUtil.parseStr(kv.get("Msg"), "");
-
-			resource.add(strId, msg);
+				String strId = StrUtil.parseStr(strkv.get("Id"), "");
+				String msg = StrUtil.parseStr(strkv.get("Msg"), "");
+				map.put(strId, msg);
+			}
+			resource.getResMap().put(groupId, map);
 		}
 
 		return resource;

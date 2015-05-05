@@ -58,7 +58,7 @@ public class FtdServlet extends HttpServlet {
 			if (index <= 0) {
 				result.element(Context.RET_CODE, 0x1000);
 				String errFmt = I18nMgr.getInstance().getMsg(lang,
-						Resource.ERROR_CODE_PREFIX + "request.url.error");
+						Resource.ERROR_CODE_PREFIX, "request.url.error");
 				result.element(Context.RET_MSG, String.format(errFmt, url));
 				logger.error("error request url [{}] !", url);
 				break;
@@ -69,7 +69,7 @@ public class FtdServlet extends HttpServlet {
 			if (handler == null) {
 				result.element(Context.RET_CODE, 0x1001);
 				String errFmt = I18nMgr.getInstance().getMsg(lang,
-						Resource.ERROR_CODE_PREFIX + "handler.not.found");
+						Resource.ERROR_CODE_PREFIX, "handler.not.found");
 				result.element(Context.RET_MSG, String.format(errFmt, cmd));
 				logger.error("handler[{}] not found", cmd);
 				break;
@@ -85,7 +85,7 @@ public class FtdServlet extends HttpServlet {
 			} catch (FtdException fe) {
 				result.element(Context.RET_CODE, 0x1002);
 				String errFmt = I18nMgr.getInstance().getMsg(lang,
-						Resource.ERROR_CODE_PREFIX + fe.getErrorCodeId());
+						Resource.ERROR_CODE_PREFIX, fe.getErrorCodeId());
 				result.element(Context.RET_MSG,
 						String.format(errFmt, fe.getArgs()));
 				if (fe.getCause() != null)
@@ -96,7 +96,7 @@ public class FtdServlet extends HttpServlet {
 			} catch (Exception e) {
 				result.element(Context.RET_CODE, 0x1003);
 				String errFmt = I18nMgr.getInstance().getMsg(lang,
-						Resource.ERROR_CODE_PREFIX + "server.internal.error");
+						Resource.ERROR_CODE_PREFIX, "server.internal.error");
 				result.element(Context.RET_MSG,
 						String.format(errFmt, e.getMessage()));
 

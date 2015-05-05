@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONObject;
 
 import com.ftd.i18n.I18nMgr;
+import com.ftd.i18n.Resource;
 import com.ftd.manage.ManagerSession;
 import com.ftd.servlet.Context;
 import com.ftd.system.SysMgr;
@@ -39,7 +40,7 @@ public class ManageAccessFilter implements Filter {
 					SysMgr.getInstance().getDefaultLang());
 
 			String errStr = I18nMgr.getInstance().getMsg(lang,
-					"msg.error.session.time.out");
+					Resource.ERROR_CODE_PREFIX, "session.time.out");
 
 			JSONObject result = new JSONObject();
 

@@ -22,6 +22,8 @@ public class SysMgr {
 
 	// 默认首页栏目
 	private int mainPageChannel;
+	// 挂牌项目栏目
+	private int listedProjectChannel;
 	//
 	private int articleIndexNum;
 	// 默认语言
@@ -60,6 +62,10 @@ public class SysMgr {
 
 	public int getArticleIndexNum() {
 		return articleIndexNum;
+	}
+
+	public int getListedProjectChannel() {
+		return listedProjectChannel;
 	}
 
 	public boolean init(String filePath) {
@@ -111,6 +117,10 @@ public class SysMgr {
 		Element mainPageElement = root.element("MainPageChannel");
 		this.mainPageChannel = StrUtil.parseInt(mainPageElement.getTextTrim(),
 				256);
+
+		Element lpElement = root.element("ListedProjectChannel");
+		this.listedProjectChannel = StrUtil
+				.parseInt(lpElement.getTextTrim(), 0);
 
 		Element langElement = root.element("Lang");
 		this.defaultLang = StrUtil.parseStr(langElement.getTextTrim(), "zh_CN");

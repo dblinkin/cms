@@ -3,6 +3,8 @@ package com.ext.project.listed;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.ftd.manage.channel.Channel;
+import com.ftd.manage.channel.ChannelMgr;
 import com.ftd.manage.release.AfterRelease;
 import com.ftd.manage.release.Releasable;
 import com.ftd.servlet.FtdException;
@@ -87,7 +89,14 @@ public class ListedProject implements Releasable {
 		this.projectTitle = projectTitle;
 	}
 
-	public int getProjectType() {
+	public String getProjectType() {
+		Channel c = ChannelMgr.getInstance().getChannel(projectType);
+		if (c != null)
+			return c.getChannelName();
+		return "";
+	}
+
+	public int getChannelId() {
 		return projectType;
 	}
 
