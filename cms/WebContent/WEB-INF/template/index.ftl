@@ -381,7 +381,7 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
 			<#list news.articleIndex as  article>
 			<#if article_index lt 5>
 			<li style="width:24em;margin-top:1.3em;overflow-x: hidden;white-space: nowrap;text-overflow: ellipsis;list-style-position: inside;">
-				
+	 			
 				
 				<a href="${article.articleUrl}" target="_blank" title="${article.articleTitle}">${article.articleTitle}</a>
 				<span style="right:0.5em;position:absolute;">${article.createTime[0..10]}</span>

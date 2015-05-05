@@ -17,7 +17,7 @@
     <!-- Custom styles for this template -->
 	  <script src="/js/jquery-2.1.3.min.js"></script>
 	  <script src="/js/bootstrap.min.js"></script>
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!-- Just for debugg ing purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="/js/ie-emulation-modes-warning.js"></script>
     <script src="/js/html5shiv.min.js"></script>
@@ -32,7 +32,7 @@
 	<script type="text/javascript">
 	$('.carousel').carousel({
   interval: 2000
-});
+}); 
 	</script>
  <style>
 

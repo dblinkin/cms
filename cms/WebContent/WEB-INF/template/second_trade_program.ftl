@@ -282,7 +282,7 @@ padding-left: 3px;
   <a href="${ch1.channel.channelUrl}" target="_blank" style="float:right;">更多>></a>
   </div>
   <div class="panel-body">
-	
+	 
 	<ul> 
 	<#list ch1.articleIndex as article>
 	<#if article_index lt 10>

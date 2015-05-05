@@ -235,7 +235,7 @@ padding-left: 3px;
 				</div>
 				
 				<div class="col-lg-12" style="text-align:center;font-size:16px;">
-				<p>来源：${listedProject.listedStartTime}&nbsp;&nbsp;时间:${listedProject.listedStartTime}</p>
+				<p>来源：${listedProject.projectSrc}&nbsp;&nbsp;时间:${listedProject.createTime[0..10]}</p>
 				</div>
 		</div>
 		
