@@ -83,24 +83,23 @@ public class FtdServlet extends HttpServlet {
 			try {
 				handler.handle(ctx);
 			} catch (FtdException fe) {
+				if (fe.getCause() != null)
+					logger.error(ExceptionUtils.getStackTrace(fe.getCause()));
+				else
+					logger.error(ExceptionUtils.getStackTrace(fe));
 				result.element(Context.RET_CODE, 0x1002);
 				String errFmt = I18nMgr.getInstance().getMsg(lang,
 						Resource.ERROR_CODE_PREFIX, fe.getErrorCodeId());
 				result.element(Context.RET_MSG,
 						String.format(errFmt, fe.getArgs()));
-				if (fe.getCause() != null)
-					logger.error(ExceptionUtils.getStackTrace(fe.getCause()));
-				else
-					logger.error(ExceptionUtils.getStackTrace(fe));
 				break;
 			} catch (Exception e) {
+				logger.error(ExceptionUtils.getStackTrace(e));
 				result.element(Context.RET_CODE, 0x1003);
 				String errFmt = I18nMgr.getInstance().getMsg(lang,
 						Resource.ERROR_CODE_PREFIX, "server.internal.error");
 				result.element(Context.RET_MSG,
 						String.format(errFmt, e.getMessage()));
-
-				logger.error(ExceptionUtils.getStackTrace(e));
 				break;
 			}
 

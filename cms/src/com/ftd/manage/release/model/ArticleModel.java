@@ -35,7 +35,7 @@ public class ArticleModel implements ModelProvider {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		if (articleId != 0) {
-			model.put("article", ArticleDao.select(this.articleId));
+			model.put("article", ArticleDao.select(articleId));
 		}
 		return model;
 	}

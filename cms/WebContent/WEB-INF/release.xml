@@ -8,8 +8,8 @@
 	<!-- 默认首页 -->
 	<Release Id="main_page" Src="MAIN_PAGE" Template="index.ftl" FilenameFormat="/index.html">
 		<Model>com.ftd.manage.release.model.ChannelModel</Model>
-		<Model ModelId="512">com.ftd.manage.release.model.NoticeModel</Model>
-		<Model ModelId="768">com.ftd.manage.release.model.NewsModel</Model>
+		<Model ModelId="768">com.ftd.manage.release.model.NoticeModel</Model>
+		<Model ModelId="512">com.ftd.manage.release.model.NewsModel</Model>
 		<Model>com.ext.newspoll.NewsPollModel</Model><!-- 轮播广告 -->
 		<Model>com.ext.project.recommend.RcmdProjectModel</Model><!-- 推荐项目 -->
 		<Model>com.ext.friendlink.FriendLinkModel</Model><!-- 友情链接 -->
