@@ -39,6 +39,14 @@
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="control-group span12">
+	          <label class="control-label"><s>*</s>文章模板：</label>
+	          <div class="controls bui-form-field-select" data-loader="{url:'manage_suggest_or_select.do?type=articleTpl',property:'items',dataType:'json'}">
+	            <input name="releaseId" type="hidden" value="0">
+	          </div>
+	      </div>     
+        </div>
         
         <div class="row">
         <script type="text/plain" id="articleContent" name="articleContent" style="width:1000px;height:240px;">
@@ -50,7 +58,6 @@
             <div class="span13 offset3 ">
               <button type="submit" class="button button-primary">预览</button>
               <button type="button" id="add" class="button button-primary">保存</button>
-              <button type="button" id="addAndDeploy" class="button button-primary">保存并发布</button>
               <button type="reset" class="button">重置</button>
             </div>
         </div>

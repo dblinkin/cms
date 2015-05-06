@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <title>文章发布</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="../assets/css/dpl-min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/bui-min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/page-min.css" rel="stylesheet" type="text/css" />
+ </head>
+ <body>
+  
+  <div class="container">
+  	<form id="J_Form" class="form-horizontal span24">
+	    <div class="row">
+    	  <div class="control-group span8">
+            <label class="control-label">栏目：</label>
+            <div class="controls bui-form-group-select" data-type="channel">
+	          <select class="input-small" name="channel1Id"><option>一级栏目</option></select>&nbsp;&nbsp;
+	          <select class="input-small" name="channel2Id"><option>二级栏目</option></select>
+	        </div>
+          </div>
+	    </div>
+		<div class="row">
+			<div class="control-group span24">
+	            <label class="control-label"><s>*</s>重定向URL：</label>
+	            <div class="controls">
+	              <input name="releaseUrl" type="text" data-rules="{required:true}" class="input-normal control-text" style="width:300px">
+	            </div>
+	        </div>   
+		</div>
+        <div class="row form-actions actions-bar">
+            <div class="span13 offset3 ">
+              <button type="button" id="redirect" class="button button-primary">确定</button>
+              <button type="reset" class="button button-primary">重置</button>
+            </div>
+        </div>
+      </form>
+    
+  </div>
+  
+  <script type="text/javascript" src="../assets/js/jquery-1.8.1.min.js"></script>
+  <script type="text/javascript" src="../../lib/cms_manage.js"></script>
+  <script type="text/javascript" src="../assets/js/bui.js"></script>
+  <script type="text/javascript" src="../assets/js/config.js"></script>
+  <script type="text/javascript">
+    BUI.use('common/page');
+  </script>
+<script type="text/javascript">
+BUI.use('bui/form',function (Form) {
+	// 自定义类型
+    BUI.Form.Group.Select.addType('channel',{
+   	  proxy : {//加载数据的配置项
+	 	url : 'manage_query_channel.do',
+	    dataType : 'json'
+	  },
+      root : {id : '0'}
+    });
+	
+	$(":input[name='channel1Id']").change(function(){
+		$.ajax({
+			url : 'manage_query_channel.do',
+			data : {id : $(this).val()},
+			success : function(data){
+				var first = $("option:first",":input[name='channel2Id']");
+				$(":input[name='channel2Id']").empty().append(first);	
+				if(data.nodes && data.nodes.length){									
+					$(data.nodes).each(function(i){
+						var str = "<option value='"+data.nodes[i].id + "'>" +data.nodes[i].text +"</option>";
+						$(":input[name='channel2Id']").append(str);
+					});
+				}
+			}
+		});
+	});
+	
+	var form = new Form.HForm({
+	   srcNode : '#J_Form'
+	});
+	form.render();
+	
+	$("#redirect").click(function(){
+		form.valid();
+		if(form.isValid()){
+			$.ajax({
+			  url : "manage_channel_redirect.do",
+			  data : form.serializeToObject(),
+			  success : function(data){
+				  BUI.Message.Alert('重定向成功','success');
+			  }
+		  	});
+		}else{
+			form.focusError();
+		}
+	});
+   
+});
+</script>
+
+<body>
+</html> 
