@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>陆良农村产权交易所</title> 
+    <title>陆良农村产权交易所</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -106,12 +106,17 @@ padding-left: 3px;
   float: right;
   cursor: pointer;
 }
-
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+  z-index: 2;
+  color: #fff;
+  background-color: #80c6e0;
+  border-color: #337ab7;
+}
 </style>
   </head>
-    <body style="background-color:#fff;">
+  <body style="background-color:#fff;">
 <!--
-
+  
   <div class="ad" style="left: 0.5em; position: absolute; top: 10em;z-index:999;">
    <a title="项目路演" target="_blank" href=""><img src="image/ad_1.jpg"></a>
 <br></div>
@@ -150,7 +155,7 @@ padding-left: 3px;
 		
 		
     <div class="container-fluid" style="margin-top: 0.5em;">
-	        <#--导航条开始-->
+	   <#--导航条开始-->
            <div class="row">
 	 <div class="col-lg-12 col-md-12" style="text-align: center;font-family:'Micro YaHei',微软雅黑;padding-right:9em;padding-left:9em;">
 				<div class="panel panel-primary" style="margin-bottom: 0px;">
@@ -193,16 +198,21 @@ padding-left: 3px;
     </div>
 
      <#--导航条结束-->
-     </div>
+     
+    
+    
+    
+	</div>
+	
 <div class="row">
 	
 	<div class="col-lg-3 col-lg-offset-1">
 	<ol class="breadcrumb" style="background-color:#fff;">
-  <li ><a href="/index.html">首页</a></li>
+  <li ><a href="/index.html"  >首页</a></li>
   
   
-  <li><a href="${currentChannel.channelUrl?if_exists}" >${currentChannel.channelName}</a></li>
-  <li><a href="${currentChannel2.channelUrl?if_exists}"  >${currentChannel2.channelName}</a></li>
+  <li><a href="${currentChannel.channelUrl?if_exists}"  >${currentChannel.channelName}</a></li>
+  
 	
   </ol>
 	
@@ -216,101 +226,155 @@ padding-left: 3px;
 	</div>
 	
 </div>
-
-<div class="row">
-	<div class="col-lg-10 col-lg-offset-1" style="margin-top: -1em;">
-	<div class="panel panel-primary" style="">
-			  <div class="panel-heading" style="background-color:#fff;padding:0; border-bottom: none;font-family:'Micro YaHei',微软雅黑;">
-        <h3 class="panel-title" id="panel-title" style="padding-top:20px;" >${listedProject.projectTitle}
-		
-		<div class="row"> 
-			
-				
-				
-				<div class="col-lg-12" style="margin-top:0.5em;">
-				<ul class="nav nav-tabs">
- 
-				<li class="divider"></li>
-			</ul>
-				</div>
-				
-				<div class="col-lg-12" style="text-align:center;font-size:16px;">
-				<p>来源：${listedProject.projectSrc}&nbsp;&nbsp;时间:${listedProject.createTime[0..10]}</p>
-				</div>
-		</div>
-		
-		</h3>
-      </div>
-     
-      <div class="panel-body" style="">
+<div class="row" >
+	<div class="col-lg-2 col-lg-offset-1" style="margin-top:-1em;">
 	
-		<div class="row">
-				
-				<div class="col-lg-10 col-lg-offset-1">
-			
-			<table class="table table-bordered table-striped">
-				<tr style="text-align:center;">
-					<td colspan=4 style="background-color:#80c6e0;">项目信息</td>
-				</tr>
-					<tr>
-						<th style="background-color:#cccccc;">项目编号</th>
-						<td>${listedProject.projectNum}</td>
-						<th style="background-color:#cccccc;">项目类别</th>
-						<td>${listedProject.projectType}</td>
-						
-					</tr>
-				<tr>
-					<th style="background-color:#cccccc;">挂牌开始时间</th>
-						<td>${listedProject.listedStartTime}</td>
-						<th style="background-color:#cccccc;">挂牌截止时间</th>
-						<td>${listedProject.listedEndTime}</td>
-				</tr>
-				<tr style="text-align:center;">
-					<td colspan=4 style="background-color:#80c6e0;">流转信息</td>
-				</tr>
-				<tr>
-						<th style="background-color:#cccccc;">转出方名称</th>
-						<td>${listedProject.assetTransfor}</td>
-						<th style="background-color:#cccccc;">所在区域</th>
-						<td>${listedProject.district}</td>
-						
-					</tr>
-				<tr>
-					<th style="background-color:#cccccc;">流转方式</th>
-						<td>${listedProject.transferType}</td>
-						<th style="background-color:#cccccc;">挂牌价格</th>
-						<td>${listedProject.transferPrice}</td>
-				</tr>
-				<tr>
-					<th style="background-color:#cccccc;">成交状态</th>
-						<td>${listedProject.isDeal}</td>
-						<th style="background-color:#cccccc;">流转面积</th>
-						<td>${listedProject.transferArea}</td>
-				</tr>
-				<tr>
-					<th style="background-color:#cccccc;">流转开始时间</th>
-						<td>${listedProject.transferStartTime}</td>
-						<th style="background-color:#cccccc;">流转结束时间</th>
-						<td>${listedProject.transferEndTime}</td>
-				</tr>
-				<tr>
-					<th style="background-color:#cccccc;">备注</th>
-					<td colspan=3>${listedProject.remark}</td>
-						
-				</tr>
-				</table>
-			
-				</div>
-	</div>
+<div class="panel panel-primary" style="text-align:center;">
+  <!-- Default panel contents -->
+  <div class="panel-heading" style="font-size:1.5em;padding-left:0.1em;border-bottom:none;font-family:'Micro YaHei',微软雅黑;">${currentChannel.channelName}</div>
+ 
+<ul class="nav nav-tabs">
+	<li class="divider"></li>
+   </ul>
+  <!-- List group -->
+  <ul class="list-group">
+  	<#list channel_articleIndex as ch1>
+  	
+        <li class="list-group-item" style="margin-top:0;"><a href="${ch1.channel.channelUrl}" target="_blank" style="text-decoration:none;">${ch1.channel.channelName}</a></li>
+    
+    
+    </#list>  
+  
+  </ul>
+</div>
+<div class="panel panel-primary" style="margin-top:0.5em;text-align:center;">
+  <!-- Default panel contents -->
+  <div class="panel-heading" style="font-size:1.5em;padding-left:0.1em;border-bottom:none;font-family:'Micro YaHei',微软雅黑;">关于我们</div>
+   
+   <ul class="nav nav-tabs">
+	<li class="divider"></li>
+   </ul>
+ 
+
+  <!-- List group -->
+  <ul class="list-group">
+    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">农交所介绍</a></li>
+    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">组织机构</a></li>
+    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">企业文化</a></li>
+    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">大事记</a></li>
+    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">联系我们</a></li>
+  </ul>
+</div>
+
+      </div>
+      
+      
+	  <div class="col-lg-8 " style="margin-top:-1em;">
+	  <div class="tab-content">
+	  
+	  <#list channel_articleIndex as ch1>
+	 
+	  
+	 <div role="tabpanel" class="tab-pane active" id="${ch1.channel.channelDesc}" style="margin-bottom: 10px;">
+		<div class="panel panel-primary" style="">
+  <!-- Default panel contents -->
+  <div class="panel-heading">${ch1.channel.channelName}
+  <a href="${ch1.channel.channelUrl}" target="_blank" style="float:right;">更多>></a>
+  </div>
+  <div class="panel-body">
+	 
+	<ul> 
+	<#list ch1.articleIndex as article>
+	<#if article_index lt 10>
+	<li><span style="float:right;">${article.createTime[0..10]}</span><a href="${article.articleUrl}" target="_blank">${article.articleTitle}</a></li>
+	</#if>
+	</#list>
+	</ul>
+	<table class="table table-hover table-condensed" style="margin-top:0.3em">
+      <thead>
+        <tr>
+         
+          <th>项目类型</th>
+          <th>标的名称</th>
+          <th>所在地区</th>
+		  <th>金额</th>
+		  <th>投资用途</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">实物资产</th>
+          <td>求租陆良县五百平米房屋</td>
+          <td>陆良县</td>
+          <td>未设定</td>
+		   <td>个人画室</td>
+        </tr>
+      <tr>
+          <th scope="row">一般农用地</th>
+          <td>求租陆良县三百亩耕地</td>
+          <td>陆良县</td>
+          <td>价格面议</td>
+		   <td>蔬菜种植</td>
+        </tr> 
+		<tr>
+          <th scope="row">养殖用地</th>
+          <td>求租陆良县五十亩养殖用地</td>
+          <td>陆良县</td>
+          <td>价格好说</td>
+		   <td>畜禽养殖</td>
+        </tr>
+		<tr>
+          <th scope="row">养殖用地</th>
+          <td>求租陆良县五十亩养殖用地</td>
+          <td>陆良县</td>
+          <td>价格好说</td>
+		   <td>畜禽养殖</td>
+        </tr>
+		<tr>
+          <th scope="row">养殖用地</th>
+          <td>求租陆良县五十亩养殖用地</td>
+          <td>陆良县</td>
+          <td>价格好说</td>
+		   <td>畜禽养殖</td>
+        </tr>
+		<tr>
+          <th scope="row">养殖用地</th>
+          <td>求租陆良县五十亩养殖用地</td>
+          <td>陆良县</td>
+          <td>价格好说</td>
+		   <td>畜禽养殖</td>
+        </tr>
+       
+      </tbody>
+    </table>
+  </div>
 </div>
 </div>
+
+
+</#list>
+
+
+
+	
+
+
 </div>
+	  </div>
+     
 </div>
 
 
       <!-- Site footer -->
       <footer class="footer"  style="text-align:center; margin-top:0.5em;">
-    
+    <div class="row" >
+      		<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1" style="text-align:center;">
+		                <ul class="nav nav-tabs " >
+						
+						
+						</ul>
+		
+	</div>
 	<div style="margin-top:1.5em;">
 	 <address>
 		<strong>&copy; 2005-2015 陆良农交所 滇ICP备05070218号</strong></br>

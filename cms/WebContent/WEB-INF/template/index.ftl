@@ -208,9 +208,13 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
        <div id="carousel-news" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
   <ol class="carousel-indicators">
+  <#list newspolls as poll>
+  <#if poll_index = 0>
     <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+    <#else>
+    <li data-target="#carousel-example-generic" data-slide-to="${poll_index}"></li>
+   </#if>
+   </#list>
   </ol>
 
   <!-- Wrapper for slides -->
@@ -220,16 +224,16 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
   <#list newspolls as poll>
   <#if poll_index = 0>
     <div class="item active">
-    <img src="${poll.pollImgUrl}" alt="..."> 
+    <a href="${poll.articleUrl}" target="_blank"><img src="${poll.pollImgUrl}" alt="..."></a> 
       <div class="carousel-caption">
-       ${poll.newsTitle}
+      <a href="${poll.articleUrl}" target="_blank" style="color:#fff;text-decoration:none;"> ${poll.newsTitle}</a>
       </div>
     </div>
     <#else>
      <div class="item">
-    <img src="${poll.pollImgUrl}" alt="..."> 
+    <a href="${poll.articleUrl}" target="_blank"><img src="${poll.pollImgUrl}" alt="..."> </a>
       <div class="carousel-caption">
-       ${poll.newsTitle}
+      <a href="${poll.articleUrl}" target="_blank" style="color:#fff;text-decoration:none;"> ${poll.newsTitle}</a>
       </div>
     </div>
     </#if>
@@ -377,7 +381,7 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
 			<#list news.articleIndex as  article>
 			<#if article_index lt 5>
 			<li style="width:24em;margin-top:1.3em;overflow-x: hidden;white-space: nowrap;text-overflow: ellipsis;list-style-position: inside;">
-				
+	 			
 				
 				<a href="${article.articleUrl}" target="_blank" title="${article.articleTitle}">${article.articleTitle}</a>
 				<span style="right:0.5em;position:absolute;">${article.createTime[0..10]}</span>
@@ -580,7 +584,7 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
       
         <tr>
           <th scope="row">${listPro.projectNum}</th>
-          <td><a href="${listPro.releaseUrl?if_exists}">${listPro.projectTitle}</a></td>
+          <td><a href="${listPro.releaseUrl?if_exists}" target="_blank">${listPro.projectTitle}</a></td>
           <td>农村土地</td>
           <td>${listPro.transferPrice?if_exists}</td>
 		   <td>${listPro.listedStartTime}</td>

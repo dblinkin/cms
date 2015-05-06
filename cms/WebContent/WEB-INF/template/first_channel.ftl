@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
+  <head> 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -239,13 +239,10 @@ padding-left: 3px;
   <!-- List group -->
   <ul class="list-group">
   	<#list channel_articleIndex as ch1>
-  	<#if ch1_index  = 0 >
   	
-    <li class="list-group-item active" style="margin-top:0;"><a href="#${ch1.channel.channelDesc}" aria-controls="${ch1.channel.channelDesc}" role="tab" data-toggle="pill" style="text-decoration:none;">${ch1.channel.channelName}</a></li>
-    <#else>
-        <li class="list-group-item" style="margin-top:0;"><a href="#${ch1.channel.channelDesc}" aria-controls="${ch1.channel.channelDesc}" role="tab" data-toggle="pill" style="text-decoration:none;">${ch1.channel.channelName}</a></li>
+        <li class="list-group-item" style="margin-top:0;"><a href="${ch1.channel.channelUrl}" target="_blank" style="text-decoration:none;">${ch1.channel.channelName}</a></li>
     
-    </#if>
+    
     </#list>  
   
   </ul>
@@ -276,9 +273,9 @@ padding-left: 3px;
 	  <div class="tab-content">
 	  
 	  <#list channel_articleIndex as ch1>
-	  <#if ch1_index = 0>
+	 
 	  
-	 <div role="tabpanel" class="tab-pane active" id="${ch1.channel.channelDesc}">
+	 <div role="tabpanel" class="tab-pane active" id="${ch1.channel.channelDesc}" style="margin-bottom: 10px;">
 		<div class="panel panel-primary" style="">
   <!-- Default panel contents -->
   <div class="panel-heading">${ch1.channel.channelName}
@@ -298,27 +295,7 @@ padding-left: 3px;
 </div>
 </div>
 
-<#else>
-<div role="tabpanel" class="tab-pane" id="${ch1.channel.channelDesc}">
-		<div class="panel panel-primary" style="">
-  <!-- Default panel contents -->
-  <div class="panel-heading">${ch1.channel.channelName}
-    <a href="${ch1.channel.channelUrl}" target="_blank" style="float:right;">更多>></a>
-  </div>
-  <div class="panel-body">
-	
-	<ul> 
-	<#list ch1.articleIndex as article>
-	<#if article_index lt 10>
-	<li><span style="float:right;">${article.createTime[0..10]}</span><a href="${article.articleUrl}">${article.articleTitle}</a></li>
-	</#if>
-	</#list>
-	</ul>
-	
-  </div>
-</div>
-</div>
-</#if>
+
 </#list>
 
 
