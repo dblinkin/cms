@@ -23,6 +23,7 @@
     <script src="/js/html5shiv.min.js"></script>
       <script src="/js/respond.min.js"></script>
 	  <script src="/js/date.js"></script>
+	  <script src="/js/bootstrap-paginator.min.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -253,21 +254,25 @@ padding-left: 3px;
 </div>
 <div class="panel panel-primary" style="margin-top:0.5em;text-align:center;">
   <!-- Default panel contents -->
-  <div class="panel-heading" style="font-size:1.5em;padding-left:0.1em;border-bottom:none;font-family:'Micro YaHei',微软雅黑;">关于我们</div>
+  <#list channels as ch1>
+  	<#if ch1.channelDesc = 'aboutUs'>
+  <div class="panel-heading" style="font-size:1.5em;padding-left:0.1em;border-bottom:none;font-family:'Micro YaHei',微软雅黑;">${ch1.channelName}</div>
    
    <ul class="nav nav-tabs">
 	<li class="divider"></li>
    </ul>
-
+ 
 
   <!-- List group -->
   <ul class="list-group">
-    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">农交所介绍</a></li>
-    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">组织机构</a></li>
-    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">企业文化</a></li>
-    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">大事记</a></li>
-    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">联系我们</a></li>
+   <#if ch1.children?size != 0>
+   		<#list ch1.children  as ch2>
+    <li class="list-group-item" style="margin-top:0;"><a href="${ch2.channelUrl?if_exists}" target="_blank" style="text-decoration:none;">${ch2.channelName}</a></li>
+         </#list>
+    </#if>
   </ul>
+  </#if>
+   </#list>
 </div>
 
       </div>
@@ -282,33 +287,15 @@ padding-left: 3px;
   <!-- Default panel contents -->
   <div class="panel-heading">${currentChannel2.channelName}</div>
   <div class="panel-body">
-	
-	<ul> 
+	<#assign pageSize=5>
+	<ul id="content" currentPage="1" pageCount="${(articleIndex?size / pageSize)?ceiling}" channelId="${currentChannel2.channelId}" pageSize="${pageSize}"> 
 	<#list articleIndex as article>
 	<#if article_index lt 10>
 	<li><span style="float:right;">${article.createTime[0..10]}</span><a href="${article.articleUrl}" target="_blank">${article.articleTitle}</a></li>
 	</#if>
 	</#list>
 	</ul>
-	<nav style="float:right;">
-  <ul class="pagination">
-    <li>
-      <a href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <li><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li>
-      <a href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav>
+	
 
   </div>
 </div>
@@ -317,6 +304,12 @@ padding-left: 3px;
 
 
 </div>
+<nav style="float:right;">
+ <ul id="pagination">
+
+
+</ul>
+</nav>
 	  </div>
      
 </div>
@@ -346,7 +339,7 @@ padding-left: 3px;
 
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="js/ie10-viewport-bug-workaround.js"></script>
+    <script src="/js/ie10-viewport-bug-workaround.js"></script>
 	
 		<script type="text/javascript">
 	 $(function(){ 
@@ -357,6 +350,47 @@ $("#currentDate").text(date + " 农历:" + calendar);
 });
 	
 	</script>
+	<script>
+var page = $("#content");
+
+var options = {
+		bootstrapMajorVersion: 3,
+        alignment:'center',
+        currentPage:1,
+        numberOfPages:5,
+        totalPages: $("#content").attr("pageCount"),
+        pageUrl: function(type, page, current){
+                    return "/cms/query_article_index.pub?channelId="+$("#content").attr("channelId")+"&current="+current+"&page="+page+"&pageSize="+$("#content").attr("pageSize"); 
+        },
+        
+        onPageClicked: function (event, originalEvent, type, page) {  
+        	 originalEvent.preventDefault();
+             originalEvent.stopPropagation();
+            // var target = originalEvent.currentTarget;
+            // var url = $(target).attr("href");
+            // $("#page-url-alert-content").text("Page item url: "+url)
+            $.ajax({
+         		url:originalEvent.target.href,
+         		type:"GET",
+         		dataType:"json",
+         		success: function(data){
+         			$("#content li").remove();
+         			$(data.articles).each(function(){
+         				$("#content").append("<li><span style=\"float:right;\">"+this.time.substring(0,10)+"</span>"+"<a href="+this.url+" target=\"_blank\">"+this.title+"</a></li>");
+         			});
+         			
+         		},
+         		error: function(error){
+         			alert("error");
+         		}
+            });
+        }
+        
+    };
+    $('#pagination').bootstrapPaginator(options);
+
+
+</script>
   </body>
 </html>
 
