@@ -249,7 +249,9 @@ padding-left: 3px;
 </div>
 <div class="panel panel-primary" style="margin-top:0.5em;text-align:center;">
   <!-- Default panel contents -->
-  <div class="panel-heading" style="font-size:1.5em;padding-left:0.1em;border-bottom:none;font-family:'Micro YaHei',微软雅黑;">关于我们</div>
+  <#list channels as ch1>
+  	<#if ch1.channelDesc = 'aboutUs'>
+  <div class="panel-heading" style="font-size:1.5em;padding-left:0.1em;border-bottom:none;font-family:'Micro YaHei',微软雅黑;">${ch1.channelName}</div>
    
    <ul class="nav nav-tabs">
 	<li class="divider"></li>
@@ -258,12 +260,14 @@ padding-left: 3px;
 
   <!-- List group -->
   <ul class="list-group">
-    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">农交所介绍</a></li>
-    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">组织机构</a></li>
-    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">企业文化</a></li>
-    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">大事记</a></li>
-    <li class="list-group-item" style="margin-top:0;"><a href="#" target="_blank" style="text-decoration:none;">联系我们</a></li>
+   <#if ch1.children?size != 0>
+   		<#list ch1.children as ch2>
+    <li class="list-group-item" style="margin-top:0;"><a href="${ch2.channelUrl?if_exists}" target="_blank" style="text-decoration:none;">${ch2.channelName}</a></li>
+         </#list>
+    </#if>
   </ul>
+  </#if>
+   </#list>
 </div>
 
       </div>

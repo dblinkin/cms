@@ -635,19 +635,26 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
       <!-- Site footer -->
       <footer class="footer"  style="text-align:center; margin-top:0.5em;">
       	<div class="row" >
+      	
       		<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1" style="text-align:center;">
+      		<div class="row">
+			
+			<div class="col-lg-1 " style="text-align:center;padding-right:0;margin-top: 0.8em;">
+			<p style="float:left;">友情链接</p>
+			</div>
+      		<div class="col-lg-11  " style="text-align:center;margin-top:-0.5em;">
 		                <ul class="nav nav-tabs " >
-						<li><a href="#" >友情链接</a></li>
+						
 						<#if friendlinks?size != 0>
 						<#list friendlinks as link>
 						<li><a href="${link.linkUrl}" title="${link.linkTitle}" target="_blank">${link.linkTitle}</a></li>
 						</#list>
 						</#if>
-						<li><a href="#" >云南税务局</a></li>
+						
 						</ul>
-		
+		</div>
 	</div>
-
+</div>
 	</div>
 	<div style="margin-top:1.5em;">
 	 <address>
