@@ -59,7 +59,7 @@
           {title:'项目ID',dataIndex:'projectId',width:40,elCls:'center'},
           {title:'项目编号',dataIndex:'projectNum',width:80,elCls:'center'},
           {title:'项目标题',dataIndex:'projectTitle',width:200,elCls:'center'},
-          {title:'项目类型',dataIndex:'projectTypeStr',width:100,elCls:'center'},
+          {title:'项目类型',dataIndex:'projectType',width:100,elCls:'center'},
           {title:'文章模板',dataIndex:'releaseId',width:60,elCls:'center'},
           {title:'操作',dataIndex:'',width:150,elCls:'center',renderer : function(value,obj){
             var releaseStr = '<i class="icon-upload"></i><span class="grid-command btn-release" title="发布">发布</span>',
@@ -124,7 +124,7 @@
       BUI.each(items,function(item){
     	  var obj = {};
     	  obj.projectId = item.projectId;
-    	  obj.channelId = item.projectType;
+    	  obj.channelId = item.channelId;
         ids.push(obj);
       });
 
@@ -143,7 +143,7 @@
         releaseItems([record]);
       }else if(sender.hasClass('btn-preview')){
     	  $("#projectId", "#preview").val(ev.record.projectId);
-    	  $("#channelId", "#preview").val(ev.record.projectType);
+    	  $("#channelId", "#preview").val(ev.record.channelId);
     	  $("#preview").submit();
       }
     });

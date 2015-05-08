@@ -290,6 +290,63 @@ padding-left: 3px;
 	</#if>
 	</#list>
 	</ul>
+	<table class="table table-hover table-condensed" style="margin-top:0.3em">
+      <thead>
+        <tr>
+         
+          <th>项目类型</th>
+          <th>标的名称</th>
+          <th>所在地区</th>
+		  <th>金额</th>
+		  <th>投资用途</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">实物资产</th>
+          <td>求租陆良县五百平米房屋</td>
+          <td>陆良县</td>
+          <td>未设定</td>
+		   <td>个人画室</td>
+        </tr>
+      <tr>
+          <th scope="row">一般农用地</th>
+          <td>求租陆良县三百亩耕地</td>
+          <td>陆良县</td>
+          <td>价格面议</td>
+		   <td>蔬菜种植</td>
+        </tr> 
+		<tr>
+          <th scope="row">养殖用地</th>
+          <td>求租陆良县五十亩养殖用地</td>
+          <td>陆良县</td>
+          <td>价格好说</td>
+		   <td>畜禽养殖</td>
+        </tr>
+		<tr>
+          <th scope="row">养殖用地</th>
+          <td>求租陆良县五十亩养殖用地</td>
+          <td>陆良县</td>
+          <td>价格好说</td>
+		   <td>畜禽养殖</td>
+        </tr>
+		<tr>
+          <th scope="row">养殖用地</th>
+          <td>求租陆良县五十亩养殖用地</td>
+          <td>陆良县</td>
+          <td>价格好说</td>
+		   <td>畜禽养殖</td>
+        </tr>
+		<tr>
+          <th scope="row">养殖用地</th>
+          <td>求租陆良县五十亩养殖用地</td>
+          <td>陆良县</td>
+          <td>价格好说</td>
+		   <td>畜禽养殖</td>
+        </tr>
+       
+      </tbody>
+    </table>
 	<nav style="float:right;">
   <ul class="pagination">
     <li>

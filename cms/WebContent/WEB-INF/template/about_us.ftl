@@ -253,7 +253,7 @@ padding-left: 3px;
   <div class="panel-heading">农交所介绍</div>
   <div class="panel-body">
 	
-	${article.articleContent}
+	关于我们fdsfdsfsdffsdfsdfdsfsdfsdfsdfsdfsdfsd
 	
   </div>
 

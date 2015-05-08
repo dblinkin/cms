@@ -22,13 +22,14 @@
 		<String Id="article" Msg="默认文章模板"/>
 		<String Id="purchase_project" Msg="受让项目文章模板"/>
 		<String Id="list_project" Msg="挂牌项目文章模板"/>
-		<String Id="first_trade_program" Msg="交易项目项目一级模板"/>
-		<String Id="second_trade_program" Msg="交易项目二级模板"/>
 	</Group>
 	
 	<!-- listedProjectType 挂牌项目类型 -->
-	<Group Id="articleTpl">
+	<Group Id="lpType">
+		<String Id="main_page" Msg="默认首页模板"/>
+		<String Id="first_channel" Msg="默认一级栏目模板"/>
+		<String Id="second_channel" Msg="默认二级栏目模板"/>
 		<String Id="article" Msg="默认文章模板"/>
-		<String Id="about_us" Msg="关于我们文章模板"/>
+		<String Id="user_define_purchase_project" Msg="受让项目文章模板"/>
 	</Group>
 </Resource>

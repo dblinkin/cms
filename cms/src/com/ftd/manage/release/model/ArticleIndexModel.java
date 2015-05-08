@@ -14,8 +14,8 @@ import com.ftd.system.SysMgr;
 
 public class ArticleIndexModel implements ModelProvider {
 
-	protected String channel1Key = "channel_articleIndex";
-	protected String channel2Key = "articleIndex";
+	private String channel1Key = "channel_articleIndex";
+	private String channel2Key = "articleIndex";
 
 	private int channelId;
 

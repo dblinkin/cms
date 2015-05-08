@@ -48,17 +48,4 @@
 	<Release Id="purchase_project" Src="USER_DEFINE" Template="pchs_project.ftl" FilenameFormat="/article/{first_channel}/{second_channel}/{yyyy}{mm}{dd}/{rand:6}{time}.html">
 		<Model>com.ftd.manage.release.model.ChannelModel</Model>
 	</Release>
-	<Release Id="first_trade_program" Src="USER_DEFINE" Template="first_channel.ftl" FilenameFormat="/article/{first_channel}.html">
-		<Model>com.ftd.manage.release.model.ChannelModel</Model>
-		<Model>com.ext.project.listed.ListedProjectIndexModel</Model>
-	</Release>
-	<Release Id="second_trade_program" Src="USER_DEFINE" Template="second_channel.ftl" FilenameFormat="/article/{first_channel}/{second_channel}.html">
-		<Model>com.ftd.manage.release.model.ChannelModel</Model>
-		<Model>com.ext.project.listed.ListedProjectIndexModel</Model>
-	</Release>
-	<!-- 默认文章页 -->
-	<Release Id="about_us" Src="ARTICLE" Template="about_us.ftl" FilenameFormat="/article/{first_channel}/{second_channel}/{yyyy}{mm}{dd}/{rand:6}{time}.html">
-		<Model>com.ftd.manage.release.model.ChannelModel</Model>
-		<Model>com.ftd.manage.release.model.ArticleModel</Model>
-	</Release>
 </ReleaseConfig>

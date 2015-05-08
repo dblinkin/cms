@@ -12,14 +12,14 @@ import com.ftd.util.dbclient.DBClient;
 
 public class ListedProjectDao {
 	public static void insert(ListedProject p) throws FtdException {
-		String sql = "insert into project_listed(project_title,project_num,create_time,project_type,listed_start_time, listed_end_time,"
+		String sql = "insert into project_listed(project_title,project_num,project_type,listed_start_time, listed_end_time,"
 				+ "asset_transfor, is_deal, district, transfer_area,transfer_type,transfer_start_time,transfer_end_time,transfer_price,remark)"
-				+ " values(?,?,?,?,?,?,   ?,?,?,?,?,?,?,?,?)";
+				+ " values(?,?,?,?,?,   ?,?,?,?,?,?,?,?,?)";
 
 		DBClient dbClient = SysMgr.getInstance().getDbClient();
 
 		try {
-			dbClient.executeUpdate(sql, p.getProjectTitle(),p.getProjectNum(),p.getCreateTime(),p.getProjectType(),p.getListedStartTime(), p.getListedEndTime(),
+			dbClient.executeUpdate(sql, p.getProjectTitle(),p.getProjectNum(),p.getProjectType(),p.getListedStartTime(), p.getListedEndTime(),
 					p.getAssetTransfor(), p.getIsDeal(), p.getDistrict(), p.getTransferArea(), p.getTransferType(), p.getTransferStartTime(), p.getTransferEndTime(), 
 					p.getTransferPrice(), p.getRemark());
 		} catch (SQLException e) {
@@ -91,7 +91,6 @@ public class ListedProjectDao {
 					ListedProject p = new ListedProject();
 					p.setProjectId(rs.getInt("project_id"));
 					p.setProjectTitle(rs.getString("project_title"));
-					p.setCreateTime(rs.getString("create_time"));
 					p.setProjectNum(rs.getString("project_num"));
 					p.setProjectType(rs.getInt("project_type"));
 					p.setListedStartTime(rs.getString("listed_start_time"));
@@ -132,7 +131,6 @@ public class ListedProjectDao {
 					ListedProject p = new ListedProject();
 					p.setProjectId(rs.getInt("project_id"));
 					p.setProjectTitle(rs.getString("project_title"));
-					p.setCreateTime(rs.getString("create_time"));
 					p.setProjectNum(rs.getString("project_num"));
 					p.setProjectType(rs.getInt("project_type"));
 					p.setListedStartTime(rs.getString("listed_start_time"));
@@ -182,7 +180,6 @@ public class ListedProjectDao {
 					ListedProject p = new ListedProject();
 					p.setProjectId(rs.getInt("project_id"));
 					p.setProjectTitle(rs.getString("project_title"));
-					p.setCreateTime(rs.getString("create_time"));
 					p.setProjectNum(rs.getString("project_num"));
 					p.setProjectType(rs.getInt("project_type"));
 					p.setListedStartTime(rs.getDate("listed_start_time").getTime());

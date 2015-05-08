@@ -11,8 +11,6 @@
 	<ArticleIndexNum>6</ArticleIndexNum><!-- 一级栏目文章索引数目 -->
 	
 	<Handlers>
-		<Handler Req="manage_suggest_or_select.do" Class="com.ftd.i18n.SuggestHandler"/>
-	
 		<Handler Req="manage_channel.do" Class="com.ftd.manage.channel.ChannelHandler"/>
 		<Handler Req="manage_query_channel.do" Class="com.ftd.manage.channel.ChannelHandlerQueryFirst"/>
 	
@@ -27,7 +25,6 @@
 		<Handler Req="manage_release_query.do" Class="com.ftd.manage.release.handler.ReleaseQueryHandler"/>
 		<Handler Req="manage_release_article.do" Class="com.ftd.manage.release.handler.ReleaseArticleHandler"/>
 		<Handler Req="manage_release_channel.do" Class="com.ftd.manage.release.handler.ReleaseChannelHandler"/>
-		<Handler Req="manage_channel_redirect.do" Class="com.ftd.manage.channel.ChannelHandlerRedirect"/>
 		<Handler Req="manage_release_mainpage.do" Class="com.ftd.manage.release.handler.ReleaseMainPageHandler"/>
 		<Handler Req="manage_release_all.do" Class="com.ftd.manage.release.handler.ReleaseAllHandler"/>
 		
