@@ -113,6 +113,11 @@ padding-left: 3px;
   background-color: #80c6e0;
   border-color: #337ab7;
 }
+/*分页按钮选中颜色*/
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+  background-color: #80C6DF;
+  border-color: #85CCE0;
+
 </style>
   </head>
   <body style="background-color:#fff;">
@@ -289,11 +294,7 @@ padding-left: 3px;
   <div class="panel-body">
 	<#assign pageSize=5>
 	<ul id="content" currentPage="1" pageCount="${(articleIndex?size / pageSize)?ceiling}" channelId="${currentChannel2.channelId}" pageSize="${pageSize}"> 
-	<#list articleIndex as article>
-	<#if article_index lt 10>
-	<li><span style="float:right;">${article.createTime[0..10]}</span><a href="${article.articleUrl}" target="_blank">${article.articleTitle}</a></li>
-	</#if>
-	</#list>
+	
 	</ul>
 	
 
@@ -388,7 +389,9 @@ var options = {
         
     };
     $('#pagination').bootstrapPaginator(options);
-
+    $(document).ready(function(){
+    	$("#pagination li:first a").trigger("click");
+    });
 
 </script>
   </body>
