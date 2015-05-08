@@ -5,6 +5,7 @@
 	
 	<MainPageChannel>256</MainPageChannel>
 	<ListedProjectChannel>1024</ListedProjectChannel>
+	<PurchaseProjectChannel>1025</PurchaseProjectChannel>
 	
 	<Lang>zh_CN</Lang>
 	
@@ -49,5 +50,9 @@
 		<Handler Req="manage_listed_project.do" Class="com.ext.project.listed.ListedProjectHandler"/>
 		<Handler Req="manage_listed_project_type.do" Class="com.ext.project.listed.ListedProjectTypeQueryHandler"/>
 		<Handler Req="manage_friend_link.do" Class="com.ext.friendlink.FriendLinkHandler"/>
+		
+		
+		<!-- 公共部分 -->
+		<Handler Req="query_article_index.pub" Class="com.ftd.manage.article.ArticlePageIndexHandler"/>
 	</Handlers>
 </System>

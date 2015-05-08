@@ -186,4 +186,68 @@ public class PurchaseProjectDao {
 
 		return null;
 	}
+	
+	public static List<PurchaseProject> selectForPage(int page, int pageSize) throws FtdException {
+		List<PurchaseProject> purchaseProjects = new ArrayList<PurchaseProject>();
+
+		DBClient dbClient = SysMgr.getInstance().getDbClient();
+		String sql = String.format("select * from project_purchase order by project_id desc limit %d,%d", pageSize
+				* (page - 1), pageSize);
+
+		CachedRowSet rs = null;
+		try {
+			rs = dbClient.executeQuery(sql);
+
+			if (rs != null) {
+				while (rs.next()) {
+					PurchaseProject p = new PurchaseProject();
+					
+					p.setProjectTitle(rs.getString("project_title"));
+					p.setCreateTime(rs.getString("create_time"));
+					p.setReleaseUrl(rs.getString("release_url"));
+					
+					purchaseProjects.add(p);
+				}
+			}
+		} catch (SQLException e) {
+			throw new FtdException(e, "db.sql.error");
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// do nothing
+				}
+		}
+
+		return purchaseProjects;
+	}
+	
+	public static int selectCountForPage(int page, int pageSize) throws FtdException {
+		DBClient dbClient = SysMgr.getInstance().getDbClient();
+		String sql = String.format("select count(1) from project_purchase order by project_id desc limit %d,%d", pageSize
+				* (page - 1), pageSize);
+
+		CachedRowSet rs = null;
+		try {
+			rs = dbClient.executeQuery(sql);
+
+			if (rs != null) {
+				while (rs.next()) {
+					return rs.getInt(1);
+				}
+			}
+		} catch (SQLException e) {
+			throw new FtdException(e, "db.sql.error");
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// do nothing
+				}
+		}
+
+		return 0;
+	}
 }

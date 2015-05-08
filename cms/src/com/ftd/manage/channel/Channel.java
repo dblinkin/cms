@@ -3,6 +3,8 @@ package com.ftd.manage.channel;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.ftd.util.StrUtil;
+
 public class Channel {
 	// 栏目ID
 	private int channelId;
@@ -16,8 +18,10 @@ public class Channel {
 	private String channelUrl;
 	// 栏目使用的模板
 	private String releaseId;
-
+	// 是否在导航栏上显示
 	private int isNav;
+	// 重定向URL
+	private String redirectUrl;
 
 	// 用于前台标示
 	private boolean leaf;
@@ -69,7 +73,9 @@ public class Channel {
 	}
 
 	public String getChannelUrl() {
-		return channelUrl;
+		if (StrUtil.isEmpty(redirectUrl))
+			return channelUrl;
+		return redirectUrl;
 	}
 
 	public void setChannelUrl(String channelUrl) {
@@ -107,6 +113,14 @@ public class Channel {
 
 	public void setIsNav(int isNav) {
 		this.isNav = isNav;
+	}
+
+	public String getRedirectUrl() {
+		return redirectUrl;
+	}
+
+	public void setRedirectUrl(String redirectUrl) {
+		this.redirectUrl = redirectUrl;
 	}
 
 }

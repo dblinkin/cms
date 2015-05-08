@@ -228,15 +228,15 @@ public class ChannelMgr {
 		c.setReleaseId(releaseId);
 	}
 
-	public void updateChannelUrl(int channelId, String releaseUrl)
+	public void updateChannelUrl(int channelId, String redirectUrl)
 			throws FtdException {
 		Channel c = channelId_channel.get(channelId);
 		if (c == null) {
 			throw new FtdException(null, "channel.not.found", channelId);
 		}
 
-		ChannelDao.updateReleaseUrl(channelId, releaseUrl);
-		c.setChannelUrl(releaseUrl);
+		ChannelDao.updateRedirectUrl(channelId, redirectUrl);
+		c.setRedirectUrl(redirectUrl);
 	}
 
 }

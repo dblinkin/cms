@@ -24,6 +24,8 @@ public class SysMgr {
 	private int mainPageChannel;
 	// 挂牌项目栏目
 	private int listedProjectChannel;
+	// 受让项目栏目
+	private int purchaseProjectChannel;
 	//
 	private int articleIndexNum;
 	// 默认语言
@@ -66,6 +68,10 @@ public class SysMgr {
 
 	public int getListedProjectChannel() {
 		return listedProjectChannel;
+	}
+
+	public int getPurchaseProjectChannel() {
+		return purchaseProjectChannel;
 	}
 
 	public boolean init(String filePath) {
@@ -121,6 +127,10 @@ public class SysMgr {
 		Element lpElement = root.element("ListedProjectChannel");
 		this.listedProjectChannel = StrUtil
 				.parseInt(lpElement.getTextTrim(), 0);
+
+		Element ppElement = root.element("PurchaseProjectChannel");
+		this.purchaseProjectChannel = StrUtil.parseInt(ppElement.getTextTrim(),
+				0);
 
 		Element langElement = root.element("Lang");
 		this.defaultLang = StrUtil.parseStr(langElement.getTextTrim(), "zh_CN");

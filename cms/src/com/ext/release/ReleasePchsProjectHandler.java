@@ -9,6 +9,7 @@ import com.ftd.manage.release.ReleaseMgr;
 import com.ftd.servlet.Context;
 import com.ftd.servlet.FtdException;
 import com.ftd.servlet.Handler;
+import com.ftd.system.SysMgr;
 import com.ftd.util.StrUtil;
 
 public class ReleasePchsProjectHandler extends Handler {
@@ -17,8 +18,7 @@ public class ReleasePchsProjectHandler extends Handler {
 	public void handle(Context ctx) throws FtdException {
 		int projectId = StrUtil.parseInt(
 				(String) ctx.paramMap.get("projectId"), 0);
-		int channelId = StrUtil.parseInt(
-				(String) ctx.paramMap.get("channelId"), 0);
+		int channelId = SysMgr.getInstance().getPurchaseProjectChannel();
 		String ids = StrUtil.parseStr((String) ctx.paramMap.get("ids"), "");
 		if (StrUtil.isEmpty(ids)) {
 			if (projectId != 0) {

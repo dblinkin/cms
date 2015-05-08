@@ -134,13 +134,6 @@
 	  	addArticle(false);
   })
   
-  $("#addAndDeploy").click(function(){
-	  if(articleId)
-		updateArticle(true);
-	  else
-	  	addArticle(true);
-  })
-  
   function queryArticle(qrticleId){
 	  $.ajax({
 		  url : "manage_article.do?opr=query&articleId=" + qrticleId,
@@ -149,7 +142,6 @@
 				  form.setRecord(data.article);
 				  form.setFieldValue("channel1Id", data.article.channelId & 0xFFFFFF00);
 				  form.setFieldValue("channelId", data.article.channelId);
-				  form.setFieldValue("ftl", "news.ftl");
 				  um.setContent(data.article.articleContent);
 			  }
 		  }
@@ -157,37 +149,41 @@
   }
   
   function addArticle(isDeploy){
-	  var submitMask = form.get('submitMask');
-	  if(submitMask && submitMask.show){
-	      submitMask.show();
-	  }
-	  
-	  var data = BUI.merge(true,form.serializeToObject(),{deploy:isDeploy});
-	  
-	  $.ajax({
-		  url : "manage_article.do?opr=insert",
-		  type : "post",
-		  dataType : "json",
-		  data : data,
-		  success : function(data){
-			  if(submitMask && submitMask.hide){
-			        submitMask.hide();
+	  form.valid();
+	  if(form.isValid()){
+		  var data = BUI.merge(true,form.serializeToObject(),{deploy:isDeploy});
+		  $.ajax({
+			  url : "manage_article.do?opr=insert",
+			  type : "post",
+			  dataType : "json",
+			  data : data,
+			  success : function(data){
+				  if(submitMask && submitMask.hide){
+				        submitMask.hide();
+				  }
+				  BUI.Message.Alert("添加成功！");
 			  }
-			  BUI.Message.Alert("添加成功！");
-		  }
-	  });
+		  });
+	  }else{
+		form.focusError();
+	  }
   }
   
   function updateArticle(isDeploy){
-	  var data = BUI.merge(true,form.serializeToObject(),{deploy:isDeploy});
+	  form.valid();
+	  if(form.isValid()){
+		  var data = BUI.merge(true,form.serializeToObject(),{deploy:isDeploy});
+		  $.ajax({
+			  url : "manage_article.do?opr=update",
+			  data : data,
+			  success : function(data){
+				  BUI.Message.Alert("保存成功！");
+			  }
+		  });
+	  }else{
+		form.focusError();
+	  }
 	  
-	  $.ajax({
-		  url : "manage_article.do?opr=update",
-		  data : data,
-		  success : function(data){
-			  BUI.Message.Alert("保存成功！");
-		  }
-	  });
   }
 </script>
 

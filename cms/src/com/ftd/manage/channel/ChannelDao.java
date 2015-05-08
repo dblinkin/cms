@@ -76,6 +76,17 @@ public class ChannelDao {
 		}
 	}
 
+	public static void updateRedirectUrl(int channelId, String redirectUrl)
+			throws FtdException {
+		String sql = "update channel set redirect_url=? where channel_id=?";
+		DBClient dbClient = SysMgr.getInstance().getDbClient();
+		try {
+			dbClient.executeUpdate(sql, redirectUrl, channelId);
+		} catch (SQLException e) {
+			throw new FtdException(e, "db.sql.error");
+		}
+	}
+
 	public static List<Channel> selectAll() throws FtdException {
 		List<Channel> channels = new ArrayList<Channel>();
 		String sql = "select * from channel";
@@ -93,6 +104,7 @@ public class ChannelDao {
 					c.setChannelName(rs.getString("channel_name"));
 					c.setChannelDesc(rs.getString("channel_desc"));
 					c.setChannelUrl(rs.getString("channel_url"));
+					c.setRedirectUrl(rs.getString("redirect_url"));
 					c.setReleaseId(rs.getString("release_id"));
 					c.setIsNav(rs.getInt("is_nav"));
 					channels.add(c);

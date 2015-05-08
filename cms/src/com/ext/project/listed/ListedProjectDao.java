@@ -217,4 +217,66 @@ public class ListedProjectDao {
 
 		return null;
 	}
+	
+	public static List<ListedProject> selectForPage(int type, int page, int pageSize) throws FtdException {
+		List<ListedProject> listedProjects = new ArrayList<ListedProject>();
+
+		DBClient dbClient = SysMgr.getInstance().getDbClient();
+		String sql = String.format("select * from project_listed where project_type=%d order by project_id desc limit %d,%d", type, pageSize
+				* (page - 1), pageSize);
+
+		CachedRowSet rs = null;
+		try {
+			rs = dbClient.executeQuery(sql);
+
+			if (rs != null) {
+				while (rs.next()) {
+					ListedProject p = new ListedProject();
+					p.setProjectTitle(rs.getString("project_title"));
+					p.setCreateTime(rs.getString("create_time"));
+					p.setReleaseUrl(rs.getString("release_url"));
+					listedProjects.add(p);
+				}
+			}
+		} catch (SQLException e) {
+			throw new FtdException(e, "db.sql.error");
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// do nothing
+				}
+		}
+
+		return listedProjects;
+	}
+	
+	public static int selectCountForPage(int type, int page, int pageSize) throws FtdException {
+		DBClient dbClient = SysMgr.getInstance().getDbClient();
+		String sql = String.format("select count(1) from project_listed where project_type=%d order by project_id desc limit %d,%d", type, pageSize
+				* (page - 1), pageSize);
+
+		CachedRowSet rs = null;
+		try {
+			rs = dbClient.executeQuery(sql);
+
+			if (rs != null) {
+				while (rs.next()) {
+					return rs.getInt(1);
+				}
+			}
+		} catch (SQLException e) {
+			throw new FtdException(e, "db.sql.error");
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// do nothing
+				}
+		}
+
+		return 0;
+	}
 }
