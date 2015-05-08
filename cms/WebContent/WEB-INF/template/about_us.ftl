@@ -231,16 +231,23 @@ padding-left: 3px;
 	
 <div class="panel panel-primary" style="text-align:center;">
   <!-- Default panel contents -->
-  <div class="panel-heading" style="font-size:1.5em;padding-left:0.1em;border-bottom:none;font-family:'Micro YaHei',微软雅黑;">新闻动态</div>
+  <div class="panel-heading" style="font-size:1.5em;padding-left:0.1em;border-bottom:none;font-family:'Micro YaHei',微软雅黑;">${currentChannel.channelName}</div>
  
 <ul class="nav nav-tabs">
 	<li class="divider"></li>
    </ul>
   <!-- List group -->
   <ul class="list-group">
-    <li class="list-group-item active" style="margin-top:0;"><a href="#hotNews" aria-controls="hotNews" role="tab" data-toggle="pill" style="text-decoration:none;">热点动态</a></li>
-    <li class="list-group-item" style="margin-top:0;"><a href="#industryNews" aria-controls="industryNews" role="tab" data-toggle="pill" style="text-decoration:none;">业内动态</a></li>
-    <li class="list-group-item" style="margin-top:0;"><a href="#ourNews" aria-controls="ourNews" role="tab" data-toggle="pill" style="text-decoration:none;">本所动态</a></li>
+  <#if currentChannel.children?size != 0>
+  		  <#list currentChannel.children as ch2>
+  		  	<#if ch2.channelId = currentChannel2.channelId>
+  				  <li class="list-group-item active" style="margin-top:0;"><a href="${ch2.channelUrl}" target="_blank" style="text-decoration:none;">${ch2.channelName}</a></li>
+   			 <#else>
+       		 <li class="list-group-item" style="margin-top:0;"><a href="${ch2.channelUrl}" target="_blank"  style="text-decoration:none;">${ch2.channelName}</a></li>
+    
+    		</#if>
+   		 </#list>
+   		 </#if>
   </ul>
 </div>
 
@@ -250,10 +257,10 @@ padding-left: 3px;
 	 <div role="tabpanel" class="tab-pane active" id="hotNews">
 		<div class="panel panel-primary" style="">
   <!-- Default panel contents -->
-  <div class="panel-heading">农交所介绍</div>
+  <div class="panel-heading">${article.articleTitle}</div>
   <div class="panel-body">
 	
-	关于我们fdsfdsfsdffsdfsdfdsfsdfsdfsdfsdfsdfsd
+	${article.articleContent}
 	
   </div>
 
@@ -265,7 +272,7 @@ padding-left: 3px;
 	 <div role="tabpanel" class="tab-pane" id="industryNews">
 		<div class="panel panel-primary" style="">
   <!-- Default panel contents -->
-  <div class="panel-heading">组织机构</div>
+  <div class="panel-heading">关于我们</div>
   <div class="panel-body">
 	
 	fsdfsdfs
@@ -338,5 +345,4 @@ $("#currentDate").text(date + " 农历:" + calendar);
 	</script>
   </body>
 </html>
-
 
