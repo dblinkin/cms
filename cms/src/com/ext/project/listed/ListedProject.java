@@ -17,6 +17,7 @@ public class ListedProject implements Releasable {
 	private int projectType;
 	private long listedStartTime;
 	private long listedEndTime;
+	private long createTime = System.currentTimeMillis();
 
 	private String assetTransfor;
 	private String isDeal;
@@ -58,6 +59,19 @@ public class ListedProject implements Releasable {
 
 	// ----------getter setter---------------
 
+	public String getCreateTime() {
+		return StrUtil.datetime(createTime);
+	}
+
+	public void setCreateTime(long createTime) {
+		this.createTime = createTime;
+	}
+
+	public void setCreateTime(String createTime) {
+		this.createTime = StrUtil.parseDatetime(createTime,
+				System.currentTimeMillis());
+	}
+
 	public String getProjectNum() {
 		return projectNum;
 	}
@@ -90,15 +104,16 @@ public class ListedProject implements Releasable {
 		this.projectTitle = projectTitle;
 	}
 
-	public String getProjectType() {
+	public int getProjectType() {
+		return projectType;
+	}
+
+	public String getProjectTypeStr() {
 		Channel c = ChannelMgr.getInstance().getChannel(projectType);
 		if (c != null)
 			return c.getChannelName();
 		return "";
-	}
 
-	public int getChannelId() {
-		return projectType;
 	}
 
 	public void setProjectType(int projectType) {

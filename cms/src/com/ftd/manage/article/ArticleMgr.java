@@ -106,7 +106,7 @@ public class ArticleMgr {
 		Article old = articleId_article.get(a.getArticleId());
 		if (old != null) {
 			old.updateEdit(a);
-			ArticleDao.update(old);
+			ArticleDao.update(a);
 		}
 	}
 

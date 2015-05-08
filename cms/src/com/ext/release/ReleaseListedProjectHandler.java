@@ -22,7 +22,7 @@ public class ReleaseListedProjectHandler extends Handler {
 			if (projectId != 0) {
 				ListedProject p = ListedProjectDao.select(projectId);
 				if (p != null) {
-					ReleaseMgr.getInstance().release(p.getChannelId(), p);
+					ReleaseMgr.getInstance().release(p.getProjectType(), p);
 				}
 			}
 		} else {
@@ -32,7 +32,7 @@ public class ReleaseListedProjectHandler extends Handler {
 				projectId = obj.getInt("projectId");
 				ListedProject p = ListedProjectDao.select(projectId);
 				if (p != null) {
-					ReleaseMgr.getInstance().release(p.getChannelId(), p);
+					ReleaseMgr.getInstance().release(p.getProjectType(), p);
 				}
 			}
 		}

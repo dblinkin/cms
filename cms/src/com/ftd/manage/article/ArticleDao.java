@@ -59,18 +59,20 @@ public class ArticleDao {
 	}
 
 	public static void update(Article a) throws FtdException {
-		String sql = "update article set channel_id=?, article_title=?,article_url=?,create_time=?,is_released=?,released_time=?,article_src=?,"
+		String sql = "update article set channel_id=?, article_title=?,article_src=?,"
 				+ "article_content=? where article_id=?";
 
 		DBClient dbClient = SysMgr.getInstance().getDbClient();
 
 		try {
-			dbClient.executeUpdate(sql, a.getChannelId(), a.getArticleTitle(),
-					a.getArticleUrl(), a.getCreateTime(), a.isReleased() ? 1
-							: 0, a.getReleasedTime(), a.getArticleSrc(),
+			dbClient.executeUpdate(
+					sql,
+					a.getChannelId(),
+					a.getArticleTitle(),
+					a.getArticleSrc(),
 					StrUtil.toHexString(StrZipUtil.compress(
-							a.getArticleContent()).getBytes()), a
-							.getArticleId());
+							a.getArticleContent()).getBytes()),
+					a.getArticleId());
 		} catch (SQLException e) {
 			throw new FtdException(e, "db.sql.error");
 		}

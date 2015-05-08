@@ -235,7 +235,7 @@ padding-left: 3px;
 				</div>
 				
 				<div class="col-lg-12" style="text-align:center;font-size:16px;">
-				<p>来源：${listedProject.projectSrc}&nbsp;&nbsp;时间:${listedProject.createTime[0..10]}</p>
+				<p>来源：陆良农交所&nbsp;&nbsp;时间:${listedProject.createTime[0..10]}</p>
 				</div>
 		</div>
 		
@@ -256,7 +256,7 @@ padding-left: 3px;
 						<th style="background-color:#cccccc;">项目编号</th>
 						<td>${listedProject.projectNum}</td>
 						<th style="background-color:#cccccc;">项目类别</th>
-						<td>${listedProject.projectType}</td>
+						<td>${listedProject.projectTypeStr}</td>
 						
 					</tr>
 				<tr>

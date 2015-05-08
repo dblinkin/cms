@@ -290,16 +290,7 @@ padding-left: 3px;
 	</#if>
 	</#list>
 	</ul>
-	
-
-  </div>
-</div>
-</div>
-
-
-
-</div>
-<nav style="float:right;">
+	<nav style="float:right;">
   <ul class="pagination">
     <li>
       <a href="#" aria-label="Previous">
@@ -318,6 +309,14 @@ padding-left: 3px;
     </li>
   </ul>
 </nav>
+
+  </div>
+</div>
+</div>
+
+
+
+</div>
 	  </div>
      
 </div>
@@ -360,4 +359,5 @@ $("#currentDate").text(date + " 农历:" + calendar);
 	</script>
   </body>
 </html>
+
 
