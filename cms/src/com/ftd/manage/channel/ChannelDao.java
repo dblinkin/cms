@@ -19,7 +19,7 @@ public class ChannelDao {
 			.getLogger(ChannelDao.class);
 
 	public static void insert(Channel c) throws FtdException {
-		String sql = "insert into channel values(?,?,?,?,?,?,?)";
+		String sql = "insert into channel(channel_id, parent_channel_id,channel_name,channel_desc,channel_url,is_nav,release_id) values(?,?,?,?,?,?,?)";
 		DBClient dbClient = SysMgr.getInstance().getDbClient();
 
 		try {
