@@ -12,6 +12,7 @@
 		<String Id="release.manager.not.found" Msg="发布管理器不存在[%1s]"/>
 		<String Id="release.not.found" Msg="发布管理器不存在"/>
 		<String Id="article.not.found" Msg="发布的文章[%1s]不存在"/>
+		<String Id="redirect.url.error" Msg="重定向URL错误[%1s]"/>
 	</Group>
 	
 	<!-- ftl模板名称  -->

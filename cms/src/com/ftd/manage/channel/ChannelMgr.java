@@ -98,13 +98,13 @@ public class ChannelMgr {
 			}
 
 			if (c.getParentChannelId() == 0) {
-				if (c.getIsNav() == 1 && StrUtil.isEmpty(c.getChannelUrl())) {
+				if (StrUtil.isEmpty(c.getChannelUrl())) {
 					String url = ReleaseMgr.getInstance().getReleaseFilename(
 							Release.Src.FIRST_CHANNEL, c.getChannelId());
 					c.setChannelUrl(url);
 				}
 			} else {
-				if (c.getIsNav() == 1 && StrUtil.isEmpty(c.getChannelUrl())) {
+				if (StrUtil.isEmpty(c.getChannelUrl())) {
 					String url = ReleaseMgr.getInstance().getReleaseFilename(
 							Release.Src.SECOND_CHANNEL, c.getChannelId());
 					c.setChannelUrl(url);

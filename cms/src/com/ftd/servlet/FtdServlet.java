@@ -103,6 +103,10 @@ public class FtdServlet extends HttpServlet {
 				break;
 			}
 
+			// response已经写过，直接返回
+			if (ctx.isRedirect())
+				return;
+
 			ctx.putResult(Context.RET_CODE, Context.DEFAULT_SUCCESS_CODE);
 			result.putAll(ctx.getResult());
 		} while (false);

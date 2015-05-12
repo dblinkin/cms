@@ -36,6 +36,11 @@ public class Channel {
 		isNav = c.isNav;
 	}
 
+	// redirectUrl 不为空则已经重定向
+	public boolean isRedirect() {
+		return !StrUtil.isEmpty(redirectUrl);
+	}
+
 	public void removeChild(Channel c) {
 		children.remove(c);
 	}

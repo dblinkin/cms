@@ -40,6 +40,8 @@ public class Context {
 
 	private int retCode = DEFAULT_SUCCESS_CODE;
 	private String retMsg;
+	
+	private boolean redirect;
 
 	public Context(HttpServletRequest request, HttpServletResponse response,
 			String cmd) {
@@ -150,6 +152,16 @@ public class Context {
 
 	public void setRetMsg(String retMsg) {
 		this.retMsg = retMsg;
+	}
+	
+	
+
+	public boolean isRedirect() {
+		return redirect;
+	}
+
+	public void setRedirect(boolean redirect) {
+		this.redirect = redirect;
 	}
 
 	public OPR getOpr() {

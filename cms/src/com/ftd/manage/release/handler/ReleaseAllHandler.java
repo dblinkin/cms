@@ -2,6 +2,10 @@ package com.ftd.manage.release.handler;
 
 import java.util.List;
 
+import com.ext.project.listed.ListedProject;
+import com.ext.project.listed.ListedProjectDao;
+import com.ext.project.purchase.PurchaseProject;
+import com.ext.project.purchase.PurchaseProjectDao;
 import com.ftd.manage.article.Article;
 import com.ftd.manage.article.ArticleMgr;
 import com.ftd.manage.channel.Channel;
@@ -28,6 +32,17 @@ public class ReleaseAllHandler extends Handler {
 					a.getChannelId(), a.getArticleId());
 		}
 
+		List<ListedProject> lpProjects = ListedProjectDao.selectAll();
+		for (ListedProject project : lpProjects) {
+			ReleaseMgr.getInstance().release(project.getProjectType(), project);
+		}
+
+		List<PurchaseProject> pprojects = PurchaseProjectDao.selectAll();
+		for (PurchaseProject project : pprojects) {
+			ReleaseMgr.getInstance().release(
+					SysMgr.getInstance().getPurchaseProjectChannel(), project);
+		}
+
 		for (Channel c : ChannelMgr.getInstance().getCopyChannels()) {
 			if (c.getChannelId() == SysMgr.getInstance().getMainPageChannel()) {
 				ReleaseMgr.getInstance().release(Release.Src.MAIN_PAGE,
@@ -35,13 +50,14 @@ public class ReleaseAllHandler extends Handler {
 				continue;
 			}
 
-			if (c.getIsNav() == 0) {
+			if (c.isRedirect())
 				continue;
-			}
 
 			ReleaseMgr.getInstance().release(Release.Src.FIRST_CHANNEL,
 					c.getChannelId(), 0);
 			for (Channel cc : c.getChildren()) {
+				if (cc.isRedirect())
+					continue;
 				ReleaseMgr.getInstance().release(Release.Src.SECOND_CHANNEL,
 						cc.getChannelId(), 0);
 			}

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
@@ -221,6 +222,11 @@ public class ReleaseMgr {
 
 	public void preview(Release.Src src, int channelId, int articleId,
 			Context ctx) throws FtdException {
+		ctx.setRedirect(true);
+		if (checkRedirect(src, channelId, ctx)) {
+			return;
+		}
+
 		ReleaseMsg releaseMsg = getReleaseMsg(src, channelId, articleId);
 		if (releaseMsg == null) {
 			throw new FtdException(null, "release.not.found");
@@ -241,6 +247,24 @@ public class ReleaseMgr {
 		}
 
 		writeResponse(ctx.response, models, release.getTemplateName());
+	}
+
+	public boolean checkRedirect(Release.Src src, int channelId, Context ctx)
+			throws FtdException {
+		if (src == Src.FIRST_CHANNEL || src == Src.SECOND_CHANNEL) {
+			Channel c = ChannelMgr.getInstance().getChannel(channelId);
+			if (c != null && c.isRedirect()) {
+				try {
+					ctx.request.getRequestDispatcher(c.getRedirectUrl())
+							.forward(ctx.request, ctx.response);
+				} catch (ServletException | IOException e) {
+					throw new FtdException(e, "redirect.url.error",
+							c.getRedirectUrl());
+				}
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void realTimePreview(Release.Src src, int channelId, int articleId,
