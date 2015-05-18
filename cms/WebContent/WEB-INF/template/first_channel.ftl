@@ -286,14 +286,26 @@ padding-left: 3px;
   <a href="${ch1.channel.channelUrl}" target="_blank" style="float:right;">更多>></a>
   </div>
   <div class="panel-body">
-	
-	<ul> 
-	<#list ch1.articleIndex as article>
-	<#if article_index lt 10>
-	<li><span style="float:right;">${article.createTime[0..10]}</span><a href="${article.articleUrl}" target="_blank">${article.articleTitle}</a></li>
-	</#if>
-	</#list>
-	</ul>
+  <ul id="${ch1.channel.channelId?c}">
+  	
+  </ul>
+	<script>
+		$.ajax({
+        url:"/cms/query_article_index.pub?channelId=${ch1.channel.channelId?c}&current=1&page=1&pageSize=5",
+        type:"GET",
+        dataType:"json",
+        async:true,
+        success:function(data){
+       $(data.articles).each(function(){
+         				$("#${ch1.channel.channelId?c}").append("<li><span style=\"float:right;\">"+this.time.substring(0,10)+"</span>"+"<a href="+this.url+" target=\"_blank\">"+this.title+"</a></li>");
+         			});
+      
+        },
+        error:function(error){
+        alert("error");
+        }
+        });
+	</script>
 	
   </div>
 </div>
