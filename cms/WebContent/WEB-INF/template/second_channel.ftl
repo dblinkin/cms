@@ -246,9 +246,9 @@ padding-left: 3px;
   		<#if currentChannel.children?size != 0>
   		  <#list currentChannel.children as ch2>
   		  	<#if ch2.channelId = currentChannel2.channelId>
-  				  <li class="list-group-item active" style="margin-top:0;"><a href="${ch2.channelUrl}" target="_blank" style="text-decoration:none;">${ch2.channelName}</a></li>
+  				  <li class="list-group-item active" style="margin-top:0;"><a href="${ch2.channelUrl}"  style="text-decoration:none;">${ch2.channelName}</a></li>
    			 <#else>
-       		 <li class="list-group-item" style="margin-top:0;"><a href="${ch2.channelUrl}" target="_blank"  style="text-decoration:none;">${ch2.channelName}</a></li>
+       		 <li class="list-group-item" style="margin-top:0;"><a href="${ch2.channelUrl}"  style="text-decoration:none;">${ch2.channelName}</a></li>
     
     		</#if>
    		 </#list>
@@ -293,8 +293,23 @@ padding-left: 3px;
   <div class="panel-heading">${currentChannel2.channelName}</div>
   <div class="panel-body">
 	<#assign pageSize=5>
-	<ul id="content" currentPage="1" pageCount="${(articleIndex?size / pageSize)?ceiling}" channelId="${currentChannel2.channelId}" pageSize="${pageSize}"> 
-	
+	<ul id="content" currentPage="1" pageCount="" channelId="${currentChannel2.channelId?c}" pageSize="${pageSize}"> 
+	<script>
+		var pageCount;
+ $.ajax({
+        url:"/cms/query_article_index.pub?channelId=${currentChannel2.channelId?c}&current=1&page=1&pageSize=1",
+        type:"GET",
+        dataType:"json",
+        async:false,
+        success:function(data){
+        window.pageCount = Math.ceil(data.total /${pageSize}) ;
+      
+        },
+        error:function(error){
+        alert("error");
+        }
+        });
+	</script>
 	</ul>
 	
 
@@ -359,7 +374,7 @@ var options = {
         alignment:'center',
         currentPage:1,
         numberOfPages:5,
-        totalPages: $("#content").attr("pageCount"),
+        totalPages: pageCount,
         pageUrl: function(type, page, current){
                     return "/cms/query_article_index.pub?channelId="+$("#content").attr("channelId")+"&current="+current+"&page="+page+"&pageSize="+$("#content").attr("pageSize"); 
         },
@@ -389,7 +404,9 @@ var options = {
         
     };
     $('#pagination').bootstrapPaginator(options);
+    
     $(document).ready(function(){
+        
     	$("#pagination li:first a").trigger("click");
     });
 

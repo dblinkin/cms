@@ -529,30 +529,22 @@ a.tjxmdesc:hover{font-size:14px;font-family:"微软雅黑";text-decoration:none;
      
 		
 		<div class="row" style="margin-top:2em;">
+		<#list channels as ch1>
 		
+			<#if ch1.channelId = 1024>
+				<#if ch1.children?size != 0>
+				<#list ch1.children as gp>
+				<#if gp_index lt 6 >
 		<div class="col-lg-2 col-md-2">
-			<a href="#" ><img src="/image/gp1.jpg" alt="" class="img-rounded img-responsive center-block"/><div class="caption text-center">农村土地</div></a>
+			<a href="${gp.channelUrl?if_exists}" target="_blank" ><img src="/image/gp${gp_index+1}.jpg" alt="" class="img-rounded img-responsive center-block"/><div class="caption text-center">${gp.channelName}</div></a>
 		</div>
-		<div class="col-lg-2 col-md-2">
-			<a href="#" ><img src="/image/gp2.jpg" alt="" class="img-rounded img-responsive center-block"/><div class="caption text-center">生产经营股权</div></a>
+				</#if>
+			   </#list>
+			   </#if>
+			    </#if>
+			   </#list>
 		
-		</div>
-		<div class="col-lg-2 col-md-2">
-			<a href="#" ><img src="/image/gp3.jpg" alt="" class="img-rounded img-responsive center-block"/><div class="caption text-center">实物资产</div></a>
 		
-		</div>
-		<div class="col-lg-2 col-md-2">
-			<a href="#" ><img src="/image/gp4.jpg" alt="" class="img-rounded img-responsive center-block"/><div class="caption text-center">农业知识产权</div></a>
-		
-		</div>
-		<div class="col-lg-2 col-md-2">
-			<a href="#" ><img src="/image/gp5.jpg" alt="" class="img-rounded img-responsive center-block"/><div class="caption text-center">农村经济事项</div></a>
-		
-		</div>
-		<div class="col-lg-2 col-md-2">
-			<a href="#" ><img src="/image/gp6.jpg" alt="" class="img-rounded img-responsive center-block"/><div class="caption text-center">林权</div></a>
-		
-		</div>
 		
 		
 		</div>
