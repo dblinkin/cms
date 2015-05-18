@@ -23,12 +23,8 @@ $.ajax = function (s) {
         		BUI.Message.Alert(data.retMsg,'error');
         		return;
         	}
+        	
         }
-        
-        if(data.retCode == 0){
-        	delete data.retCode;
-        }
-        
         if (old) {
             old(data, textStatus, jqXHR);
         }

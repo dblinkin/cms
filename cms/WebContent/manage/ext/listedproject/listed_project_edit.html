@@ -58,8 +58,11 @@
           <div class="control-group span12">
             <label class="control-label"><s>*</s>成交状态：</label>
             <div class="controls">
-              <input name="isDeal" type="text" data-rules="{required:true}" class="input-normal control-text">
-            </div>
+	          <select name="isDeal" value="0">
+	            <option value="0">未成交</option>
+	            <option value="1">已成交</option>
+	          </select>
+          </div>
           </div>          
         </div>
         <div class="row">

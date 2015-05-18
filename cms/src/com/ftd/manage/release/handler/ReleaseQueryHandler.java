@@ -10,7 +10,7 @@ public class ReleaseQueryHandler extends Handler {
 	@Override
 	public void handle(Context ctx) throws FtdException {
 
-		ctx.putResult(I18nMgr.getInstance().getGroup(ctx.lang, "ftl"));
+		ctx.putResult(I18nMgr.getInstance().getGroup(ctx.lang, "channelTpl"));
 
 	}
 
